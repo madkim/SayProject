@@ -19,7 +19,7 @@ import {
 } from "@ionic/react";
 
 import React, { ReactElement } from "react";
-import { add, chevronBack, play } from "ionicons/icons";
+import { add, chevronBack, micSharp, play } from "ionicons/icons";
 
 interface Props {}
 
@@ -84,8 +84,8 @@ export default function ViewSaying({}: Props): ReactElement {
               <IonRow>
                 <IonCol>
                   <br />
-                  <IonButton expand="block" color="dark" fill="outline">
-                    <IonIcon icon={add} /> &nbsp;Add Recording
+                  <IonButton expand="block" color="success" fill="solid">
+                    <IonIcon icon={micSharp} /> &nbsp;Add Recording
                   </IonButton>
                 </IonCol>
               </IonRow>

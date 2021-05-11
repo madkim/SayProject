@@ -6,6 +6,7 @@ import {
   IonContent,
 } from "@ionic/react";
 
+import FadeIn from "react-fade-in";
 import Sayings from "../_components/Sayings";
 import SayingCards from "../_components/SayingCards";
 
@@ -20,9 +21,10 @@ const Home: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-
-        <Sayings />
-        <SayingCards />
+        <FadeIn>
+          <Sayings />
+          <SayingCards />
+        </FadeIn>
       </IonContent>
     </IonPage>
   );
