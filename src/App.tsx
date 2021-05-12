@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { IonReactRouter } from "@ionic/react-router";
 
 import Login from "./_pages/Login/Login";
-import MainTabs from "./_pages/MainTabs";
+import MainTabs from "./_components/MainTabs";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";

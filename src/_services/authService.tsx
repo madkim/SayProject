@@ -14,10 +14,8 @@ function login(username: string, password: string) {
         resolve(user);
       })
       .catch((error: any) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
+        console.log(error.code);
+        console.log(error.message);
       });
   });
 }

@@ -12,11 +12,11 @@ import { ReactElement } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { book, helpCircle, peopleSharp } from "ionicons/icons";
 
-import Home from "./Home";
-import Login from "./Login/Login";
-import ViewSaying from "./ViewSaying";
-import ListSayings from "./ListSayings";
-import StudySayings from "./StudySayings";
+import Home from "../_pages/Home";
+import Login from "../_pages/Login/Login";
+import ViewSaying from "../_pages/ViewSaying";
+import ListSayings from "../_pages/ListSayings";
+import StudySayings from "../_pages/StudySayings";
 
 export default function MainTabs(): ReactElement {
   return (

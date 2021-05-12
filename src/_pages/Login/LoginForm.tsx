@@ -13,9 +13,13 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
+import { DynObject } from "../../_helpers/types";
+
 import FadeIn from "react-fade-in";
+import ShowError from "../../_stories/ShowError";
 
 interface Props {
+  errors: DynObject;
   password: string;
   username: string;
   validate: () => void;
@@ -24,7 +28,14 @@ interface Props {
 }
 
 const LoginForm: React.FC<Props> = (props: Props) => {
-  const [checked, setChecked] = useState(false);
+  const [showPassword, setShowPassword] = useState(
+    localStorage.getItem("showPassword") === "true" ? true : false
+  );
+
+  const toggleShowPassword = (checked: boolean) => {
+    localStorage.setItem("showPassword", checked ? "true" : "false");
+    setShowPassword(checked);
+  };
 
   return (
     <FadeIn>
@@ -46,33 +57,45 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                   onIonChange={(e) => props.setUsername(e.detail.value!)}
                 ></IonInput>
               </IonItem>
+
+              <ShowError show={"username"} errors={props.errors} />
             </IonCol>
           </IonRow>
-          <IonRow className="ion-padding-bottom">
+          <IonRow className={`${!showPassword && "ion-padding-bottom"}`}>
             <IonCol className="ion-no-padding">
               <IonItem className="ion-padding-end">
                 <IonLabel position="stacked">
                   <h1>Password</h1>
                 </IonLabel>
                 <IonInput
-                  type={checked ? "text" : "password"}
+                  type="password"
                   value={props.password}
                   onIonChange={(e) => props.setPassword(e.detail.value!)}
                 ></IonInput>
               </IonItem>
+              {showPassword && (
+                <IonItem lines="none">
+                  <IonInput
+                    type="text"
+                    readonly
+                    value={props.password}
+                  ></IonInput>
+                </IonItem>
+              )}
+              <ShowError show={"password"} errors={props.errors} />
             </IonCol>
           </IonRow>
           <IonRow className="ion-padding-vertical">
             <IonCol className="ion-no-padding">
               <IonItem lines="none" className="ion-padding-end">
                 <IonToggle
-                  checked={checked}
-                  onIonChange={(e) => setChecked(e.detail.checked)}
+                  checked={showPassword}
+                  onIonChange={(e) => toggleShowPassword(e.detail.checked!)}
                 />
                 <IonLabel
                   className="ion-padding-start"
                   onClick={() => {
-                    setChecked(!checked);
+                    setShowPassword(!showPassword);
                   }}
                 >
                   Show Password
