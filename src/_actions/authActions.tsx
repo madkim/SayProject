@@ -9,6 +9,7 @@ export const authActions = {
 
 function logUserIn(username: string, password: string, history: any) {
   return (dispatch: Dispatch<Action>) => {
+    dispatch({ type: authConstants.USER_LOGIN_REQUEST, payload: true });
     authService
       .login(username, password)
       .then((user) => {
@@ -16,14 +17,14 @@ function logUserIn(username: string, password: string, history: any) {
         dispatch({ type: authConstants.USER_LOGIN_SUCCESS, payload: true });
         history.push("/home");
       })
-      .catch(() => {
+      .catch((error) => {
         dispatch({
           type: authConstants.USER_LOGIN_FAILURE,
           payload: false,
         });
-        alert(
-          "An error occured while logging in. Please check your credentials and try again."
-        );
+        // alert(
+        //   "An error occured while logging in. Please check your credentials and try again."
+        // );
       });
   };
 }

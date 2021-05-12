@@ -10,10 +10,13 @@ import {
   IonCardTitle,
   IonCardHeader,
   IonCardContent,
+  IonSpinner,
 } from "@ionic/react";
 
 import { useState } from "react";
 import { DynObject } from "../../_helpers/types";
+import { RootState } from "../../_reducers/rootReducer";
+import { useSelector } from "react-redux";
 
 import FadeIn from "react-fade-in";
 import ShowError from "../../_stories/ShowError";
@@ -28,6 +31,9 @@ interface Props {
 }
 
 const LoginForm: React.FC<Props> = (props: Props) => {
+  const loading = useSelector((state: RootState) => state.auth.loading);
+  const loginFailed = useSelector((state: RootState) => state.auth.loginFailed);
+
   const [showPassword, setShowPassword] = useState(
     localStorage.getItem("showPassword") === "true" ? true : false
   );
@@ -46,6 +52,12 @@ const LoginForm: React.FC<Props> = (props: Props) => {
         </IonCardHeader>
         <IonCardContent>
           <br />
+          {loginFailed && (
+            <IonCardHeader color="danger">
+              Invalid Login Credentials
+            </IonCardHeader>
+          )}
+
           <IonRow className="ion-padding-vertical">
             <IonCol className="ion-no-padding">
               <IonItem className="ion-padding-end">
@@ -111,9 +123,10 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                 fill="solid"
                 color="primary"
                 expand="block"
+                disabled={loading}
                 onClick={props.validate}
               >
-                Login
+                {loading ? <IonSpinner name="bubbles" /> : "Login"}
               </IonButton>
             </IonCol>
           </IonRow>

@@ -2,14 +2,23 @@ import { Action } from "../_helpers/types";
 import { authConstants } from "../_constants/authConstants";
 
 export const initState: {
-  isLoggedIn: boolean;
   loading: boolean;
+  isLoggedIn: boolean;
+  loginFailed: boolean;
 } = {
-  isLoggedIn: false,
   loading: false,
+  isLoggedIn: false,
+  loginFailed: false,
 };
 
 export function authReducer(state = initState, action: Action) {
+  if (action.type === authConstants.USER_LOGIN_REQUEST) {
+    return (state = {
+      ...state,
+      loading: true,
+      loginFailed: false,
+    });
+  }
   if (action.type === authConstants.USER_LOGIN_SUCCESS) {
     return (state = {
       ...state,
@@ -22,6 +31,7 @@ export function authReducer(state = initState, action: Action) {
       ...state,
       loading: false,
       isLoggedIn: false,
+      loginFailed: true,
     });
   }
 

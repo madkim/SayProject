@@ -5,7 +5,7 @@ export const authService = {
 };
 
 function login(username: string, password: string) {
-  return new Promise((resolve: (user: any) => void) => {
+  return new Promise((resolve: (user: any) => void, reject) => {
     fireAuth
       .signInWithEmailAndPassword(username, password)
       .then((userCredential: any) => {
@@ -16,6 +16,7 @@ function login(username: string, password: string) {
       .catch((error: any) => {
         console.log(error.code);
         console.log(error.message);
+        reject(error.code);
       });
   });
 }
