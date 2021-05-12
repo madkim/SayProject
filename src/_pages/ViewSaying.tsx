@@ -16,6 +16,7 @@ import {
   IonButtons,
   IonCardHeader,
   IonCardContent,
+  IonText,
 } from "@ionic/react";
 
 import React, { ReactElement } from "react";
@@ -54,7 +55,9 @@ export default function ViewSaying({}: Props): ReactElement {
           </IonCardHeader>
           <IonCardContent>
             <br />
-            <h1>Hello, my name is Matthew.</h1>
+            <IonText color="dark">
+              <h1>Hello, my name is Matthew.</h1>
+            </IonText>
           </IonCardContent>
         </IonCard>
 
