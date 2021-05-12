@@ -7,7 +7,7 @@ interface Props {}
 export default function SayingCards({}: Props): ReactElement {
   return (
     <>
-      <IonCard button routerLink="/view">
+      <IonCard button routerLink="/view/false">
         <IonCardHeader color="danger" style={{ fontSize: "large" }}>
           <IonIcon icon={closeOutline} /> &nbsp; Needs Review
         </IonCardHeader>
@@ -15,7 +15,7 @@ export default function SayingCards({}: Props): ReactElement {
           <br />I need to use the restroom.
         </IonCardContent>
       </IonCard>
-      <IonCard button routerLink="/view">
+      <IonCard button routerLink="/view/true">
         <IonCardHeader color="success" style={{ fontSize: "large" }}>
           <IonIcon icon={checkmark} /> &nbsp; Answered
         </IonCardHeader>

@@ -9,9 +9,9 @@ import {
 const StudySayings: React.FC = () => {
   return (
     <IonPage>
-      <IonContent fullscreen>
+      <IonContent>
         <IonHeader>
-          <IonToolbar color="primary" style={{ padding: "1em" }}>
+          <IonToolbar color="primary" className="ion-padding-top">
             <IonTitle size="large" className="ion-text-center">
               SAY
             </IonTitle>

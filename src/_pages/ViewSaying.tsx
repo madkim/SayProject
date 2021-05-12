@@ -19,19 +19,27 @@ import {
 } from "@ionic/react";
 
 import React, { ReactElement } from "react";
-import { add, chevronBack, micSharp, play } from "ionicons/icons";
+import { useParams } from "react-router-dom";
+import { chevronBack, micSharp, play } from "ionicons/icons";
 
 interface Props {}
 
 export default function ViewSaying({}: Props): ReactElement {
+  const { viewed } = useParams<{ viewed: string }>();
+
   return (
     <IonPage>
-      <IonContent fullscreen>
+      <IonContent>
         <IonHeader>
-          <IonToolbar color="primary" style={{ padding: "1em" }}>
+          <IonToolbar color="primary" className="ion-padding-top">
             <IonButtons slot="start">
-              <IonButton routerLink="/home" routerDirection="back">
-                <IonIcon icon={chevronBack} />
+              <IonButton
+                slot="start"
+                fill="clear"
+                routerLink="/"
+                routerDirection="back"
+              >
+                <IonIcon icon={chevronBack} style={{ color: "white" }} />
               </IonButton>
             </IonButtons>
             <IonTitle size="large" className="ion-text-center">
@@ -41,7 +49,10 @@ export default function ViewSaying({}: Props): ReactElement {
         </IonHeader>
 
         <IonCard>
-          <IonCardHeader color="success" style={{ fontSize: "large" }}>
+          <IonCardHeader
+            color={`${viewed === "true" ? "success" : "danger"}`}
+            style={{ fontSize: "large" }}
+          >
             How do you say:
           </IonCardHeader>
           <IonCardContent>
@@ -51,7 +62,10 @@ export default function ViewSaying({}: Props): ReactElement {
         </IonCard>
 
         <IonCard>
-          <IonCardHeader color="success" style={{ fontSize: "large" }}>
+          <IonCardHeader
+            color={`${viewed === "true" ? "success" : "danger"}`}
+            style={{ fontSize: "large" }}
+          >
             Recordings:
           </IonCardHeader>
           <IonCardContent>
@@ -84,7 +98,11 @@ export default function ViewSaying({}: Props): ReactElement {
               <IonRow>
                 <IonCol>
                   <br />
-                  <IonButton expand="block" color="success" fill="solid">
+                  <IonButton
+                    expand="block"
+                    color={`${viewed === "true" ? "success" : "danger"}`}
+                    fill="solid"
+                  >
                     <IonIcon icon={micSharp} /> &nbsp;Add Recording
                   </IonButton>
                 </IonCol>

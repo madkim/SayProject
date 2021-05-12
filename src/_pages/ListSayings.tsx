@@ -21,9 +21,9 @@ const ListSayings: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent fullscreen>
+      <IonContent>
         <IonHeader>
-          <IonToolbar color="primary" style={{ padding: "1em" }}>
+          <IonToolbar color="primary" className="ion-padding-top">
             <IonTitle size="large" className="ion-text-center">
               SAY
             </IonTitle>
@@ -45,19 +45,19 @@ const ListSayings: React.FC = () => {
                   <IonItemDivider>
                     <IonLabel>A</IonLabel>
                   </IonItemDivider>
-                  <IonItem detail button routerLink="/view">
+                  <IonItem detail button routerLink="/view/true">
                     <IonLabel>Pokémon Yellow</IonLabel>
                   </IonItem>
-                  <IonItem detail button routerLink="/view">
+                  <IonItem detail button routerLink="/view/true">
                     <IonLabel>Mega Man X</IonLabel>
                   </IonItem>
-                  <IonItem detail button routerLink="/view">
+                  <IonItem detail button routerLink="/view/true">
                     <IonLabel>The Legend of Zelda</IonLabel>
                   </IonItem>
-                  <IonItem detail button routerLink="/view">
+                  <IonItem detail button routerLink="/view/true">
                     <IonLabel>Pac-Man</IonLabel>
                   </IonItem>
-                  <IonItem detail button routerLink="/view">
+                  <IonItem detail button routerLink="/view/true">
                     <IonLabel>Super Mario World</IonLabel>
                   </IonItem>
                 </IonList>

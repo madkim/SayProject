@@ -1,20 +1,11 @@
-import {
-  IonApp,
-  IonTabs,
-  IonIcon,
-  IonLabel,
-  IonTabBar,
-  IonTabButton,
-  IonRouterOutlet,
-} from "@ionic/react";
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { IonApp } from "@ionic/react";
+import { RootState } from "./_reducers/rootReducer";
+import { useSelector } from "react-redux";
 import { IonReactRouter } from "@ionic/react-router";
-import { book, helpCircle, peopleSharp } from "ionicons/icons";
 
-import Home from "./_pages/Home";
-import ViewSaying from "./_pages/ViewSaying";
-import ListSayings from "./_pages/ListSayings";
-import StudySayings from "./_pages/StudySayings";
+import Login from "./_pages/Login/Login";
+import MainTabs from "./_pages/MainTabs";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -35,47 +26,19 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet id="main">
-          <Route exact path="/home">
-            <Home />
-          </Route>
-          <Route exact path="/view">
-            <ViewSaying />
-          </Route>
-          <Route exact path="/list">
-            <ListSayings />
-          </Route>
-          <Route exact path="/study">
-            <StudySayings />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </IonRouterOutlet>
+const App: React.FC = () => {
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon icon={helpCircle} />
-            <IonLabel>Ask</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="sayings" href="/list">
-            <IonIcon icon={peopleSharp} />
-            <IonLabel>Sayings</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="study" href="/study">
-            <IonIcon icon={book} />
-            <IonLabel>Study</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <Route path="/login" component={Login} exact />
+        <Route path="/forgot-password" component={Login} exact />
+        <Route path="/forgot-username" component={Login} exact />
+        <Route path="/" component={isLoggedIn ? MainTabs : Login} />
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;
