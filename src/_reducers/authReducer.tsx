@@ -19,6 +19,7 @@ export function authReducer(state = initState, action: Action) {
       loginFailed: false,
     });
   }
+
   if (action.type === authConstants.USER_LOGIN_SUCCESS) {
     return (state = {
       ...state,
@@ -26,12 +27,22 @@ export function authReducer(state = initState, action: Action) {
       isLoggedIn: true,
     });
   }
+
   if (action.type === authConstants.USER_LOGIN_FAILURE) {
     return (state = {
       ...state,
       loading: false,
       isLoggedIn: false,
       loginFailed: true,
+    });
+  }
+
+  if (action.type === authConstants.USER_LOGOUT) {
+    return (state = {
+      ...state,
+      loading: false,
+      isLoggedIn: false,
+      loginFailed: false,
     });
   }
 

@@ -5,6 +5,7 @@ import { authConstants } from "../_constants/authConstants";
 
 export const authActions = {
   logUserIn,
+  logUserOut,
 };
 
 function logUserIn(username: string, password: string, history: any) {
@@ -26,5 +27,14 @@ function logUserIn(username: string, password: string, history: any) {
         //   "An error occured while logging in. Please check your credentials and try again."
         // );
       });
+  };
+}
+
+function logUserOut() {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: authConstants.USER_LOGOUT,
+      payload: false,
+    });
   };
 }
