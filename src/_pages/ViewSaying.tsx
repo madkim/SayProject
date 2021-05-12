@@ -25,7 +25,7 @@ import { chevronBack, micSharp, play } from "ionicons/icons";
 interface Props {}
 
 export default function ViewSaying({}: Props): ReactElement {
-  const { viewed } = useParams<{ viewed: string }>();
+  // const { viewed } = useParams<{ viewed: string }>();
 
   return (
     <IonPage>
@@ -49,10 +49,7 @@ export default function ViewSaying({}: Props): ReactElement {
         </IonHeader>
 
         <IonCard>
-          <IonCardHeader
-            color={`${viewed === "true" ? "success" : "danger"}`}
-            style={{ fontSize: "large" }}
-          >
+          <IonCardHeader color="light" style={{ fontSize: "large" }}>
             How do you say:
           </IonCardHeader>
           <IonCardContent>
@@ -62,10 +59,7 @@ export default function ViewSaying({}: Props): ReactElement {
         </IonCard>
 
         <IonCard>
-          <IonCardHeader
-            color={`${viewed === "true" ? "success" : "danger"}`}
-            style={{ fontSize: "large" }}
-          >
+          <IonCardHeader color="light" style={{ fontSize: "large" }}>
             Recordings:
           </IonCardHeader>
           <IonCardContent>
@@ -98,11 +92,7 @@ export default function ViewSaying({}: Props): ReactElement {
               <IonRow>
                 <IonCol>
                   <br />
-                  <IonButton
-                    expand="block"
-                    color={`${viewed === "true" ? "success" : "danger"}`}
-                    fill="solid"
-                  >
+                  <IonButton color="primary" expand="block" fill="solid">
                     <IonIcon icon={micSharp} /> &nbsp;Add Recording
                   </IonButton>
                 </IonCol>
@@ -115,8 +105,10 @@ export default function ViewSaying({}: Props): ReactElement {
           <IonRow style={{ paddingTop: "4em" }}>
             <IonCol>
               <IonButton
+                fill="outline"
                 color="primary"
                 expand="block"
+                className="ion-padding-horizontal"
                 routerLink="/home"
                 routerDirection="back"
               >

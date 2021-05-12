@@ -35,6 +35,7 @@ export default function Sayings({}: Props): ReactElement {
           style={{ padding: "2em 1em 0em 0em" }}
         >
           <IonButton
+            fill="outline"
             color="primary"
             expand="block"
             onClick={() => {

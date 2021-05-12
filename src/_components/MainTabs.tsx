@@ -28,7 +28,7 @@ export default function MainTabs(): ReactElement {
           <Route path="/home">
             <Home />
           </Route>
-          <Route path="/view/:viewed">
+          <Route path="/view">
             <ViewSaying />
           </Route>
           <Route path="/list">

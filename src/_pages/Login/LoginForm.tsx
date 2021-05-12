@@ -66,6 +66,7 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                 </IonLabel>
                 <IonInput
                   value={props.username}
+                  onKeyDown={(e) => (e.key === "Enter" ? props.validate() : "")}
                   onIonChange={(e) => props.setUsername(e.detail.value!)}
                 ></IonInput>
               </IonItem>
@@ -82,6 +83,7 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                 <IonInput
                   type="password"
                   value={props.password}
+                  onKeyDown={(e) => (e.key === "Enter" ? props.validate() : "")}
                   onIonChange={(e) => props.setPassword(e.detail.value!)}
                 ></IonInput>
               </IonItem>

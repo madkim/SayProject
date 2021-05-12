@@ -45,19 +45,19 @@ const ListSayings: React.FC = () => {
                   <IonItemDivider>
                     <IonLabel>A</IonLabel>
                   </IonItemDivider>
-                  <IonItem detail button routerLink="/view/true">
+                  <IonItem detail button routerLink="/view">
                     <IonLabel>Pokémon Yellow</IonLabel>
                   </IonItem>
-                  <IonItem detail button routerLink="/view/true">
+                  <IonItem detail button routerLink="/view">
                     <IonLabel>Mega Man X</IonLabel>
                   </IonItem>
-                  <IonItem detail button routerLink="/view/true">
+                  <IonItem detail button routerLink="/view">
                     <IonLabel>The Legend of Zelda</IonLabel>
                   </IonItem>
-                  <IonItem detail button routerLink="/view/true">
+                  <IonItem detail button routerLink="/view">
                     <IonLabel>Pac-Man</IonLabel>
                   </IonItem>
-                  <IonItem detail button routerLink="/view/true">
+                  <IonItem detail button routerLink="/view">
                     <IonLabel>Super Mario World</IonLabel>
                   </IonItem>
                 </IonList>
