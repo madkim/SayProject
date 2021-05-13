@@ -42,7 +42,7 @@ export default function PasswordChecklist({
     }
     setErrors(errors);
 
-    isValid(errors.length > 0);
+    isValid(errors.length === 0);
   };
 
   return (

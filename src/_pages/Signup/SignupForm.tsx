@@ -75,9 +75,8 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                   <h2>First Name:</h2>
                 </IonLabel>
                 <IonInput
-                  type="text"
                   value={props.fname}
-                  autoCapitalize="words"
+                  className="ion-text-capitalize"
                   onKeyDown={(e) =>
                     e.key === "Enter" ? jumpToNextInput(lnameRef) : ""
                   }
@@ -99,9 +98,8 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                 </IonLabel>
                 <IonInput
                   ref={lnameRef}
-                  type="text"
                   value={props.lname}
-                  autoCapitalize="words"
+                  className="ion-text-capitalize"
                   onKeyDown={(e) =>
                     e.key === "Enter" ? jumpToNextInput(emailRef) : ""
                   }
@@ -153,6 +151,8 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                   onIonChange={(e) => props.setPassword(e.detail.value!)}
                 ></IonInput>
               </IonItem>
+
+              <ShowError show={"passwordInvalid"} errors={props.errors} />
 
               {props.password.trim() === "" && (
                 <ShowError show={"password"} errors={props.errors} />

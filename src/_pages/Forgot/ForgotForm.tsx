@@ -32,7 +32,7 @@ interface Props {
 
 type Ref = React.RefObject<HTMLIonInputElement>;
 
-const LoginForm: React.FC<Props> = (props: Props) => {
+const ForgotPasswordForm: React.FC<Props> = (props: Props) => {
   const passRef: Ref = useRef(null);
   const loading = useSelector((state: RootState) => state.auth.loading);
   const loginFailed = useSelector((state: RootState) => state.auth.loginFailed);
@@ -63,17 +63,19 @@ const LoginForm: React.FC<Props> = (props: Props) => {
     <FadeIn>
       <IonCard>
         <IonCardHeader color="primary">
-          <IonCardTitle className="ion-text-center">Login</IonCardTitle>
+          <IonCardTitle className="ion-text-center">
+            Forgot Password
+          </IonCardTitle>
         </IonCardHeader>
         <IonCardContent>
           <br />
-          {loginFailed && (
-            <FadeIn>
-              <IonCardHeader color="danger">
-                Invalid Login Credentials
-              </IonCardHeader>
-            </FadeIn>
-          )}
+
+          {/* <FadeIn>
+            <IonCardHeader color="danger">
+              Email not found. Please use a different email or create an
+              account.
+            </IonCardHeader>
+          </FadeIn> */}
 
           <IonRow className="ion-padding-vertical">
             <IonCol className="ion-no-padding">
@@ -83,6 +85,7 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                 </IonLabel>
                 <IonInput
                   type="email"
+                  placeholder="Please enter your email"
                   value={props.email}
                   clearOnEdit={false}
                   onKeyDown={(e) =>
@@ -95,58 +98,6 @@ const LoginForm: React.FC<Props> = (props: Props) => {
               {props.email === "" && (
                 <ShowError show={"email"} errors={props.errors} />
               )}
-
-              <br />
-            </IonCol>
-          </IonRow>
-          <IonRow className={`${!showPassword && "ion-padding-bottom"}`}>
-            <IonCol className="ion-no-padding">
-              <IonItem className="ion-padding-end">
-                <IonLabel position="stacked">
-                  <h2>Password</h2>
-                </IonLabel>
-                <IonInput
-                  ref={passRef}
-                  type="password"
-                  enterkeyhint="enter"
-                  clearOnEdit={false}
-                  value={props.password}
-                  onKeyDown={(e) => (e.key === "Enter" ? validate() : "")}
-                  onIonChange={(e) => props.setPassword(e.detail.value!)}
-                ></IonInput>
-              </IonItem>
-
-              {props.password === "" && (
-                <ShowError show={"password"} errors={props.errors} />
-              )}
-
-              {showPassword && (
-                <IonItem lines="none">
-                  <IonInput
-                    type="text"
-                    readonly
-                    value={props.password}
-                  ></IonInput>
-                </IonItem>
-              )}
-            </IonCol>
-          </IonRow>
-          <IonRow className="ion-padding-vertical">
-            <IonCol className="ion-no-padding">
-              <IonItem lines="none" className="ion-padding-end">
-                <IonToggle
-                  checked={showPassword}
-                  onIonChange={(e) => toggleShowPassword(e.detail.checked!)}
-                />
-                <IonLabel
-                  className="ion-padding-start"
-                  onClick={() => {
-                    setShowPassword(!showPassword);
-                  }}
-                >
-                  Show Password
-                </IonLabel>
-              </IonItem>
             </IonCol>
           </IonRow>
           <br />
@@ -160,7 +111,7 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                 disabled={loading}
                 onClick={props.validate}
               >
-                {loading ? <IonSpinner name="bubbles" /> : "Login"}
+                Next
               </IonButton>
             </IonCol>
           </IonRow>
@@ -172,9 +123,9 @@ const LoginForm: React.FC<Props> = (props: Props) => {
                 fill="clear"
                 color="primary"
                 expand="block"
-                routerLink="/forgot-password"
+                routerLink="/login"
               >
-                Forgot Password
+                Login
               </IonButton>
             </IonCol>
             <IonCol size="6">
@@ -196,4 +147,4 @@ const LoginForm: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default LoginForm;
+export default ForgotPasswordForm;

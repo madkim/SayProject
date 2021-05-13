@@ -42,7 +42,7 @@ const Signup: React.FC<Props> = (props: Props) => {
     if (password.length === 0) {
       errors.password = "Password is required";
     } else if (passwordValid === false) {
-      errors.password = "Password is invalid";
+      errors.passwordInvalid = "Password is invalid";
     }
     setErrors(errors);
 

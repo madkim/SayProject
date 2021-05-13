@@ -15,9 +15,9 @@ import { book, helpCircle, peopleSharp } from "ionicons/icons";
 
 import Menu from "./Menu";
 import Home from "../_pages/Home/Home";
-import ViewSaying from "../_pages/ViewSaying";
-import ListSayings from "../_pages/ListSayings";
-import StudySayings from "../_pages/StudySayings";
+import ViewSaying from "../_pages/ViewSayings/ViewSaying";
+import ListSayings from "../_pages/ListSayings/ListSayings";
+import StudySayings from "../_pages/StudySayings/StudySayings";
 
 export default function MainTabs(): ReactElement {
   return (
