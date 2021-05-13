@@ -24,38 +24,20 @@ import ShowError from "../../_stories/ShowError";
 interface Props {
   email: string;
   errors: DynObject;
-  password: string;
-  validate: () => void;
+  findUser: () => void;
   setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
 }
 
 type Ref = React.RefObject<HTMLIonInputElement>;
 
 const ForgotPasswordForm: React.FC<Props> = (props: Props) => {
-  const passRef: Ref = useRef(null);
+  const emailRef: Ref = useRef(null);
   const loading = useSelector((state: RootState) => state.auth.loading);
-  const loginFailed = useSelector((state: RootState) => state.auth.loginFailed);
 
-  const [showPassword, setShowPassword] = useState(
-    localStorage.getItem("showPassword") === "true" ? true : false
-  );
-
-  const toggleShowPassword = (checked: boolean) => {
-    localStorage.setItem("showPassword", checked ? "true" : "false");
-    setShowPassword(checked);
-  };
-
-  const jumpToNextInput = () => {
-    passRef.current!.getInputElement().then((element) => {
-      element.focus();
-    });
-  };
-
-  const validate = () => {
-    passRef.current!.getInputElement().then((element) => {
+  const findUser = () => {
+    emailRef.current!.getInputElement().then((element) => {
       element.blur();
-      props.validate();
+      props.findUser();
     });
   };
 
@@ -84,13 +66,12 @@ const ForgotPasswordForm: React.FC<Props> = (props: Props) => {
                   <h2>Email</h2>
                 </IonLabel>
                 <IonInput
+                  ref={emailRef}
                   type="email"
                   placeholder="Please enter your email"
                   value={props.email}
                   clearOnEdit={false}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" ? jumpToNextInput() : ""
-                  }
+                  onKeyDown={(e) => (e.key === "Enter" ? findUser() : "")}
                   onIonChange={(e) => props.setEmail(e.detail.value!)}
                 ></IonInput>
               </IonItem>
@@ -109,9 +90,9 @@ const ForgotPasswordForm: React.FC<Props> = (props: Props) => {
                 color="primary"
                 expand="block"
                 disabled={loading}
-                onClick={props.validate}
+                onClick={findUser}
               >
-                Next
+                Find Account
               </IonButton>
             </IonCol>
           </IonRow>
