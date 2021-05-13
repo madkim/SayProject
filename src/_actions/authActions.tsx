@@ -6,13 +6,28 @@ import { authConstants } from "../_constants/authConstants";
 export const authActions = {
   logUserIn,
   logUserOut,
+  signUserUp,
 };
 
-function logUserIn(username: string, password: string, history: any) {
+function signUserUp(
+  fname: string,
+  lname: string,
+  email: string,
+  password: string,
+  history: any
+) {
+  console.log("signing up");
+  // create user with email && password
+  // then update user information
+  // then create user in user table for fireStorage to
+  // create the user's 'saying' collections
+}
+
+function logUserIn(email: string, password: string, history: any) {
   return (dispatch: Dispatch<Action>) => {
     dispatch({ type: authConstants.USER_LOGIN_REQUEST, payload: true });
     authService
-      .login(username, password)
+      .login(email, password)
       .then((user) => {
         console.log(user);
         dispatch({ type: authConstants.USER_LOGIN_SUCCESS, payload: true });
@@ -23,9 +38,6 @@ function logUserIn(username: string, password: string, history: any) {
           type: authConstants.USER_LOGIN_FAILURE,
           payload: false,
         });
-        // alert(
-        //   "An error occured while logging in. Please check your credentials and try again."
-        // );
       });
   };
 }

@@ -6,7 +6,7 @@ import {
   IonContent,
 } from "@ionic/react";
 
-import LoginForm from "./LoginForm";
+import SignupForm from "./SignupForm";
 
 import { useState } from "react";
 import { DynObject } from "../../_helpers/types";
@@ -16,26 +16,38 @@ import { authActions } from "../../_actions/authActions";
 
 interface Props {}
 
-const Login: React.FC<Props> = (props: Props) => {
+const Signup: React.FC<Props> = (props: Props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [errors, setErrors] = useState({});
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState({});
   const [password, setPassword] = useState("");
+  const [passwordValid, setPasswordValid] = useState(false);
 
-  const validateLogin = () => {
+  const validateSignup = () => {
     let errors: DynObject = {};
+
+    if (fname.length === 0) {
+      errors.fname = "First name is required";
+    }
+    if (lname.length === 0) {
+      errors.lname = "Last name is required";
+    }
     if (email.length === 0) {
       errors.email = "Email is required";
     }
     if (password.length === 0) {
       errors.password = "Password is required";
+    } else if (passwordValid === false) {
+      errors.password = "Password is invalid";
     }
     setErrors(errors);
 
-    if (!errors.email && !errors.password) {
-      dispatch(authActions.logUserIn(email, password, history));
+    if (!errors.fname && !errors.lname && !errors.email && !errors.password) {
+      dispatch(authActions.signUserUp(fname, lname, email, password, history));
     }
   };
 
@@ -50,17 +62,22 @@ const Login: React.FC<Props> = (props: Props) => {
           </IonToolbar>
         </IonHeader>
 
-        <LoginForm
+        <SignupForm
           email={email}
+          fname={fname}
+          lname={lname}
           errors={errors}
           password={password}
           setEmail={setEmail}
-          validate={validateLogin}
+          setFname={setFname}
+          setLname={setLname}
+          validate={validateSignup}
           setPassword={setPassword}
+          setPasswordValid={setPasswordValid}
         />
       </IonContent>
     </IonPage>
   );
 };
 
-export default Login;
+export default Signup;

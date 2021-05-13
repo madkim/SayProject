@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { IonReactRouter } from "@ionic/react-router";
 
 import Login from "./_pages/Login/Login";
+import Signup from "./_pages/Signup/Signup";
 import MainTabs from "./_components/MainTabs";
 
 /* Core CSS required for Ionic components to work properly */
@@ -32,10 +33,11 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <Route path="/login" component={Login} exact />
-        <Route path="/forgot-password" component={Login} exact />
-        <Route path="/forgot-username" component={Login} exact />
         <Route path="/" component={isLoggedIn ? MainTabs : Login} />
+        <Route path="/login" component={Login} exact />
+        <Route path="/signup" component={Signup} />
+        <Route path="/forgot-password" component={Login} exact />
+        <Route path="/forgot-email" component={Login} exact />
       </IonReactRouter>
     </IonApp>
   );

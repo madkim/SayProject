@@ -4,10 +4,10 @@ export const authService = {
   login,
 };
 
-function login(username: string, password: string) {
+function login(email: string, password: string) {
   return new Promise((resolve: (user: any) => void, reject) => {
     fireAuth
-      .signInWithEmailAndPassword(username, password)
+      .signInWithEmailAndPassword(email, password)
       .then((userCredential: any) => {
         // Signed in
         const user = userCredential.user;
