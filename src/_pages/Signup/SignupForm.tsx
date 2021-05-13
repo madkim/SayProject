@@ -20,6 +20,7 @@ import { useState, useRef } from "react";
 import FadeIn from "react-fade-in";
 import ShowError from "../../_stories/ShowError";
 import PasswordChecklist from "../../_stories/PasswordChecklist";
+import { useHistory } from "react-router";
 
 interface Props {
   email: string;
@@ -38,11 +39,30 @@ interface Props {
 type Ref = React.RefObject<HTMLIonInputElement>;
 
 const LoginForm: React.FC<Props> = (props: Props) => {
+  const history = useHistory();
   const lnameRef: Ref = useRef(null);
   const emailRef: Ref = useRef(null);
   const passRef: Ref = useRef(null);
 
   const loading = useSelector((state: RootState) => state.auth.loading);
+
+  const redirectLogin = () => {
+    if (
+      props.email.length > 0 ||
+      props.fname.length > 0 ||
+      props.lname.length > 0 ||
+      props.password.length > 0
+    ) {
+      const answer = window.confirm(
+        "Are you sure you want to leave? Your progress will not be saved."
+      );
+      if (answer) {
+        history.push("/login");
+      }
+    } else {
+      history.push("/login");
+    }
+  };
 
   const jumpToNextInput = (ref: Ref) => {
     ref.current!.getInputElement().then((element) => {
@@ -183,19 +203,20 @@ const LoginForm: React.FC<Props> = (props: Props) => {
             </IonCol>
           </IonRow>
         </IonCardContent>
+        <IonRow>
+          <IonCol className="ion-text-center">
+            <IonButton
+              fill="clear"
+              size="small"
+              color="primary"
+              onClick={redirectLogin}
+            >
+              Login
+            </IonButton>
+          </IonCol>
+        </IonRow>
+        <br />
       </IonCard>
-      <IonRow>
-        <IonCol>
-          <IonButton
-            fill="clear"
-            color="primary"
-            expand="block"
-            routerLink="/login"
-          >
-            Login
-          </IonButton>
-        </IonCol>
-      </IonRow>
       <br />
     </FadeIn>
   );
