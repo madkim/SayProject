@@ -38,7 +38,7 @@ const Home: React.FC = () => {
               <h2>SAY</h2>
             </IonTitle>
 
-            <UserProfileButton slot="start" />
+            <UserProfileButton slot="end" />
           </IonToolbar>
         </IonHeader>
 

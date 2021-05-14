@@ -33,15 +33,8 @@ const Stream: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
+        <Sayings />
         <SayingCards />
-        <div>
-          <IonCard
-            className="ion-padding"
-            style={{ position: "fixed", bottom: "1em" }}
-          >
-            <Sayings />
-          </IonCard>
-        </div>
       </IonContent>
     </IonPage>
   );

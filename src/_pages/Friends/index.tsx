@@ -10,7 +10,12 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
-import { chevronBack, menuSharp, personAdd } from "ionicons/icons";
+import {
+  chevronBack,
+  menuSharp,
+  notifications,
+  personAdd,
+} from "ionicons/icons";
 import { menuController } from "@ionic/core";
 
 import UserProfileButton from "../../_stories/UserProfileButton";
@@ -22,18 +27,17 @@ const Friends: React.FC = () => {
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
-            <UserProfileButton slot="start" />
+            <IonButton size="large" slot="start">
+              <IonIcon icon={personAdd} />
+            </IonButton>
 
             <IonTitle className="ion-text-center">
               <h2>SAY</h2>
             </IonTitle>
 
-            <IonButton size="large" slot="end">
-              <IonIcon icon={personAdd} />
-            </IonButton>
+            <UserProfileButton slot="end" />
           </IonToolbar>
         </IonHeader>
-
         <FriendList />
       </IonContent>
     </IonPage>

@@ -10,7 +10,7 @@ import {
 } from "@ionic/react";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
-import { menuSharp } from "ionicons/icons";
+import { menuSharp, notifications } from "ionicons/icons";
 import { menuController } from "@ionic/core";
 
 const StudySayings: React.FC = () => {
@@ -28,12 +28,15 @@ const StudySayings: React.FC = () => {
                 />
               </IonButton>
             </IonButtons> */}
+            <UserProfileButton slot="end" />
 
             <IonTitle className="ion-text-center">
               <h2>SAY</h2>
             </IonTitle>
 
-            <UserProfileButton slot="start" />
+            <IonButton size="large" slot="start">
+              <IonIcon icon={notifications} />
+            </IonButton>
           </IonToolbar>
         </IonHeader>
       </IonContent>

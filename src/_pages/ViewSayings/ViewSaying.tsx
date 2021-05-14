@@ -21,7 +21,7 @@ import {
 
 import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
-import { chevronBack, micSharp, play } from "ionicons/icons";
+import { chevronBack, micSharp, notifications, play } from "ionicons/icons";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
 interface Props {}
@@ -44,6 +44,10 @@ export default function ViewSaying({}: Props): ReactElement {
               <h2>SAY</h2>
             </IonTitle>
           </IonToolbar>
+
+          <IonButton slot="start">
+            <IonIcon icon={notifications} />
+          </IonButton>
         </IonHeader>
 
         <IonCard>

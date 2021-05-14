@@ -18,7 +18,7 @@ import {
 } from "@ionic/react";
 
 import { useState } from "react";
-import { menuSharp } from "ionicons/icons";
+import { menuSharp, notifications } from "ionicons/icons";
 import { menuController } from "@ionic/core";
 
 import FadeIn from "react-fade-in";
@@ -42,13 +42,18 @@ const ListSayings: React.FC = () => {
               </IonButton>
             </IonButtons> */}
 
-            <UserProfileButton slot="start" />
+            <IonButton size="large" slot="start">
+              <IonIcon icon={notifications} />
+            </IonButton>
 
             <IonTitle className="ion-text-center">
               <h2>SAY</h2>
             </IonTitle>
+
+            <UserProfileButton slot="end" />
           </IonToolbar>
         </IonHeader>
+
         <FadeIn>
           <IonGrid>
             <IonRow>

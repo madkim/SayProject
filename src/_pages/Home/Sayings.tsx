@@ -29,11 +29,7 @@ export default function Sayings({}: Props): ReactElement {
             ></IonTextarea>
           </IonItem>
         </IonCol>
-        <IonCol
-          size="3"
-          className="ion-no-padding"
-          style={{ padding: "3em 0em 0em 0em" }}
-        >
+        <IonCol size="3" style={{ padding: "2.5em .5em 0em 0em" }}>
           <IonButton
             fill="outline"
             color="primary"
