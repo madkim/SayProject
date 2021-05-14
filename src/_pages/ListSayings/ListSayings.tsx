@@ -42,11 +42,11 @@ const ListSayings: React.FC = () => {
               </IonButton>
             </IonButtons> */}
 
+            <UserProfileButton slot="start" />
+
             <IonTitle className="ion-text-center">
               <h2>SAY</h2>
             </IonTitle>
-
-            <UserProfileButton slot="end" />
           </IonToolbar>
         </IonHeader>
         <FadeIn>
@@ -61,24 +61,58 @@ const ListSayings: React.FC = () => {
             </IonRow>
             <IonRow>
               <IonCol>
-                <IonList className="ion-padding-horizontal">
-                  <IonItemDivider>
+                <IonList>
+                  {/* <IonList className="ion-padding-horizontal"> */}
+                  {/* <IonItemDivider>
                     <IonLabel>A</IonLabel>
-                  </IonItemDivider>
+                  </IonItemDivider> */}
                   <IonItem detail button routerLink="/view">
-                    <IonLabel>Pokémon Yellow</IonLabel>
+                    <IonLabel className="ion-padding-vertical">
+                      <IonRow>
+                        <IonCol>
+                          <small>Thurs 12th</small>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>Pokémon Yellow</IonCol>
+                      </IonRow>
+                    </IonLabel>
                   </IonItem>
                   <IonItem detail button routerLink="/view">
-                    <IonLabel>Mega Man X</IonLabel>
+                    <IonLabel className="ion-padding-vertical">
+                      <IonRow>
+                        <IonCol>
+                          <small>Sun 8th</small>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>Mega Man X</IonCol>
+                      </IonRow>
+                    </IonLabel>
                   </IonItem>
                   <IonItem detail button routerLink="/view">
-                    <IonLabel>The Legend of Zelda</IonLabel>
+                    <IonLabel className="ion-padding-vertical">
+                      <IonRow>
+                        <IonCol>
+                          <small>Sun 8th</small>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>The Legend of Zelda</IonCol>
+                      </IonRow>
+                    </IonLabel>
                   </IonItem>
                   <IonItem detail button routerLink="/view">
-                    <IonLabel>Pac-Man</IonLabel>
-                  </IonItem>
-                  <IonItem detail button routerLink="/view">
-                    <IonLabel>Super Mario World</IonLabel>
+                    <IonLabel className="ion-padding-vertical">
+                      <IonRow>
+                        <IonCol>
+                          <small>Sun 8th</small>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>Super Mario World</IonCol>
+                      </IonRow>
+                    </IonLabel>
                   </IonItem>
                 </IonList>
               </IonCol>

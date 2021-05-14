@@ -34,21 +34,15 @@ export default function ViewSaying({}: Props): ReactElement {
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
-            {/* <IonButtons slot="start" className="ion-padding">
-              <IonButton fill="clear" onClick={() => menuController.open()}>
-                <IonIcon
-                  size="large"
-                  icon={menuSharp}
-                  style={{ color: "white" }}
-                />
+            <IonButtons slot="start" className="ion-padding">
+              <IonButton routerLink="/list" routerDirection="back">
+                <IonIcon icon={chevronBack} />
               </IonButton>
-            </IonButtons> */}
+            </IonButtons>
 
             <IonTitle className="ion-text-center">
               <h2>SAY</h2>
             </IonTitle>
-
-            <UserProfileButton slot="end" />
           </IonToolbar>
         </IonHeader>
 
@@ -115,7 +109,7 @@ export default function ViewSaying({}: Props): ReactElement {
                 color="primary"
                 expand="block"
                 className="ion-padding-horizontal"
-                routerLink="/home"
+                routerLink="/list"
                 routerDirection="back"
               >
                 Done

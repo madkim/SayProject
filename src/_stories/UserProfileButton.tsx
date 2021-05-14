@@ -5,9 +5,11 @@ import {
   IonButton,
   IonPopover,
   IonListHeader,
+  IonBadge,
+  IonIcon,
 } from "@ionic/react";
 
-import { logOut } from "ionicons/icons";
+import { logOut, logOutOutline, notifications } from "ionicons/icons";
 import { useDispatch } from "react-redux";
 import { authActions } from "../_actions/authActions";
 import { ReactElement, useState } from "react";
@@ -42,8 +44,15 @@ export default function UserProfileButton({ slot }: Props): ReactElement {
       >
         <IonList>
           <IonListHeader>Matthew</IonListHeader>
-          <IonItem button detailIcon={logOut} onClick={() => logout()}>
-            Logout
+          {/* <IonItem button detail={false} onClick={() => logout()}>
+            Notifications
+            <IonBadge slot="end" color="danger">
+              0
+            </IonBadge>
+          </IonItem> */}
+          <IonItem button detail={false} onClick={() => logout()}>
+            Logout &nbsp;
+            <IonIcon slot="end" icon={logOutOutline} />
           </IonItem>
 
           <IonItem
@@ -59,7 +68,7 @@ export default function UserProfileButton({ slot }: Props): ReactElement {
         </IonList>
       </IonPopover>
       <IonButton
-        slot="end"
+        slot={slot}
         fill="clear"
         onClick={(e: any) => {
           e.persist();

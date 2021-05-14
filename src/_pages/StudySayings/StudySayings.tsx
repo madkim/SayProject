@@ -33,7 +33,7 @@ const StudySayings: React.FC = () => {
               <h2>SAY</h2>
             </IonTitle>
 
-            <UserProfileButton slot="end" />
+            <UserProfileButton slot="start" />
           </IonToolbar>
         </IonHeader>
       </IonContent>

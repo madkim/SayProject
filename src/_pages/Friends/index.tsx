@@ -22,15 +22,15 @@ const Friends: React.FC = () => {
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
-            <IonButton size="large">
-              <IonIcon icon={personAdd} />
-            </IonButton>
+            <UserProfileButton slot="start" />
 
             <IonTitle className="ion-text-center">
               <h2>SAY</h2>
             </IonTitle>
 
-            <UserProfileButton slot="end" />
+            <IonButton size="large" slot="end">
+              <IonIcon icon={personAdd} />
+            </IonButton>
           </IonToolbar>
         </IonHeader>
 
