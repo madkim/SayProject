@@ -25,13 +25,12 @@ const Home: React.FC = () => {
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton fill="clear">
-                {/* <IonButton fill="clear" onClick={() => menuController.open()}> */}
-                {/* <IonIcon
+              <IonButton fill="clear" onClick={() => menuController.open()}>
+                <IonIcon
                   size="large"
                   icon={menuSharp}
                   style={{ color: "white" }}
-                /> */}
+                />
               </IonButton>
             </IonButtons>
 

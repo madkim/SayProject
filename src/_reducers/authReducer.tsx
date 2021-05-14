@@ -46,5 +46,30 @@ export function authReducer(state = initState, action: Action) {
     });
   }
 
+  if (action.type === authConstants.USER_SIGNUP_REQUEST) {
+    return (state = {
+      ...state,
+      loading: true,
+      loginFailed: false,
+    });
+  }
+
+  if (action.type === authConstants.USER_SIGNUP_SUCCESS) {
+    return (state = {
+      ...state,
+      loading: false,
+      isLoggedIn: true,
+    });
+  }
+
+  if (action.type === authConstants.USER_SIGNUP_FAILURE) {
+    return (state = {
+      ...state,
+      loading: false,
+      isLoggedIn: false,
+      loginFailed: true,
+    });
+  }
+
   return state;
 }

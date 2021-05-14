@@ -35,7 +35,7 @@ const Login: React.FC<Props> = (props: Props) => {
     setErrors(errors);
 
     if (!errors.email && !errors.password) {
-      dispatch(authActions.logUserIn(email, password, history));
+      dispatch(authActions.logUserIn(email, password));
     }
   };
 

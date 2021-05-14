@@ -1,13 +1,14 @@
-import React, { ReactElement } from "react";
-import { checkmark, closeOutline } from "ionicons/icons";
 import {
   IonCard,
   IonIcon,
-  IonCardHeader,
-  IonCardContent,
   IonNote,
   IonText,
+  IonCardHeader,
+  IonCardContent,
 } from "@ionic/react";
+
+import React, { ReactElement } from "react";
+import { checkmark, closeOutline } from "ionicons/icons";
 
 interface Props {}
 
@@ -20,7 +21,7 @@ export default function SayingCards({}: Props): ReactElement {
           style={{ fontSize: "large", fontWeight: "700" }}
         >
           <IonNote color="danger">
-            <IonIcon icon={closeOutline} /> &nbsp; Needs Review
+            <IonIcon icon={closeOutline} /> &nbsp; Pending
           </IonNote>
         </IonCardHeader>
         <IonCardContent>

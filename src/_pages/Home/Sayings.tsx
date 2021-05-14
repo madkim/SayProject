@@ -32,7 +32,7 @@ export default function Sayings({}: Props): ReactElement {
         <IonCol
           size="3"
           className="ion-no-padding"
-          style={{ padding: "2em 1em 0em 0em" }}
+          style={{ padding: "3em 0em 0em 0em" }}
         >
           <IonButton
             fill="outline"

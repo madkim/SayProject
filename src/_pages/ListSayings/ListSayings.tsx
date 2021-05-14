@@ -5,16 +5,24 @@ import {
   IonItem,
   IonGrid,
   IonPage,
+  IonIcon,
   IonLabel,
   IonTitle,
   IonHeader,
+  IonButton,
   IonToolbar,
   IonContent,
+  IonButtons,
   IonSearchbar,
   IonItemDivider,
 } from "@ionic/react";
-import FadeIn from "react-fade-in";
+
 import { useState } from "react";
+import { menuSharp } from "ionicons/icons";
+import { menuController } from "@ionic/core";
+
+import FadeIn from "react-fade-in";
+import UserProfileButton from "../../_stories/UserProfileButton";
 
 const ListSayings: React.FC = () => {
   const [searchText, setSearchText] = useState("");
@@ -23,10 +31,22 @@ const ListSayings: React.FC = () => {
     <IonPage>
       <IonContent>
         <IonHeader>
-          <IonToolbar color="primary" className="ion-padding-top">
-            <IonTitle size="large" className="ion-text-center">
-              SAY
+          <IonToolbar color="primary">
+            {/* <IonButtons slot="start" className="ion-padding">
+              <IonButton fill="clear" onClick={() => menuController.open()}>
+                <IonIcon
+                  size="large"
+                  icon={menuSharp}
+                  style={{ color: "white" }}
+                />
+              </IonButton>
+            </IonButtons> */}
+
+            <IonTitle className="ion-text-center">
+              <h2>SAY</h2>
             </IonTitle>
+
+            <UserProfileButton slot="end" />
           </IonToolbar>
         </IonHeader>
         <FadeIn>

@@ -22,6 +22,7 @@ import {
 import React, { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { chevronBack, micSharp, play } from "ionicons/icons";
+import UserProfileButton from "../../_stories/UserProfileButton";
 
 interface Props {}
 
@@ -32,20 +33,22 @@ export default function ViewSaying({}: Props): ReactElement {
     <IonPage>
       <IonContent>
         <IonHeader>
-          <IonToolbar color="primary" className="ion-padding-top">
-            <IonButtons slot="start">
-              <IonButton
-                slot="start"
-                fill="clear"
-                routerLink="/"
-                routerDirection="back"
-              >
-                <IonIcon icon={chevronBack} style={{ color: "white" }} />
+          <IonToolbar color="primary">
+            {/* <IonButtons slot="start" className="ion-padding">
+              <IonButton fill="clear" onClick={() => menuController.open()}>
+                <IonIcon
+                  size="large"
+                  icon={menuSharp}
+                  style={{ color: "white" }}
+                />
               </IonButton>
-            </IonButtons>
-            <IonTitle size="large" className="ion-text-center">
-              SAY
+            </IonButtons> */}
+
+            <IonTitle className="ion-text-center">
+              <h2>SAY</h2>
             </IonTitle>
+
+            <UserProfileButton slot="end" />
           </IonToolbar>
         </IonHeader>
 

@@ -47,7 +47,7 @@ const Signup: React.FC<Props> = (props: Props) => {
     setErrors(errors);
 
     if (!errors.fname && !errors.lname && !errors.email && !errors.password) {
-      dispatch(authActions.signUserUp(fname, lname, email, password, history));
+      dispatch(authActions.signUserUp(fname, lname, email, password));
     }
   };
 

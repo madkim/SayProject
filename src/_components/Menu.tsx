@@ -13,7 +13,7 @@ import {
   IonMenuToggle,
 } from "@ionic/react";
 
-import { bagHandleOutline, statsChartOutline } from "ionicons/icons";
+import { people } from "ionicons/icons";
 
 const Menu: React.FC = () => {
   return (
@@ -32,21 +32,21 @@ const Menu: React.FC = () => {
       <IonContent>
         <IonList>
           <IonMenuToggle auto-hide="false">
-            <IonItem button routerLink="/manage/sellers" routerDirection="root">
-              <IonIcon slot="start" icon={bagHandleOutline}></IonIcon>
+            <IonItem button routerLink="/friends" routerDirection="root">
+              <IonIcon slot="start" icon={people}></IonIcon>
               <h3 style={{ padding: "10px" }}>
-                <IonLabel>Manage Sellers</IonLabel>
+                <IonLabel>Friends</IonLabel>
               </h3>
             </IonItem>
           </IonMenuToggle>
-          <IonMenuToggle auto-hide="false">
+          {/* <IonMenuToggle auto-hide="false">
             <IonItem button routerLink="/manage/budget" routerDirection="root">
               <IonIcon slot="start" icon={statsChartOutline}></IonIcon>
               <h3 style={{ padding: "10px" }}>
                 <IonLabel>Manage Budget</IonLabel>
               </h3>
             </IonItem>
-          </IonMenuToggle>
+          </IonMenuToggle> */}
         </IonList>
       </IonContent>
     </IonMenu>
