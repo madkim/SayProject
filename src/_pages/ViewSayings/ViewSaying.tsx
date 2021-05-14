@@ -1,6 +1,7 @@
 import {
   IonRow,
   IonCol,
+  IonText,
   IonCard,
   IonPage,
   IonIcon,
@@ -16,19 +17,21 @@ import {
   IonButtons,
   IonCardHeader,
   IonCardContent,
-  IonText,
 } from "@ionic/react";
 
 import React, { ReactElement } from "react";
-import { useParams } from "react-router-dom";
-import { chevronBack, micSharp, notifications, play } from "ionicons/icons";
-import UserProfileButton from "../../_stories/UserProfileButton";
+
+import {
+  play,
+  micSharp,
+  chevronBack,
+  ellipsisHorizontal,
+} from "ionicons/icons";
+import EditButton from "../../_stories/EditButton";
 
 interface Props {}
 
 export default function ViewSaying({}: Props): ReactElement {
-  // const { viewed } = useParams<{ viewed: string }>();
-
   return (
     <IonPage>
       <IonContent>
@@ -43,11 +46,9 @@ export default function ViewSaying({}: Props): ReactElement {
             <IonTitle className="ion-text-center">
               <h2>SAY</h2>
             </IonTitle>
-          </IonToolbar>
 
-          <IonButton slot="start">
-            <IonIcon icon={notifications} />
-          </IonButton>
+            <EditButton slot="end" />
+          </IonToolbar>
         </IonHeader>
 
         <IonCard>
