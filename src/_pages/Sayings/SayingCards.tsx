@@ -5,10 +5,24 @@ import {
   IonText,
   IonCardHeader,
   IonCardContent,
+  IonGrid,
+  IonRow,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonCol,
 } from "@ionic/react";
 
+import FadeIn from "react-fade-in";
+
 import React, { ReactElement } from "react";
-import { checkmark, closeOutline } from "ionicons/icons";
+import {
+  checkmark,
+  checkmarkCircleSharp,
+  closeCircleOutline,
+  closeCircleSharp,
+  closeOutline,
+} from "ionicons/icons";
 
 interface Props {}
 
@@ -17,12 +31,13 @@ export default function SayingCards({}: Props): ReactElement {
     <>
       <IonCard button routerLink="/view">
         <IonCardHeader
-          color="light"
+          color="dark"
           style={{ fontSize: "large", fontWeight: "700" }}
         >
           <IonNote color="danger">
-            <IonIcon icon={closeOutline} /> &nbsp; Pending
+            <IonIcon icon={closeCircleSharp} />
           </IonNote>
+          &nbsp; Pending
         </IonCardHeader>
         <IonCardContent>
           <br />
@@ -31,12 +46,13 @@ export default function SayingCards({}: Props): ReactElement {
       </IonCard>
       <IonCard button routerLink="/view">
         <IonCardHeader
-          color="light"
+          color="dark"
           style={{ fontSize: "large", fontWeight: "700" }}
         >
           <IonNote color="success">
-            <IonIcon icon={checkmark} /> &nbsp; Answered
+            <IonIcon icon={checkmarkCircleSharp} />
           </IonNote>
+          &nbsp; Answered
         </IonCardHeader>
         <IonCardContent>
           <br />

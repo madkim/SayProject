@@ -13,21 +13,12 @@ import UserProfileButton from "../../_stories/UserProfileButton";
 import { menuSharp, notifications } from "ionicons/icons";
 import { menuController } from "@ionic/core";
 
-const StudySayings: React.FC = () => {
+const Study: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
-            {/* <IonButtons slot="start" className="ion-padding">
-              <IonButton fill="clear" onClick={() => menuController.open()}>
-                <IonIcon
-                  size="large"
-                  icon={menuSharp}
-                  style={{ color: "white" }}
-                />
-              </IonButton>
-            </IonButtons> */}
             <UserProfileButton slot="end" />
 
             <IonTitle className="ion-text-center">
@@ -44,4 +35,4 @@ const StudySayings: React.FC = () => {
   );
 };
 
-export default StudySayings;
+export default Study;

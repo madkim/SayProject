@@ -8,31 +8,26 @@ import {
   IonContent,
   IonButtons,
   IonAvatar,
+  IonFab,
+  IonFabButton,
 } from "@ionic/react";
 
-import { menuSharp } from "ionicons/icons";
+import { add, menuSharp, notifications } from "ionicons/icons";
 import { menuController } from "@ionic/core";
 
 import FadeIn from "react-fade-in";
-import Sayings from "./Sayings";
-import SayingCards from "./SayingCards";
+import SetList from "./SetList";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
-const Home: React.FC = () => {
+const Sets: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
-            <IonButtons slot="start" className="ion-padding">
-              <IonButton fill="clear" onClick={() => menuController.open()}>
-                <IonIcon
-                  size="large"
-                  icon={menuSharp}
-                  style={{ color: "white" }}
-                />
-              </IonButton>
-            </IonButtons>
+            <IonButton size="large" slot="start">
+              <IonIcon icon={notifications} />
+            </IonButton>
 
             <IonTitle className="ion-text-center">
               <h2>SAY</h2>
@@ -43,12 +38,17 @@ const Home: React.FC = () => {
         </IonHeader>
 
         <FadeIn>
-          <Sayings />
-          <SayingCards />
+          <SetList />
         </FadeIn>
+
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton color="dark">
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
 };
 
-export default Home;
+export default Sets;

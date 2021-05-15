@@ -15,10 +15,18 @@ import {
   IonButtons,
   IonSearchbar,
   IonItemDivider,
+  IonNote,
+  IonText,
 } from "@ionic/react";
 
 import { useState } from "react";
-import { menuSharp, notifications } from "ionicons/icons";
+import {
+  checkbox,
+  checkmark,
+  closeOutline,
+  menuSharp,
+  notifications,
+} from "ionicons/icons";
 import { menuController } from "@ionic/core";
 
 import FadeIn from "react-fade-in";
@@ -32,16 +40,6 @@ const ListSayings: React.FC = () => {
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
-            {/* <IonButtons slot="start" className="ion-padding">
-              <IonButton fill="clear" onClick={() => menuController.open()}>
-                <IonIcon
-                  size="large"
-                  icon={menuSharp}
-                  style={{ color: "white" }}
-                />
-              </IonButton>
-            </IonButtons> */}
-
             <IonButton size="large" slot="start">
               <IonIcon icon={notifications} />
             </IonButton>
@@ -67,19 +65,40 @@ const ListSayings: React.FC = () => {
             <IonRow>
               <IonCol>
                 <IonList>
-                  {/* <IonList className="ion-padding-horizontal"> */}
-                  {/* <IonItemDivider>
-                    <IonLabel>A</IonLabel>
-                  </IonItemDivider> */}
                   <IonItem detail button routerLink="/view">
                     <IonLabel className="ion-padding-vertical">
                       <IonRow>
                         <IonCol>
-                          <small>Thurs 12th</small>
+                          <small>
+                            <b>Date:</b>&nbsp; April 12th 2021
+                          </small>
+                        </IonCol>
+
+                        <IonCol>
+                          <small>
+                            <b>Status:</b>
+                            <IonNote color="danger">&nbsp;Pending</IonNote>
+                          </small>
                         </IonCol>
                       </IonRow>
+
                       <IonRow>
-                        <IonCol>Pokémon Yellow</IonCol>
+                        <IonCol>
+                          <div className="ion-text-wrap">
+                            <h1>
+                              Hello, my name is Matthew. I am a traveler from
+                              America looking for the bathroom.
+                            </h1>
+                          </div>
+                        </IonCol>
+                      </IonRow>
+
+                      <IonRow>
+                        <IonCol className="ion-text-wrap">
+                          <small>
+                            <b>Set:</b> Chinese words and phrases
+                          </small>
+                        </IonCol>
                       </IonRow>
                     </IonLabel>
                   </IonItem>
@@ -87,35 +106,35 @@ const ListSayings: React.FC = () => {
                     <IonLabel className="ion-padding-vertical">
                       <IonRow>
                         <IonCol>
-                          <small>Sun 8th</small>
+                          <small>
+                            <b>Date:</b>&nbsp; April 8th 2021
+                          </small>
+                        </IonCol>
+
+                        <IonCol>
+                          <small>
+                            <b>Status:</b>
+                            <IonNote color="success">&nbsp;Answered</IonNote>
+                          </small>
                         </IonCol>
                       </IonRow>
-                      <IonRow>
-                        <IonCol>Mega Man X</IonCol>
-                      </IonRow>
-                    </IonLabel>
-                  </IonItem>
-                  <IonItem detail button routerLink="/view">
-                    <IonLabel className="ion-padding-vertical">
+
                       <IonRow>
                         <IonCol>
-                          <small>Sun 8th</small>
+                          <div className="ion-text-wrap">
+                            <h1>
+                              This is another phrase I want to know how to say.
+                            </h1>
+                          </div>
                         </IonCol>
                       </IonRow>
+
                       <IonRow>
-                        <IonCol>The Legend of Zelda</IonCol>
-                      </IonRow>
-                    </IonLabel>
-                  </IonItem>
-                  <IonItem detail button routerLink="/view">
-                    <IonLabel className="ion-padding-vertical">
-                      <IonRow>
-                        <IonCol>
-                          <small>Sun 8th</small>
+                        <IonCol className="ion-text-wrap">
+                          <small>
+                            <b>Set:</b> Chinese words and phrases
+                          </small>
                         </IonCol>
-                      </IonRow>
-                      <IonRow>
-                        <IonCol>Super Mario World</IonCol>
                       </IonRow>
                     </IonLabel>
                   </IonItem>

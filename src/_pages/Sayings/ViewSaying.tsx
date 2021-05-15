@@ -38,7 +38,7 @@ export default function ViewSaying({}: Props): ReactElement {
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton routerLink="/list" routerDirection="back">
+              <IonButton routerLink="/sayings" routerDirection="back">
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
@@ -114,7 +114,7 @@ export default function ViewSaying({}: Props): ReactElement {
                 color="primary"
                 expand="block"
                 className="ion-padding-horizontal"
-                routerLink="/list"
+                routerLink="/sayings"
                 routerDirection="back"
               >
                 Done

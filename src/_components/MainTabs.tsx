@@ -1,5 +1,4 @@
 import {
-  IonApp,
   IonTabs,
   IonIcon,
   IonLabel,
@@ -11,15 +10,15 @@ import {
 
 import { ReactElement } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { book, helpCircle, peopleSharp, reader } from "ionicons/icons";
+import { albums, book, peopleSharp, reader } from "ionicons/icons";
 
 import Menu from "./Menu";
-import Home from "../_pages/Home/Home";
-import Stream from "../_pages/Stream/Stream";
+import Sets from "../_pages/Sets";
+import Sayings from "../_pages/Sayings";
 import Friends from "../_pages/Friends";
-import ViewSaying from "../_pages/ViewSayings/ViewSaying";
-import ListSayings from "../_pages/ListSayings/ListSayings";
-import StudySayings from "../_pages/StudySayings/StudySayings";
+import ViewSaying from "../_pages/Sayings/ViewSaying";
+import ListSayings from "../_pages/Sayings/ListSayings";
+import StudySayings from "../_pages/Study";
 
 export default function MainTabs(): ReactElement {
   return (
@@ -27,9 +26,9 @@ export default function MainTabs(): ReactElement {
       <Menu />
       <IonTabs>
         <IonRouterOutlet id="main">
-          {/* <Route path="/home">
-            <Home />
-          </Route> */}
+          <Route path="/sets">
+            <Sets />
+          </Route>
           <Route path="/view">
             <ViewSaying />
           </Route>
@@ -42,18 +41,20 @@ export default function MainTabs(): ReactElement {
           <Route path="/friends">
             <Friends />
           </Route>
-          <Route path="/stream">
-            <Stream />
+          <Route path="/sayings">
+            <Sayings />
           </Route>
-          {/* <Route exact path="/">
-            <Redirect to="/home" />
-          </Route> */}
           <Route exact path="/">
-            <Redirect to="/list" />
+            <Redirect to="/sets" />
           </Route>
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom">
+          <IonTabButton tab="sets" href="/sets">
+            <IonIcon icon={albums} />
+            <IonLabel>Sets</IonLabel>
+          </IonTabButton>
+
           <IonTabButton tab="list" href="/list">
             <IonIcon icon={reader} />
             <IonLabel>Sayings</IonLabel>
