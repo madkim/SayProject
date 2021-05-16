@@ -22,7 +22,7 @@ import {
 import React, { ReactElement } from "react";
 
 import {
-  play,
+  caretForwardCircle,
   micSharp,
   chevronBack,
   ellipsisHorizontal,
@@ -78,8 +78,8 @@ export default function ViewSaying({}: Props): ReactElement {
                   </IonItem>
                 </IonCol>
                 <IonCol size="auto">
-                  <IonButton color="dark" fill="outline">
-                    <IonIcon icon={play} />
+                  <IonButton color="success" fill="outline">
+                    <IonIcon icon={caretForwardCircle} />
                   </IonButton>
                 </IonCol>
               </IonRow>
@@ -90,8 +90,8 @@ export default function ViewSaying({}: Props): ReactElement {
                   </IonItem>
                 </IonCol>
                 <IonCol size="auto">
-                  <IonButton color="dark" fill="outline">
-                    <IonIcon icon={play} />
+                  <IonButton color="success" fill="outline">
+                    <IonIcon icon={caretForwardCircle} />
                   </IonButton>
                 </IonCol>
               </IonRow>
