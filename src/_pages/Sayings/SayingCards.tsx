@@ -1,63 +1,79 @@
 import {
+  IonRow,
+  IonCol,
+  IonNote,
   IonCard,
   IonIcon,
-  IonNote,
-  IonText,
+  IonButton,
   IonCardHeader,
   IonCardContent,
-  IonGrid,
-  IonRow,
-  IonList,
+  IonCardSubtitle,
   IonItem,
-  IonLabel,
-  IonCol,
+  IonText,
 } from "@ionic/react";
 
-import FadeIn from "react-fade-in";
-
-import React, { ReactElement } from "react";
 import {
-  checkmark,
-  checkmarkCircleSharp,
-  closeCircleOutline,
+  add,
+  caretForward,
+  caretForwardCircle,
+  chevronForward,
   closeCircleSharp,
-  closeOutline,
+  play,
+  playSkipForwardCircleOutline,
+  stopCircle,
+  volumeHigh,
 } from "ionicons/icons";
+
+import FadeIn from "react-fade-in";
+import { useHistory } from "react-router-dom";
+import React, { ReactElement, useState } from "react";
 
 interface Props {}
 
 export default function SayingCards({}: Props): ReactElement {
+  const history = useHistory();
+
+  const listen = (e: any) => {};
+
   return (
     <>
-      <IonCard button routerLink="/view">
-        <IonCardHeader
-          color="dark"
-          style={{ fontSize: "large", fontWeight: "700" }}
-        >
-          <IonNote color="danger">
-            <IonIcon icon={closeCircleSharp} />
-          </IonNote>
-          &nbsp; Pending
+      <IonCard>
+        <IonCardHeader style={{ fontSize: "large", fontWeight: "700" }}>
+          <IonRow>
+            <IonCol onClick={() => history.push("/view")}>
+              <IonText color="dark">I need to use the restroom.</IonText>
+            </IonCol>
+            <IonCol size="auto">
+              <IonButton
+                color="danger"
+                fill="outline"
+                expand="block"
+                routerLink="/view"
+              >
+                <IonIcon icon={stopCircle} />
+              </IonButton>
+            </IonCol>
+          </IonRow>
         </IonCardHeader>
-        <IonCardContent>
-          <br />
-          <IonText color="dark">I need to use the restroom.</IonText>
-        </IonCardContent>
       </IonCard>
-      <IonCard button routerLink="/view">
-        <IonCardHeader
-          color="dark"
-          style={{ fontSize: "large", fontWeight: "700" }}
-        >
-          <IonNote color="success">
-            <IonIcon icon={checkmarkCircleSharp} />
-          </IonNote>
-          &nbsp; Answered
+      <IonCard>
+        <IonCardHeader style={{ fontSize: "large", fontWeight: "700" }}>
+          <IonRow>
+            <IonCol onClick={() => history.push("/view")}>
+              <IonText color="dark">Hello, my name is Matthew Kim.</IonText>
+            </IonCol>
+            <IonCol size="auto">
+              <IonButton
+                color="success"
+                fill="outline"
+                expand="block"
+                onClick={listen}
+              >
+                <IonIcon icon={caretForwardCircle} />
+              </IonButton>
+            </IonCol>
+          </IonRow>
         </IonCardHeader>
-        <IonCardContent>
-          <br />
-          <IonText color="dark">Hello, my name is Matthew Kim.</IonText>
-        </IonCardContent>
       </IonCard>
     </>
   );

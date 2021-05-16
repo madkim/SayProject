@@ -36,16 +36,13 @@ export default function SayingCards({}: Props): ReactElement {
               <IonItem detail button routerLink="/view">
                 <IonLabel className="ion-padding-vertical">
                   <IonRow>
-                    <IonCol>
-                      <small>
-                        <b>Date:</b>&nbsp; April 12th 2021
-                      </small>
+                    <IonCol size="auto">
+                      <small>April 12th 2021</small>
                     </IonCol>
 
                     <IonCol>
                       <small>
-                        <b>Status:</b>
-                        <IonNote color="danger">&nbsp;Pending</IonNote>
+                        <IonNote color="danger">&nbsp;No Recording</IonNote>
                       </small>
                     </IonCol>
                   </IonRow>
@@ -66,16 +63,7 @@ export default function SayingCards({}: Props): ReactElement {
                 <IonLabel className="ion-padding-vertical">
                   <IonRow>
                     <IonCol>
-                      <small>
-                        <b>Date:</b>&nbsp; April 8th 2021
-                      </small>
-                    </IonCol>
-
-                    <IonCol>
-                      <small>
-                        <b>Status:</b>
-                        <IonNote color="success">&nbsp;Answered</IonNote>
-                      </small>
+                      <small>April 8th 2021</small>
                     </IonCol>
                   </IonRow>
 

@@ -26,6 +26,7 @@ import {
   micSharp,
   chevronBack,
   ellipsisHorizontal,
+  stopCircleSharp,
 } from "ionicons/icons";
 import EditButton from "../../_stories/EditButton";
 
@@ -97,8 +98,8 @@ export default function ViewSaying({}: Props): ReactElement {
               <IonRow>
                 <IonCol>
                   <br />
-                  <IonButton color="primary" expand="block" fill="solid">
-                    <IonIcon icon={micSharp} /> &nbsp;Add Recording
+                  <IonButton color="danger" expand="block" fill="outline">
+                    <IonIcon icon={stopCircleSharp} /> &nbsp;Add Recording
                   </IonButton>
                 </IonCol>
               </IonRow>
