@@ -77,25 +77,6 @@ export default function SayingCards({ sayings }: Props): ReactElement {
             </IonCard>
           );
         })}
-      {/* <IonCard>
-        <IonCardHeader style={{ fontSize: "large", fontWeight: "700" }}>
-          <IonRow>
-            <IonCol onClick={() => history.push("/view")}>
-              <IonText color="dark">Hello, my name is Matthew Kim.</IonText>
-            </IonCol>
-            <IonCol size="auto">
-              <IonButton
-                color="success"
-                fill="outline"
-                expand="block"
-                onClick={listen}
-              >
-                <IonIcon icon={caretForwardCircle} />
-              </IonButton>
-            </IonCol>
-          </IonRow>
-        </IonCardHeader>
-      </IonCard> */}
     </>
   );
 }

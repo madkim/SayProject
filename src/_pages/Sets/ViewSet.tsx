@@ -10,6 +10,7 @@ import {
 } from "@ionic/react";
 
 import Ask from "../Sayings/AskSaying";
+import FadeIn from "react-fade-in";
 import SayingCards from "../Sayings/SayingCards";
 import SearchSayings from "../Sayings/SearchSayings";
 
@@ -60,10 +61,10 @@ const ViewSet: React.FC = () => {
         {search ? (
           <SearchSayings sayings={currentSet.sayings} />
         ) : (
-          <>
+          <FadeIn>
             <Ask />
             <SayingCards sayings={currentSet.sayings} />
-          </>
+          </FadeIn>
         )}
       </IonContent>
     </IonPage>

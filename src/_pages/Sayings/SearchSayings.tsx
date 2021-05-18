@@ -48,7 +48,6 @@ export default function SayingCards({ sayings }: Props): ReactElement {
                       <IonLabel className="ion-padding-vertical">
                         <IonRow>
                           <IonCol size="auto">
-                            {/* <small>April 12th 2021</small> */}
                             <small>
                               {moment(saying.createdAt).format("MMM Do YYYY")}
                             </small>
