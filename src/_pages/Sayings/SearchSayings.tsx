@@ -10,13 +10,16 @@ import {
 } from "@ionic/react";
 
 import FadeIn from "react-fade-in";
+import moment from "moment";
 
+import { Saying } from "../../_helpers/types";
 import React, { ReactElement, useState } from "react";
-import { checkmark, closeOutline } from "ionicons/icons";
 
-interface Props {}
+interface Props {
+  sayings: Saying[];
+}
 
-export default function SayingCards({}: Props): ReactElement {
+export default function SayingCards({ sayings }: Props): ReactElement {
   const [searchText, setSearchText] = useState("");
 
   return (
@@ -33,33 +36,47 @@ export default function SayingCards({}: Props): ReactElement {
         <IonRow>
           <IonCol>
             <IonList>
-              <IonItem detail button routerLink="/view">
-                <IonLabel className="ion-padding-vertical">
-                  <IonRow>
-                    <IonCol size="auto">
-                      <small>April 12th 2021</small>
-                    </IonCol>
+              {Object.keys(sayings).length > 0 &&
+                sayings.map((saying) => {
+                  return (
+                    <IonItem
+                      detail
+                      button
+                      key={saying.id}
+                      routerLink={`/view/${saying.id}`}
+                    >
+                      <IonLabel className="ion-padding-vertical">
+                        <IonRow>
+                          <IonCol size="auto">
+                            {/* <small>April 12th 2021</small> */}
+                            <small>
+                              {moment(saying.createdAt).format("MMM Do YYYY")}
+                            </small>
+                          </IonCol>
 
-                    <IonCol>
-                      <small>
-                        <IonNote color="danger">&nbsp;No Recording</IonNote>
-                      </small>
-                    </IonCol>
-                  </IonRow>
+                          {saying.hasRecording === false && (
+                            <IonCol>
+                              <small>
+                                <IonNote color="danger">
+                                  &nbsp;No Recording
+                                </IonNote>
+                              </small>
+                            </IonCol>
+                          )}
+                        </IonRow>
 
-                  <IonRow>
-                    <IonCol>
-                      <div className="ion-text-wrap">
-                        <h1>
-                          Hello, my name is Matthew. I am a traveler from
-                          America looking for the bathroom.
-                        </h1>
-                      </div>
-                    </IonCol>
-                  </IonRow>
-                </IonLabel>
-              </IonItem>
-              <IonItem detail button routerLink="/view">
+                        <IonRow>
+                          <IonCol>
+                            <div className="ion-text-wrap">
+                              <h1>{saying.saying}</h1>
+                            </div>
+                          </IonCol>
+                        </IonRow>
+                      </IonLabel>
+                    </IonItem>
+                  );
+                })}
+              {/* <IonItem detail button routerLink="/view">
                 <IonLabel className="ion-padding-vertical">
                   <IonRow>
                     <IonCol>
@@ -77,7 +94,7 @@ export default function SayingCards({}: Props): ReactElement {
                     </IonCol>
                   </IonRow>
                 </IonLabel>
-              </IonItem>
+              </IonItem> */}
             </IonList>
           </IonCol>
         </IonRow>

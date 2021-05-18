@@ -24,12 +24,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 const Sets: React.FC = () => {
   const dispatch = useDispatch();
+  const sets = useSelector((state: RootState) => state.set.sets);
+  const loading = useSelector((state: RootState) => state.set.loading);
 
   useEffect(() => {
-    dispatch(setActions.getSets());
+    console.log("here");
+    dispatch(setActions.getAllSets());
   }, []);
-
-  const sets = useSelector((state: RootState) => state.set.sets);
 
   return (
     <IonPage>
@@ -49,7 +50,7 @@ const Sets: React.FC = () => {
         </IonHeader>
 
         <FadeIn>
-          <ListSets sets={sets} />
+          <ListSets sets={sets} loading={loading} />
         </FadeIn>
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">

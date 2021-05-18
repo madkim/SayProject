@@ -19,27 +19,40 @@ import {
   IonCardContent,
 } from "@ionic/react";
 
-import React, { ReactElement } from "react";
-
 import {
-  caretForwardCircle,
-  micSharp,
   chevronBack,
-  ellipsisHorizontal,
   stopCircleSharp,
+  caretForwardCircle,
 } from "ionicons/icons";
+
+import { Saying } from "../../_helpers/types";
+import { useParams } from "react-router";
+import { RootState } from "../../_reducers/rootReducer";
+import { useSelector } from "react-redux";
+
+import React, { ReactElement } from "react";
 import EditButton from "../../_stories/EditButton";
 
 interface Props {}
 
 export default function ViewSaying({}: Props): ReactElement {
+  const { id } = useParams<{ id: string }>();
+
+  const currentSet = useSelector((state: RootState) => state.set.currentSet);
+  const saying = currentSet.sayings.find(
+    (element: Saying) => element.id === id
+  );
+
   return (
     <IonPage>
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton routerLink="/sayings" routerDirection="back">
+              <IonButton
+                routerLink={`/set/${currentSet.set.id}`}
+                routerDirection="back"
+              >
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
@@ -59,7 +72,7 @@ export default function ViewSaying({}: Props): ReactElement {
           <IonCardContent>
             <br />
             <IonText color="dark">
-              <h1>Hello, my name is Matthew.</h1>
+              <h1>{saying && saying.saying}</h1>
             </IonText>
           </IonCardContent>
         </IonCard>
@@ -115,7 +128,7 @@ export default function ViewSaying({}: Props): ReactElement {
                 color="primary"
                 expand="block"
                 className="ion-padding-horizontal"
-                routerLink="/sayings"
+                routerLink={`/set/${currentSet.set.id}`}
                 routerDirection="back"
               >
                 Done

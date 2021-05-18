@@ -4,6 +4,7 @@ import {
   IonCardTitle,
   IonCardHeader,
   IonCardContent,
+  IonLoading,
 } from "@ionic/react";
 
 import { Sets } from "../../_helpers/types";
@@ -12,9 +13,10 @@ import React, { ReactElement } from "react";
 
 interface Props {
   sets: Sets;
+  loading: boolean;
 }
 
-export default function ListSets({ sets }: Props): ReactElement {
+export default function ListSets({ sets, loading }: Props): ReactElement {
   const listShared = (shared: string[]) => {
     return shared.reduce((prev, current, index, []) => {
       return prev + ", " + current;
@@ -23,10 +25,10 @@ export default function ListSets({ sets }: Props): ReactElement {
 
   return (
     <>
-      {Object.keys(sets).length > 0 &&
-        sets.map((set, index) => {
+      {Object.keys(sets).length > 0 ? (
+        sets.map((set) => {
           return (
-            <IonCard key={index} button routerLink="/sayings">
+            <IonCard key={set.id} button routerLink={`/set/${set.id}`}>
               <IonCardHeader color="dark">
                 <IonCardTitle>{set.name}</IonCardTitle>
               </IonCardHeader>
@@ -46,7 +48,14 @@ export default function ListSets({ sets }: Props): ReactElement {
               </IonCardContent>
             </IonCard>
           );
-        })}
+        })
+      ) : (
+        <IonLoading
+          isOpen={loading}
+          message={"Please wait..."}
+          duration={5000}
+        />
+      )}
     </>
   );
 }

@@ -1,18 +1,36 @@
 import { Dispatch } from "react";
 import { setService } from "../_services/setService";
 import { setConstants } from "../_constants/setConstants";
-import { Action, Set, Sets } from "../_helpers/types";
+import { Action, CurrentSet, Set, Sets } from "../_helpers/types";
 
 export const setActions = {
   addSet,
-  getSets,
+  getSetById,
+  getAllSets,
 };
 
-function getSets() {
+function getSetById(id: string) {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({ type: setConstants.GET_SET_REQUEST, payload: true });
+    setService
+      .getSet(id)
+      .then((set: CurrentSet) => {
+        dispatch({ type: setConstants.GET_SET_SUCCESS, payload: set });
+      })
+      .catch((error) => {
+        dispatch({
+          type: setConstants.GET_SET_FAILURE,
+          payload: false,
+        });
+      });
+  };
+}
+
+function getAllSets() {
   return (dispatch: Dispatch<Action>) => {
     dispatch({ type: setConstants.GET_SETS_REQUEST, payload: true });
     setService
-      .get()
+      .getSets()
       .then((sets: Sets) => {
         dispatch({ type: setConstants.GET_SETS_SUCCESS, payload: sets });
       })

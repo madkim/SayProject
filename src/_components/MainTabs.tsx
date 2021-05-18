@@ -13,9 +13,9 @@ import { Redirect, Route } from "react-router-dom";
 import { albums, book, peopleSharp, reader } from "ionicons/icons";
 
 import Menu from "./Menu";
+import Set from "../_pages/Sets/ViewSet";
 import Sets from "../_pages/Sets";
 import AddSet from "../_pages/Sets/AddSet";
-import Sayings from "../_pages/Sayings";
 import Friends from "../_pages/Friends";
 import ViewSaying from "../_pages/Sayings/ViewSaying";
 import ListSayings from "../_pages/Sayings/ListSayings";
@@ -30,10 +30,13 @@ export default function MainTabs(): ReactElement {
           <Route path="/sets">
             <Sets />
           </Route>
+          <Route path="/set/:id">
+            <Set />
+          </Route>
           <Route path="/addset">
             <AddSet />
           </Route>
-          <Route path="/view">
+          <Route path="/view/:id">
             <ViewSaying />
           </Route>
           <Route path="/list">
@@ -44,9 +47,6 @@ export default function MainTabs(): ReactElement {
           </Route>
           <Route path="/friends">
             <Friends />
-          </Route>
-          <Route path="/sayings">
-            <Sayings />
           </Route>
           <Route exact path="/">
             <Redirect to="/sets" />
