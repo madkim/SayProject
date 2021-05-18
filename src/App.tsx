@@ -29,8 +29,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 
 const App: React.FC = () => {
-  // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const isLoggedIn = true;
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   return (
     <IonApp>

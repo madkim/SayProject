@@ -18,10 +18,9 @@ export default function ListSets({ sets }: Props): ReactElement {
   return (
     <>
       {Object.keys(sets).length > 0 &&
-        sets.map((set) => {
-          console.log(set);
+        sets.map((set, index) => {
           return (
-            <IonCard key={set.id} button routerLink="/sayings">
+            <IonCard key={index} button routerLink="/sayings">
               <IonCardHeader color="dark">
                 <IonCardTitle>{set.name}</IonCardTitle>
               </IonCardHeader>
@@ -38,7 +37,7 @@ export default function ListSets({ sets }: Props): ReactElement {
             </IonCard>
           );
         })}
-      <IonCard button routerLink="/sayings">
+      {/* <IonCard button routerLink="/sayings">
         <IonCardHeader color="dark">
           <IonCardTitle>Chinese Words and Phrases</IonCardTitle>
         </IonCardHeader>
@@ -67,7 +66,7 @@ export default function ListSets({ sets }: Props): ReactElement {
             <h2>Shared: Vicky Zhen</h2>
           </IonNote>
         </IonCardContent>
-      </IonCard>
+      </IonCard> */}
     </>
   );
 }

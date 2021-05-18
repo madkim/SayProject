@@ -11,11 +11,23 @@ export const initState: {
 };
 
 export function setReducer(state = initState, action: Action) {
-  if (action.type === setConstants.ADD_NEW_SET_REQUEST) {
-    const newSet = action.payload;
+  if (action.type === setConstants.GET_SETS_REQUEST) {
     return (state = {
       ...state,
       loading: true,
+    });
+  }
+  if (action.type === setConstants.GET_SETS_SUCCESS) {
+    return (state = {
+      ...state,
+      loading: true,
+      sets: action.payload,
+    });
+  }
+  if (action.type === setConstants.GET_SETS_FAILURE) {
+    return (state = {
+      ...state,
+      loading: false,
     });
   }
 

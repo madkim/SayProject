@@ -30,8 +30,8 @@ import { chevronBack } from "ionicons/icons";
 import { useDispatch, useSelector } from "react-redux";
 
 import FadeIn from "react-fade-in";
-import AddFriendToSet from "./AddFriendToSet";
 import ShowError from "../../_stories/ShowError";
+import AddFriendToSet from "./AddFriendToSet";
 
 const AddSet: React.FC = () => {
   const dispatch = useDispatch();

@@ -16,11 +16,19 @@ import FadeIn from "react-fade-in";
 import ListSets from "./ListSets";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
+import { useEffect } from "react";
 import { RootState } from "../../_reducers/rootReducer";
-import { useSelector } from "react-redux";
+import { setActions } from "../../_actions/setActions";
 import { add, notifications } from "ionicons/icons";
+import { useSelector, useDispatch } from "react-redux";
 
 const Sets: React.FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setActions.getSets());
+  }, []);
+
   const sets = useSelector((state: RootState) => state.set.sets);
 
   return (
