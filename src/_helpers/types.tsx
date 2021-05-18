@@ -23,9 +23,4 @@ export interface Set {
   shared: string[];
 }
 
-export type CurrentSet = {
-  set: Set;
-  sayings: Saying[];
-};
-
 export type Sets = Set[];

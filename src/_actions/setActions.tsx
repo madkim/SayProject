@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { setService } from "../_services/setService";
 import { setConstants } from "../_constants/setConstants";
-import { Action, CurrentSet, Set, Sets } from "../_helpers/types";
+import { Action, Set, Sets } from "../_helpers/types";
 
 export const setActions = {
   addSet,
@@ -14,7 +14,7 @@ function getSetById(id: string) {
     dispatch({ type: setConstants.GET_SET_REQUEST, payload: true });
     setService
       .getSet(id)
-      .then((set: CurrentSet) => {
+      .then((set: Set) => {
         dispatch({ type: setConstants.GET_SET_SUCCESS, payload: set });
       })
       .catch((error) => {

@@ -25,23 +25,35 @@ import {
   caretForwardCircle,
 } from "ionicons/icons";
 
-import { Saying } from "../../_helpers/types";
-import { useParams } from "react-router";
 import { RootState } from "../../_reducers/rootReducer";
-import { useSelector } from "react-redux";
+import { sayingActions } from "../../_actions/sayingActions";
+import { useParams, useHistory } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 
-import React, { ReactElement } from "react";
 import EditButton from "../../_stories/EditButton";
+import React, { ReactElement, useEffect } from "react";
 
 interface Props {}
 
 export default function ViewSaying({}: Props): ReactElement {
+  const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
 
-  const currentSet = useSelector((state: RootState) => state.set.currentSet);
-  const saying = currentSet.sayings.find(
-    (element: Saying) => element.id === id
-  );
+  const set = useSelector((state: RootState) => state.set.currentSet);
+  const saying = useSelector((state: RootState) => state.saying.saying);
+  const history = useHistory();
+
+  useEffect(() => {
+    dispatch(sayingActions.getSayingById(id));
+  }, []);
+
+  const deleteSaying = () => {
+    const answer = window.confirm("Are you sure you want to delete?");
+
+    if (answer) {
+      dispatch(sayingActions.deleteSayingById(id, history, `/set/${set.id}`));
+    }
+  };
 
   return (
     <IonPage>
@@ -49,10 +61,7 @@ export default function ViewSaying({}: Props): ReactElement {
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton
-                routerLink={`/set/${currentSet.set.id}`}
-                routerDirection="back"
-              >
+              <IonButton routerLink={`/set/${set.id}`} routerDirection="back">
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
@@ -61,7 +70,7 @@ export default function ViewSaying({}: Props): ReactElement {
               <h2>SAY</h2>
             </IonTitle>
 
-            <EditButton slot="end" />
+            <EditButton slot="end" deleteItem={deleteSaying} />
           </IonToolbar>
         </IonHeader>
 
@@ -128,7 +137,7 @@ export default function ViewSaying({}: Props): ReactElement {
                 color="primary"
                 expand="block"
                 className="ion-padding-horizontal"
-                routerLink={`/set/${currentSet.set.id}`}
+                routerLink={`/set/${set.id}`}
                 routerDirection="back"
               >
                 Done

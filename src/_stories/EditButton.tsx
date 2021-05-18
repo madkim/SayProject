@@ -16,9 +16,10 @@ import {
 
 interface Props {
   slot: string;
+  deleteItem: () => void;
 }
 
-export default function EditButton({ slot }: Props): ReactElement {
+export default function EditButton({ slot, deleteItem }: Props): ReactElement {
   const dispatch = useDispatch();
 
   const [popoverState, setShowPopover] = useState({
@@ -43,7 +44,7 @@ export default function EditButton({ slot }: Props): ReactElement {
             <IonIcon slot="end" icon={createOutline} />
           </IonItem>
 
-          <IonItem button detail={false}>
+          <IonItem button detail={false} onClick={deleteItem}>
             <IonText color="danger">Delete &nbsp;</IonText>
             <IonIcon color="danger" slot="end" icon={trashOutline} />
           </IonItem>

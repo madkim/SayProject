@@ -1,6 +1,6 @@
 import { db } from "../_helpers/firebase";
 import { fireAuth } from "../_helpers/firebase";
-import { CurrentSet, Set, Sets } from "../_helpers/types";
+import { Set, Sets } from "../_helpers/types";
 import moment from "moment";
 
 export const setService = {
@@ -10,39 +10,18 @@ export const setService = {
 };
 
 function getSet(id: string) {
-  return new Promise(async (resolve: (set: CurrentSet) => void, reject) => {
+  return new Promise(async (resolve: (set: Set) => void, reject) => {
     const user = fireAuth.currentUser;
 
     if (user) {
       const set = await db.collection("sets").doc(id).get();
 
-      const sayings = await db
-        .collection("sayings")
-        .where("set", "==", id)
-        .get();
-
-      const setSayings = sayings.docs.map((saying) => {
-        return {
-          id: saying.id,
-          set: saying.data().set,
-          owner: saying.data().owner,
-          saying: saying.data().saying,
-          createdAt: saying.data().createdAt.toDate(),
-          hasRecording: saying.data().hasRecording,
-        };
+      resolve({
+        id: id,
+        name: set.data()!.name,
+        owner: set.data()!.owner,
+        shared: set.data()!.shared,
       });
-
-      let currentSet = {
-        set: {
-          id: id,
-          name: set.data()!.name,
-          owner: set.data()!.owner,
-          shared: set.data()!.shared,
-        },
-        sayings: setSayings,
-      };
-
-      resolve(currentSet);
     } else {
       // logout
     }

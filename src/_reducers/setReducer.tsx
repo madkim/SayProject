@@ -1,15 +1,14 @@
-import { Action } from "../_helpers/types";
 import { setConstants } from "../_constants/setConstants";
-import { CurrentSet, Sets } from "../_helpers/types";
+import { Action, Sets, Set } from "../_helpers/types";
 
 export const initState: {
   sets: Sets;
   loading: boolean;
-  currentSet: CurrentSet;
+  currentSet: Set;
 } = {
   sets: [],
   loading: false,
-  currentSet: { set: { id: "", name: "", owner: "", shared: [] }, sayings: [] },
+  currentSet: { id: "", name: "", owner: "", shared: [] },
 };
 
 export function setReducer(state = initState, action: Action) {

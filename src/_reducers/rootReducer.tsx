@@ -1,11 +1,12 @@
-import { authReducer } from "./authReducer";
 import { setReducer } from "./setReducer";
-
+import { authReducer } from "./authReducer";
+import { sayingReducer } from "./sayingReducer";
 import { combineReducers } from "redux";
 
 export const rootReducer = combineReducers({
-  auth: authReducer,
   set: setReducer,
+  auth: authReducer,
+  saying: sayingReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

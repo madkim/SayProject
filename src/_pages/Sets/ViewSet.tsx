@@ -17,6 +17,7 @@ import SearchSayings from "../Sayings/SearchSayings";
 import { useParams } from "react-router";
 import { RootState } from "../../_reducers/rootReducer";
 import { setActions } from "../../_actions/setActions";
+import { sayingActions } from "../../_actions/sayingActions";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chevronBack, close, searchOutline } from "ionicons/icons";
@@ -26,11 +27,13 @@ const ViewSet: React.FC = () => {
   const [search, setSearch] = useState(false);
 
   const dispatch = useDispatch();
+  const set = useSelector((state: RootState) => state.set.currentSet);
   const loading = useSelector((state: RootState) => state.set.loading);
-  const currentSet = useSelector((state: RootState) => state.set.currentSet);
+  const sayings = useSelector((state: RootState) => state.saying.sayings);
 
   useEffect(() => {
     dispatch(setActions.getSetById(id));
+    dispatch(sayingActions.getSayingsBySetId(id));
   }, []);
 
   return (
@@ -44,7 +47,7 @@ const ViewSet: React.FC = () => {
               </IonButton>
             </IonButtons>
 
-            <h2>{currentSet.set.name}</h2>
+            <h2>{set.name}</h2>
 
             <IonButton slot="end" onClick={() => setSearch(!search)}>
               <IonIcon icon={search ? close : searchOutline} />
@@ -59,11 +62,11 @@ const ViewSet: React.FC = () => {
         />
 
         {search ? (
-          <SearchSayings sayings={currentSet.sayings} />
+          <SearchSayings sayings={sayings} />
         ) : (
           <FadeIn>
             <Ask />
-            <SayingCards sayings={currentSet.sayings} />
+            <SayingCards sayings={sayings} />
           </FadeIn>
         )}
       </IonContent>

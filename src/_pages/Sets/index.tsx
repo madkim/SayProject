@@ -28,7 +28,6 @@ const Sets: React.FC = () => {
   const loading = useSelector((state: RootState) => state.set.loading);
 
   useEffect(() => {
-    console.log("here");
     dispatch(setActions.getAllSets());
   }, []);
 
