@@ -4,10 +4,31 @@ import { sayingService } from "../_services/sayingService";
 import { sayingConstants } from "../_constants/sayingConstants";
 
 export const sayingActions = {
+  addNewSaying,
   getSayingById,
   deleteSayingById,
   getSayingsBySetId,
 };
+
+function addNewSaying(saying: string, setId: string) {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({ type: sayingConstants.GET_SAYING_REQUEST, payload: true });
+    sayingService
+      .addSaying(saying, setId)
+      .then((saying: Saying) => {
+        dispatch({
+          type: sayingConstants.ADD_SAYING_SUCCESS,
+          payload: saying,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: sayingConstants.ADD_SAYING_FAILURE,
+          payload: false,
+        });
+      });
+  };
+}
 
 function getSayingById(id: string) {
   return (dispatch: Dispatch<Action>) => {
@@ -49,7 +70,7 @@ function getSayingsBySetId(id: string) {
   };
 }
 
-function deleteSayingById(id: string, history: any, path: string) {
+function deleteSayingById(id: string) {
   return (dispatch: Dispatch<Action>) => {
     dispatch({ type: sayingConstants.DELETE_SAYING_REQUEST, payload: true });
     sayingService
@@ -59,7 +80,6 @@ function deleteSayingById(id: string, history: any, path: string) {
           type: sayingConstants.DELETE_SAYING_SUCCESS,
           payload: id,
         });
-        history.push(path);
       })
       .catch((error) => {
         dispatch({

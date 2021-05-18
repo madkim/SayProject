@@ -31,6 +31,11 @@ export default function EditButton({ slot, deleteItem }: Props): ReactElement {
     setShowPopover({ showPopover: false, event: undefined });
   };
 
+  const deleteSelectedItem = () => {
+    setShowPopover({ showPopover: false, event: undefined });
+    deleteItem();
+  };
+
   return (
     <>
       <IonPopover
@@ -44,7 +49,7 @@ export default function EditButton({ slot, deleteItem }: Props): ReactElement {
             <IonIcon slot="end" icon={createOutline} />
           </IonItem>
 
-          <IonItem button detail={false} onClick={deleteItem}>
+          <IonItem button detail={false} onClick={deleteSelectedItem}>
             <IonText color="danger">Delete &nbsp;</IonText>
             <IonIcon color="danger" slot="end" icon={trashOutline} />
           </IonItem>

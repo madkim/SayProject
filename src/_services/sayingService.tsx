@@ -1,12 +1,41 @@
 import { db } from "../_helpers/firebase";
-import { fireAuth } from "../_helpers/firebase";
 import { Saying } from "../_helpers/types";
+import { fireAuth } from "../_helpers/firebase";
+import moment from "moment";
 
 export const sayingService = {
+  addSaying,
   getSaying,
   getSayings,
   deleteSaying,
 };
+
+function addSaying(saying: string, setId: string) {
+  return new Promise(async (resolve: (saying: Saying) => void, reject) => {
+    const user = fireAuth.currentUser;
+
+    if (user) {
+      const sayingRef = await db.collection("sayings").add({
+        createdAt: new Date(),
+        hasRecording: false,
+        owner: user.uid,
+        saying: saying,
+        set: setId,
+      });
+
+      resolve({
+        id: sayingRef.id,
+        set: setId,
+        owner: user.uid,
+        saying: saying,
+        createdAt: moment(new Date()).format("MMM Do YYYY"),
+        hasRecording: false,
+      });
+    } else {
+      // logout
+    }
+  });
+}
 
 function getSaying(id: string) {
   return new Promise(async (resolve: (saying: Saying) => void, reject) => {

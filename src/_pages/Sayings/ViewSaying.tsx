@@ -26,18 +26,20 @@ import {
 } from "ionicons/icons";
 
 import { RootState } from "../../_reducers/rootReducer";
+import { NavContext } from "@ionic/react";
 import { sayingActions } from "../../_actions/sayingActions";
 import { useParams, useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
+import React, { ReactElement, useEffect, useContext } from "react";
 
 import EditButton from "../../_stories/EditButton";
-import React, { ReactElement, useEffect } from "react";
 
 interface Props {}
 
 export default function ViewSaying({}: Props): ReactElement {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
+  const { goBack } = useContext(NavContext);
 
   const set = useSelector((state: RootState) => state.set.currentSet);
   const saying = useSelector((state: RootState) => state.saying.saying);
@@ -51,7 +53,8 @@ export default function ViewSaying({}: Props): ReactElement {
     const answer = window.confirm("Are you sure you want to delete?");
 
     if (answer) {
-      dispatch(sayingActions.deleteSayingById(id, history, `/set/${set.id}`));
+      dispatch(sayingActions.deleteSayingById(id));
+      goBack(`/set/${set.id}`);
     }
   };
 

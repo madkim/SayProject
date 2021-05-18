@@ -19,6 +19,21 @@ export const initState: {
 };
 
 export function sayingReducer(state = initState, action: Action) {
+  if (action.type === sayingConstants.ADD_SAYING_SUCCESS) {
+    return (state = {
+      ...state,
+      loading: false,
+      sayings: [action.payload, ...state.sayings],
+    });
+  }
+
+  if (action.type === sayingConstants.ADD_SAYING_FAILURE) {
+    return (state = {
+      ...state,
+      loading: false,
+    });
+  }
+
   if (action.type === sayingConstants.GET_SAYING_REQUEST) {
     return (state = {
       ...state,

@@ -36,6 +36,10 @@ const ViewSet: React.FC = () => {
     dispatch(sayingActions.getSayingsBySetId(id));
   }, []);
 
+  const addNewSaying = (saying: string) => {
+    dispatch(sayingActions.addNewSaying(saying, set.id));
+  };
+
   return (
     <IonPage>
       <IonContent>
@@ -65,7 +69,7 @@ const ViewSet: React.FC = () => {
           <SearchSayings sayings={sayings} />
         ) : (
           <FadeIn>
-            <Ask />
+            <Ask addNewSaying={addNewSaying} />
             <SayingCards sayings={sayings} />
           </FadeIn>
         )}
