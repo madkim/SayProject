@@ -15,6 +15,12 @@ interface Props {
 }
 
 export default function ListSets({ sets }: Props): ReactElement {
+  const listShared = (shared: string[]) => {
+    return shared.reduce((prev, current, index, []) => {
+      return prev + ", " + current;
+    });
+  };
+
   return (
     <>
       {Object.keys(sets).length > 0 &&
@@ -31,42 +37,16 @@ export default function ListSets({ sets }: Props): ReactElement {
                   <br />
                   <h2>Owner: {set.owner}</h2>
                   <br />
-                  <h2>Shared:</h2>
+                  <h2>
+                    Shared:&nbsp;
+                    {console.log(set.shared)}
+                    {set.shared.length === 0 ? "None" : listShared(set.shared)}
+                  </h2>
                 </IonNote>
               </IonCardContent>
             </IonCard>
           );
         })}
-      {/* <IonCard button routerLink="/sayings">
-        <IonCardHeader color="dark">
-          <IonCardTitle>Chinese Words and Phrases</IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>
-          <IonNote color="dark">
-            <br />
-            <h2>Cards: 10</h2>
-            <br />
-            <h2>Owner: Carmen Chen</h2>
-            <br />
-            <h2>Shared: Vicky Zhen</h2>
-          </IonNote>
-        </IonCardContent>
-      </IonCard>
-      <IonCard button routerLink="/sayings">
-        <IonCardHeader color="dark">
-          <IonCardTitle>Korean Words and Phrases</IonCardTitle>
-        </IonCardHeader>
-        <IonCardContent>
-          <IonNote color="dark">
-            <br />
-            <h2>Cards: 10</h2>
-            <br />
-            <h2>Owner: Carmen Chen</h2>
-            <br />
-            <h2>Shared: Vicky Zhen</h2>
-          </IonNote>
-        </IonCardContent>
-      </IonCard> */}
     </>
   );
 }

@@ -40,7 +40,7 @@ const AddSet: React.FC = () => {
 
   const [name, setName] = useState("");
   const [errors, setErrors] = useState({});
-  const [friends, setFriends] = useState([""]);
+  const [friends, setFriends] = useState<string[]>([]);
 
   const validateSet = () => {
     if (name === "") {
