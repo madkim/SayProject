@@ -12,14 +12,17 @@ import {
   IonFabButton,
 } from "@ionic/react";
 
-import { add, menuSharp, notifications } from "ionicons/icons";
-import { menuController } from "@ionic/core";
-
 import FadeIn from "react-fade-in";
-import SetList from "./SetList";
+import ListSets from "./ListSets";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
+import { RootState } from "../../_reducers/rootReducer";
+import { useSelector } from "react-redux";
+import { add, notifications } from "ionicons/icons";
+
 const Sets: React.FC = () => {
+  const sets = useSelector((state: RootState) => state.set.sets);
+
   return (
     <IonPage>
       <IonContent>
@@ -38,11 +41,11 @@ const Sets: React.FC = () => {
         </IonHeader>
 
         <FadeIn>
-          <SetList />
+          <ListSets sets={sets} />
         </FadeIn>
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton color="dark">
+          <IonFabButton color="primary" routerLink="/addset">
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>

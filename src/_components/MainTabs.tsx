@@ -14,6 +14,7 @@ import { albums, book, peopleSharp, reader } from "ionicons/icons";
 
 import Menu from "./Menu";
 import Sets from "../_pages/Sets";
+import AddSet from "../_pages/Sets/AddSet";
 import Sayings from "../_pages/Sayings";
 import Friends from "../_pages/Friends";
 import ViewSaying from "../_pages/Sayings/ViewSaying";
@@ -28,6 +29,9 @@ export default function MainTabs(): ReactElement {
         <IonRouterOutlet id="main">
           <Route path="/sets">
             <Sets />
+          </Route>
+          <Route path="/addset">
+            <AddSet />
           </Route>
           <Route path="/view">
             <ViewSaying />

@@ -1,26 +1,43 @@
 import {
   IonCard,
-  IonIcon,
   IonNote,
-  IonText,
+  IonCardTitle,
   IonCardHeader,
   IonCardContent,
-  IonCardTitle,
-  IonChip,
-  IonAvatar,
-  IonLabel,
-  IonRow,
-  IonCol,
 } from "@ionic/react";
-import { closeCircle } from "ionicons/icons";
+
+import { Sets } from "../../_helpers/types";
 
 import React, { ReactElement } from "react";
 
-interface Props {}
+interface Props {
+  sets: Sets;
+}
 
-export default function SetList({}: Props): ReactElement {
+export default function ListSets({ sets }: Props): ReactElement {
   return (
     <>
+      {Object.keys(sets).length > 0 &&
+        sets.map((set) => {
+          console.log(set);
+          return (
+            <IonCard key={set.id} button routerLink="/sayings">
+              <IonCardHeader color="dark">
+                <IonCardTitle>{set.name}</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent className="ion-text-capitalize">
+                <IonNote color="dark">
+                  <br />
+                  <h2>Cards: 10</h2>
+                  <br />
+                  <h2>Owner: {set.owner}</h2>
+                  <br />
+                  <h2>Shared:</h2>
+                </IonNote>
+              </IonCardContent>
+            </IonCard>
+          );
+        })}
       <IonCard button routerLink="/sayings">
         <IonCardHeader color="dark">
           <IonCardTitle>Chinese Words and Phrases</IonCardTitle>
