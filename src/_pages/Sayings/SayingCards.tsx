@@ -40,7 +40,14 @@ export default function SayingCards({ sayings }: Props): ReactElement {
         setRecording(false);
         setSelectedSaying("");
         VoiceRecorder.stopRecording()
-          .then((result: RecordingData) => console.log(result.value))
+          .then((result: RecordingData) => {
+            console.log(result.value);
+            const audioRef = new Audio(
+              `data:audio/aac;base64,${result.value.recordDataBase64}`
+            );
+            audioRef.oncanplaythrough = () => audioRef.play();
+            audioRef.load();
+          })
           .catch((error) => console.log(error));
       }
     } else {
