@@ -20,6 +20,7 @@ export interface Set {
   id: string;
   name: string;
   owner: string;
+  count: number;
   shared: string[];
 }
 

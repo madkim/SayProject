@@ -75,25 +75,6 @@ export default function SayingCards({ sayings }: Props): ReactElement {
                     </IonItem>
                   );
                 })}
-              {/* <IonItem detail button routerLink="/view">
-                <IonLabel className="ion-padding-vertical">
-                  <IonRow>
-                    <IonCol>
-                      <small>April 8th 2021</small>
-                    </IonCol>
-                  </IonRow>
-
-                  <IonRow>
-                    <IonCol>
-                      <div className="ion-text-wrap">
-                        <h1>
-                          This is another phrase I want to know how to say.
-                        </h1>
-                      </div>
-                    </IonCol>
-                  </IonRow>
-                </IonLabel>
-              </IonItem> */}
             </IonList>
           </IonCol>
         </IonRow>

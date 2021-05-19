@@ -8,7 +8,7 @@ export const initState: {
 } = {
   sets: [],
   loading: false,
-  currentSet: { id: "", name: "", owner: "", shared: [] },
+  currentSet: { id: "", name: "", owner: "", count: 0, shared: [] },
 };
 
 export function setReducer(state = initState, action: Action) {

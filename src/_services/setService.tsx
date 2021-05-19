@@ -16,10 +16,16 @@ function getSet(id: string) {
     if (user) {
       const set = await db.collection("sets").doc(id).get();
 
+      const sayings = await db
+        .collection("sayings")
+        .where("set", "==", set.id)
+        .get();
+
       resolve({
         id: id,
         name: set.data()!.name,
         owner: set.data()!.owner,
+        count: sayings.docs.length,
         shared: set.data()!.shared,
       });
     } else {
@@ -41,10 +47,16 @@ function getSets() {
       let sets = setsRef.docs.map(async (set) => {
         const owner = await db.collection("users").doc(set.data().owner).get();
 
+        const sayings = await db
+          .collection("sayings")
+          .where("set", "==", set.id)
+          .get();
+
         return {
           id: set.id,
           name: set.data().name,
           owner: owner.data()!.name,
+          count: sayings.docs.length,
           shared: set.data().shared,
         };
       });

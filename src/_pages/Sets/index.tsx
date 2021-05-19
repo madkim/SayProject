@@ -1,4 +1,5 @@
 import {
+  IonFab,
   IonPage,
   IonIcon,
   IonTitle,
@@ -6,14 +7,10 @@ import {
   IonButton,
   IonToolbar,
   IonContent,
-  IonButtons,
-  IonAvatar,
-  IonFab,
   IonFabButton,
 } from "@ionic/react";
 
-import FadeIn from "react-fade-in";
-import ListSets from "./ListSets";
+import ListSets from "./ListSets/ListSets";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
 import { useEffect } from "react";
@@ -48,9 +45,7 @@ const Sets: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <FadeIn>
-          <ListSets sets={sets} loading={loading} />
-        </FadeIn>
+        <ListSets sets={sets} loading={loading} />
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton color="primary" routerLink="/addset">

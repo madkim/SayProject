@@ -40,6 +40,10 @@ export default function SayingCards({ sayings }: Props): ReactElement {
     // Listen to Recording
   };
 
+  const record = () => {
+    // New recording
+  };
+
   return (
     <>
       {Object.keys(sayings).length > 0 &&
@@ -66,7 +70,7 @@ export default function SayingCards({ sayings }: Props): ReactElement {
                         fill="outline"
                         color="danger"
                         expand="block"
-                        routerLink={`/view/${saying.id}`}
+                        onClick={record}
                       >
                         <IonIcon icon={stopCircle} />
                       </IonButton>
