@@ -1,36 +1,29 @@
 import {
+  IonRow,
+  IonCol,
+  IonItem,
   IonPage,
   IonIcon,
+  IonGrid,
   IonTitle,
+  IonInput,
   IonHeader,
   IonButton,
   IonToolbar,
   IonContent,
-  IonButtons,
-  IonAvatar,
-  IonFab,
-  IonFabButton,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonCheckbox,
-  IonList,
-  IonListHeader,
   IonSpinner,
+  IonListHeader,
 } from "@ionic/react";
 
 import { useState } from "react";
-import { RootState } from "../../_reducers/rootReducer";
-import { setActions } from "../../_actions/setActions";
+import { RootState } from "../../../_reducers/rootReducer";
+import { setActions } from "../../../_actions/setActions";
 import { useHistory } from "react-router";
 import { chevronBack } from "ionicons/icons";
 import { useDispatch, useSelector } from "react-redux";
 
 import FadeIn from "react-fade-in";
-import ShowError from "../../_stories/ShowError";
+import ShowError from "../../../_stories/ShowError";
 import AddFriendToSet from "./AddFriendToSet";
 
 const AddSet: React.FC = () => {

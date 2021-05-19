@@ -37,12 +37,7 @@ export default function ListView({ sets, loading }: Props): ReactElement {
         {Object.keys(sets).length > 0 ? (
           sets.map((set) => {
             return (
-              <IonItem
-                detail
-                button
-                key={set.id}
-                routerLink={`/view/${set.id}`}
-              >
+              <IonItem detail button key={set.id} routerLink={`/set/${set.id}`}>
                 <IonLabel className="ion-padding-vertical">
                   <IonRow>
                     <IonCol size="auto">

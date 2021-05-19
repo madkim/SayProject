@@ -15,7 +15,7 @@ import { albums, book, peopleSharp, reader } from "ionicons/icons";
 import Menu from "./Menu";
 import Set from "../_pages/Sets/ViewSet";
 import Sets from "../_pages/Sets";
-import AddSet from "../_pages/Sets/AddSet";
+import AddSet from "../_pages/Sets/AddSet/AddSet";
 import Friends from "../_pages/Friends";
 import ViewSaying from "../_pages/Sayings/ViewSaying";
 import ListSayings from "../_pages/Sayings/ListSayings";

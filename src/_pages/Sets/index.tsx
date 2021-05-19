@@ -10,7 +10,7 @@ import {
   IonFabButton,
 } from "@ionic/react";
 
-import ListSets from "./ListSets/ListSets";
+import ListSets from "./ListSets";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
 import { useEffect } from "react";
