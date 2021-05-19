@@ -1,33 +1,21 @@
 import {
   IonRow,
   IonCol,
-  IonNote,
+  IonText,
   IonCard,
   IonIcon,
   IonButton,
   IonCardHeader,
-  IonCardContent,
-  IonCardSubtitle,
-  IonItem,
-  IonText,
+  IonSpinner,
 } from "@ionic/react";
 
-import {
-  add,
-  caretForward,
-  caretForwardCircle,
-  chevronForward,
-  closeCircleSharp,
-  play,
-  playSkipForwardCircleOutline,
-  stopCircle,
-  volumeHigh,
-} from "ionicons/icons";
+import { caretForwardCircle, stopCircle } from "ionicons/icons";
 
-import FadeIn from "react-fade-in";
 import { Saying } from "../../_helpers/types";
+import { Plugins } from "@capacitor/core";
 import { useHistory } from "react-router-dom";
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
+import { RecordingData, GenericResponse } from "capacitor-voice-recorder";
 
 interface Props {
   sayings: Saying[];
@@ -35,19 +23,39 @@ interface Props {
 
 export default function SayingCards({ sayings }: Props): ReactElement {
   const history = useHistory();
+  const { VoiceRecorder } = Plugins;
+
+  const [recording, setRecording] = useState(false);
+  const [selectedSaying, setSelectedSaying] = useState("");
 
   const listen = () => {
     // Listen to Recording
   };
 
-  const record = () => {
-    // New recording
+  const record = (id: string) => {
+    if (recording) {
+      if (selectedSaying !== id) {
+        alert("Another recording already in progress!");
+      } else {
+        setRecording(false);
+        setSelectedSaying("");
+        VoiceRecorder.stopRecording()
+          .then((result: RecordingData) => console.log(result.value))
+          .catch((error) => console.log(error));
+      }
+    } else {
+      setRecording(true);
+      setSelectedSaying(id);
+      VoiceRecorder.startRecording()
+        .then((result: GenericResponse) => console.log(result.value))
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
     <>
       {Object.keys(sayings).length > 0 &&
-        sayings.map((saying, index) => {
+        sayings.map((saying) => {
           return (
             <IonCard key={saying.id}>
               <IonCardHeader style={{ fontSize: "large", fontWeight: "700" }}>
@@ -70,9 +78,13 @@ export default function SayingCards({ sayings }: Props): ReactElement {
                         fill="outline"
                         color="danger"
                         expand="block"
-                        onClick={record}
+                        onClick={() => record(saying.id)}
                       >
-                        <IonIcon icon={stopCircle} />
+                        {recording && selectedSaying === saying.id ? (
+                          <IonSpinner color="danger" name="bubbles" />
+                        ) : (
+                          <IonIcon icon={stopCircle} />
+                        )}
                       </IonButton>
                     )}
                   </IonCol>

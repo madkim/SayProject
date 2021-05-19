@@ -38,11 +38,11 @@ export default function ListView({ sets, loading }: Props): ReactElement {
           sets.map((set) => {
             return (
               <IonItem detail button key={set.id} routerLink={`/set/${set.id}`}>
-                <IonLabel className="ion-padding-vertical">
+                <IonLabel>
                   <IonRow>
-                    <IonCol size="auto">
+                    {/* <IonCol size="auto">
                       <small>Cards: {set.count}</small>
-                    </IonCol>
+                    </IonCol> */}
 
                     <IonCol>
                       <small>Owner: {set.owner}</small>
@@ -51,11 +51,11 @@ export default function ListView({ sets, loading }: Props): ReactElement {
 
                   <IonRow>
                     <IonCol>
-                      <h1>{set.name}</h1>
+                      <h2>{set.name}</h2>
                     </IonCol>
                   </IonRow>
 
-                  <IonRow>
+                  {/* <IonRow>
                     <IonCol>
                       <small className="ion-text-wrap">
                         Shared:&nbsp;
@@ -64,7 +64,7 @@ export default function ListView({ sets, loading }: Props): ReactElement {
                           : listShared(set.shared)}
                       </small>
                     </IonCol>
-                  </IonRow>
+                  </IonRow> */}
                 </IonLabel>
               </IonItem>
             );
