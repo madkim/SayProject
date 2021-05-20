@@ -37,6 +37,7 @@
     "redux-thunk": "^2.3.0",
     "typescript": "^4.1.3",
     "use-long-press": "^1.0.5",
+    "wavesurfer.js": "^5.0.1",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
@@ -77,6 +78,7 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
-    "@capacitor/cli": "2.4.7"
+    "@capacitor/cli": "2.4.7",
+    "@types/wavesurfer.js": "^5.0.1"
   }
 }
