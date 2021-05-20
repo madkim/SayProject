@@ -81,6 +81,9 @@ export default function SayingCards(props: Props): ReactElement {
 
   const deleteRecording = () => {
     // delete recording
+    const answer = window.confirm(
+      "Are you sure you want to delete this recording?"
+    );
   };
 
   return (
@@ -120,27 +123,26 @@ export default function SayingCards(props: Props): ReactElement {
                     )}
                   </IonCol>
                 </IonRow>
-                {saying.hasRecording && (
-                  <IonRow>
-                    <IonCol>
-                      <IonRow>
-                        <IonCol>
-                          <div id={`waveform-${saying.id}`}></div>
-                        </IonCol>
-                        <IonCol size="auto" className="ion-no-padding">
-                          <IonButton
-                            color="success"
-                            fill="outline"
-                            expand="block"
-                            onClick={() => listen(saying.id)}
-                          >
-                            <IonIcon icon={caretForwardCircle} />
-                          </IonButton>
-                        </IonCol>
-                      </IonRow>
-                    </IonCol>
-                  </IonRow>
-                )}
+
+                <IonRow>
+                  <IonCol>
+                    <IonRow>
+                      <IonCol>
+                        <div id={`waveform-${saying.id}`}></div>
+                      </IonCol>
+                      <IonCol size="auto" className="ion-no-padding">
+                        <IonButton
+                          color="success"
+                          fill="outline"
+                          expand="block"
+                          onClick={() => listen(saying.id)}
+                        >
+                          <IonIcon icon={caretForwardCircle} />
+                        </IonButton>
+                      </IonCol>
+                    </IonRow>
+                  </IonCol>
+                </IonRow>
               </IonCardHeader>
             </IonCard>
           );
