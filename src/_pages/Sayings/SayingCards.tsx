@@ -9,7 +9,13 @@ import {
   IonCardHeader,
 } from "@ionic/react";
 
-import { caretForwardCircle, stopCircle, trash } from "ionicons/icons";
+import {
+  caretForwardCircle,
+  pauseCircleOutline,
+  play,
+  stopCircle,
+  trash,
+} from "ionicons/icons";
 
 import { Saying } from "../../_helpers/types";
 import { Plugins } from "@capacitor/core";
@@ -28,6 +34,7 @@ export default function SayingCards(props: Props): ReactElement {
   const { VoiceRecorder } = Plugins;
 
   const [sayings, setSayings] = useState(props.sayings);
+  const [playing, setPlaying] = useState<boolean>(false);
   const [recording, setRecording] = useState(false);
   const [wavesurfers, setWavesurfers] = useState<any>("");
   const [selectedSaying, setSelectedSaying] = useState("");
@@ -36,9 +43,16 @@ export default function SayingCards(props: Props): ReactElement {
     setSayings(props.sayings);
   }, []);
 
+  // Listen to Recording
   const listen = (id: string) => {
-    // Listen to Recording
-    wavesurfers[id].play();
+    if (playing === true) {
+      setPlaying(false);
+      wavesurfers[id].pause();
+    } else {
+      setPlaying(true);
+      wavesurfers[id].play();
+    }
+    setSelectedSaying(id);
   };
 
   const record = (id: string) => {
@@ -57,6 +71,10 @@ export default function SayingCards(props: Props): ReactElement {
             wavesurfer.load(
               `data:audio/aac;base64,${result.value.recordDataBase64}`
             );
+
+            wavesurfer.on("finish", function () {
+              setPlaying(false);
+            });
 
             setWavesurfers({ ...wavesurfers, [id]: wavesurfer });
 
@@ -131,14 +149,25 @@ export default function SayingCards(props: Props): ReactElement {
                         <div id={`waveform-${saying.id}`}></div>
                       </IonCol>
                       <IonCol size="auto" className="ion-no-padding">
-                        <IonButton
-                          color="success"
-                          fill="outline"
-                          expand="block"
-                          onClick={() => listen(saying.id)}
-                        >
-                          <IonIcon icon={caretForwardCircle} />
-                        </IonButton>
+                        {playing && selectedSaying === saying.id ? (
+                          <IonButton
+                            color="warning"
+                            fill="outline"
+                            expand="block"
+                            onClick={() => listen(saying.id)}
+                          >
+                            <IonIcon icon={pauseCircleOutline} />
+                          </IonButton>
+                        ) : (
+                          <IonButton
+                            color="success"
+                            fill="outline"
+                            expand="block"
+                            onClick={() => listen(saying.id)}
+                          >
+                            <IonIcon icon={caretForwardCircle} />
+                          </IonButton>
+                        )}
                       </IonCol>
                     </IonRow>
                   </IonCol>
