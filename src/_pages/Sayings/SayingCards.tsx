@@ -1,29 +1,13 @@
-import {
-  IonRow,
-  IonCol,
-  IonText,
-  IonCard,
-  IonIcon,
-  IonButton,
-  IonSpinner,
-  IonCardHeader,
-} from "@ionic/react";
-
-import {
-  caretForwardCircle,
-  pauseCircleOutline,
-  play,
-  stopCircle,
-  trash,
-} from "ionicons/icons";
-
 import { Saying } from "../../_helpers/types";
 import { Plugins } from "@capacitor/core";
 import { useHistory } from "react-router-dom";
 import { RecordingData, GenericResponse } from "capacitor-voice-recorder";
 import { ReactElement, useState, useEffect } from "react";
+import { IonRow, IonCol, IonText, IonCard, IonCardHeader } from "@ionic/react";
 
 import WaveSurfer from "wavesurfer.js";
+import PlayPauseButton from "../../_stories/PlayPauseButton";
+import RecordDeleteButton from "../../_stories/RecordDeleteButton";
 
 interface Props {
   sayings: Saying[];
@@ -38,10 +22,6 @@ export default function SayingCards(props: Props): ReactElement {
   const [recording, setRecording] = useState(false);
   const [wavesurfers, setWavesurfers] = useState<any>("");
   const [selectedSaying, setSelectedSaying] = useState("");
-
-  useEffect(() => {
-    setSayings(props.sayings);
-  }, []);
 
   // Listen to Recording
   const listen = (id: string) => {
@@ -116,29 +96,14 @@ export default function SayingCards(props: Props): ReactElement {
                     <IonText color="dark">{saying.saying}</IonText>
                   </IonCol>
                   <IonCol size="auto">
-                    {saying.hasRecording ? (
-                      <IonButton
-                        color="danger"
-                        fill="outline"
-                        expand="block"
-                        onClick={deleteRecording}
-                      >
-                        <IonIcon icon={trash} />
-                      </IonButton>
-                    ) : (
-                      <IonButton
-                        fill="outline"
-                        color="danger"
-                        expand="block"
-                        onClick={() => record(saying.id)}
-                      >
-                        {recording && selectedSaying === saying.id ? (
-                          <IonSpinner color="danger" name="bubbles" />
-                        ) : (
-                          <IonIcon icon={stopCircle} />
-                        )}
-                      </IonButton>
-                    )}
+                    <RecordDeleteButton
+                      id={saying.id}
+                      record={record}
+                      recording={recording}
+                      hasRecording={saying.hasRecording}
+                      selectedSaying={selectedSaying}
+                      deleteRecording={deleteRecording}
+                    />
                   </IonCol>
                 </IonRow>
 
@@ -149,25 +114,12 @@ export default function SayingCards(props: Props): ReactElement {
                         <div id={`waveform-${saying.id}`}></div>
                       </IonCol>
                       <IonCol size="auto" className="ion-no-padding">
-                        {playing && selectedSaying === saying.id ? (
-                          <IonButton
-                            color="warning"
-                            fill="outline"
-                            expand="block"
-                            onClick={() => listen(saying.id)}
-                          >
-                            <IonIcon icon={pauseCircleOutline} />
-                          </IonButton>
-                        ) : (
-                          <IonButton
-                            color="success"
-                            fill="outline"
-                            expand="block"
-                            onClick={() => listen(saying.id)}
-                          >
-                            <IonIcon icon={caretForwardCircle} />
-                          </IonButton>
-                        )}
+                        <PlayPauseButton
+                          id={saying.id}
+                          listen={listen}
+                          playing={playing}
+                          selectedSaying={selectedSaying}
+                        />
                       </IonCol>
                     </IonRow>
                   </IonCol>
