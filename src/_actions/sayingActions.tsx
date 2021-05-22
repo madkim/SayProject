@@ -6,6 +6,7 @@ import { sayingConstants } from "../_constants/sayingConstants";
 export const sayingActions = {
   addNewSaying,
   getSayingById,
+  getAllSayings,
   deleteSayingById,
   getSayingsBySetId,
   saveSayingRecording,
@@ -49,6 +50,26 @@ function addNewSaying(saying: string, setId: string) {
       .catch((error) => {
         dispatch({
           type: sayingConstants.ADD_SAYING_FAILURE,
+          payload: false,
+        });
+      });
+  };
+}
+
+function getAllSayings() {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({ type: sayingConstants.GET_SAYING_REQUEST, payload: true });
+    sayingService
+      .getAll()
+      .then((sayings: Saying[]) => {
+        dispatch({
+          type: sayingConstants.GET_ALL_SAYINGS_SUCCESS,
+          payload: sayings,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: sayingConstants.GET_ALL_SAYINGS_FAILURE,
           payload: false,
         });
       });

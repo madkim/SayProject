@@ -3,6 +3,7 @@ import {
   IonCol,
   IonList,
   IonItem,
+  IonNote,
   IonGrid,
   IonPage,
   IonIcon,
@@ -12,28 +13,31 @@ import {
   IonButton,
   IonToolbar,
   IonContent,
-  IonButtons,
   IonSearchbar,
-  IonItemDivider,
-  IonNote,
-  IonText,
 } from "@ionic/react";
 
-import { useState } from "react";
-import {
-  checkbox,
-  checkmark,
-  closeOutline,
-  menuSharp,
-  notifications,
-} from "ionicons/icons";
-import { menuController } from "@ionic/core";
+import { Saying } from "../../_helpers/types";
+import { RootState } from "../../_reducers/rootReducer";
+import { setConstants } from "../../_constants/setConstants";
+import { notifications } from "ionicons/icons";
+import { sayingActions } from "../../_actions/sayingActions";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+import moment from "moment";
 import FadeIn from "react-fade-in";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
 const ListSayings: React.FC = () => {
+  const dispatch = useDispatch();
+  const sayings = useSelector((state: RootState) => state.saying.sayings);
+  const allSayings = useSelector((state: RootState) => state.saying.allSayings);
   const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    dispatch(sayingActions.getAllSayings());
+    dispatch({ type: setConstants.SET_INIT_STATE, payload: "" });
+  }, [sayings]);
 
   return (
     <IonPage>
@@ -65,67 +69,55 @@ const ListSayings: React.FC = () => {
             <IonRow>
               <IonCol>
                 <IonList>
-                  <IonItem detail button routerLink="/view">
-                    <IonLabel className="ion-padding-vertical">
-                      <IonRow>
-                        <IonCol size="auto">
-                          <small>April 12th 2021</small>
-                        </IonCol>
+                  {Object.keys(allSayings).length > 0 &&
+                    allSayings.map((saying: Saying) => {
+                      return (
+                        <IonItem
+                          key={saying.id}
+                          detail
+                          button
+                          routerLink={`/view/${saying.id}`}
+                        >
+                          <IonLabel className="ion-padding-vertical">
+                            <IonRow>
+                              <IonCol size="auto">
+                                <small>
+                                  {moment(saying.createdAt).format(
+                                    "MMM Do YYYY"
+                                  )}
+                                </small>
+                              </IonCol>
 
-                        <IonCol>
-                          <small>
-                            <IonNote color="danger">&nbsp;No Recording</IonNote>
-                          </small>
-                        </IonCol>
-                      </IonRow>
+                              {saying.hasRecording === false && (
+                                <IonCol>
+                                  <small>
+                                    <IonNote color="danger">
+                                      &nbsp;No Recording
+                                    </IonNote>
+                                  </small>
+                                </IonCol>
+                              )}
+                            </IonRow>
 
-                      <IonRow>
-                        <IonCol>
-                          <div className="ion-text-wrap">
-                            <h1>
-                              Hello, my name is Matthew. I am a traveler from
-                              America looking for the bathroom.
-                            </h1>
-                          </div>
-                        </IonCol>
-                      </IonRow>
+                            <IonRow>
+                              <IonCol>
+                                <div className="ion-text-wrap">
+                                  <h1>{saying.saying}</h1>
+                                </div>
+                              </IonCol>
+                            </IonRow>
 
-                      <IonRow>
-                        <IonCol className="ion-text-wrap">
-                          <small>
-                            <b>Set:</b> Chinese words and phrases
-                          </small>
-                        </IonCol>
-                      </IonRow>
-                    </IonLabel>
-                  </IonItem>
-                  <IonItem detail button routerLink="/view">
-                    <IonLabel className="ion-padding-vertical">
-                      <IonRow>
-                        <IonCol>
-                          <small>April 8th 2021</small>
-                        </IonCol>
-                      </IonRow>
-
-                      <IonRow>
-                        <IonCol>
-                          <div className="ion-text-wrap">
-                            <h1>
-                              This is another phrase I want to know how to say.
-                            </h1>
-                          </div>
-                        </IonCol>
-                      </IonRow>
-
-                      <IonRow>
-                        <IonCol className="ion-text-wrap">
-                          <small>
-                            <b>Set:</b> Chinese words and phrases
-                          </small>
-                        </IonCol>
-                      </IonRow>
-                    </IonLabel>
-                  </IonItem>
+                            <IonRow>
+                              <IonCol className="ion-text-wrap">
+                                <small>
+                                  <b>Set:</b> Chinese words and phrases
+                                </small>
+                              </IonCol>
+                            </IonRow>
+                          </IonLabel>
+                        </IonItem>
+                      );
+                    })}
                 </IonList>
               </IonCol>
             </IonRow>

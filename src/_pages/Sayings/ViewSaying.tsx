@@ -39,10 +39,10 @@ export default function ViewSaying({}: Props): ReactElement {
   const [playing, setPlaying] = useState(false);
   const [wavesurfer, setWavesurfer] = useState<any>(null);
 
+  const dispatch = useDispatch();
   const set = useSelector((state: RootState) => state.set.currentSet);
   const saying = useSelector((state: RootState) => state.saying.saying);
   const loading = useSelector((state: RootState) => state.saying.loading);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(sayingActions.getSayingById(id));
@@ -86,6 +86,7 @@ export default function ViewSaying({}: Props): ReactElement {
       wavesurfer.destroy();
       setWavesurfer(null);
     }
+    set.id ? goBack(`/set/${set.id}`) : goBack("/list");
   };
 
   return (
@@ -94,11 +95,7 @@ export default function ViewSaying({}: Props): ReactElement {
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton
-                routerLink={`/set/${set.id}`}
-                routerDirection="back"
-                onClick={cleanUp}
-              >
+              <IonButton onClick={cleanUp}>
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
@@ -183,8 +180,6 @@ export default function ViewSaying({}: Props): ReactElement {
                 color="primary"
                 expand="block"
                 className="ion-padding-horizontal"
-                routerLink={`/set/${set.id}`}
-                routerDirection="back"
                 onClick={cleanUp}
               >
                 Done

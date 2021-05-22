@@ -3,8 +3,9 @@ import { sayingConstants } from "../_constants/sayingConstants";
 
 export const initState: {
   saying: Saying;
-  sayings: Saying[];
   loading: boolean;
+  sayings: Saying[];
+  allSayings: Saying[];
 } = {
   saying: {
     id: "",
@@ -16,10 +17,26 @@ export const initState: {
     hasRecording: false,
   },
   sayings: [],
+  allSayings: [],
   loading: false,
 };
 
 export function sayingReducer(state = initState, action: Action) {
+  if (action.type === sayingConstants.GET_ALL_SAYINGS_SUCCESS) {
+    return (state = {
+      ...state,
+      loading: false,
+      allSayings: action.payload,
+    });
+  }
+
+  if (action.type === sayingConstants.GET_ALL_SAYINGS_FAILURE) {
+    return (state = {
+      ...state,
+      loading: false,
+    });
+  }
+
   if (action.type === sayingConstants.ADD_SAYING_SUCCESS) {
     return (state = {
       ...state,

@@ -12,6 +12,14 @@ export const initState: {
 };
 
 export function setReducer(state = initState, action: Action) {
+  if (action.type === setConstants.SET_INIT_STATE) {
+    return (state = {
+      ...state,
+      loading: false,
+      currentSet: { id: "", name: "", owner: "", count: 0, shared: [] },
+    });
+  }
+
   if (action.type === setConstants.GET_SET_REQUEST) {
     return (state = {
       ...state,

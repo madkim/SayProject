@@ -6,12 +6,53 @@ import moment from "moment";
 import firebase from "firebase/app";
 
 export const sayingService = {
+  getAll,
   addSaying,
   getSaying,
   getSayings,
   deleteSaying,
   saveRecording,
 };
+
+function getAll() {
+  return new Promise(async (resolve: (sayings: Saying[]) => void) => {
+    const userId = localStorage.getItem("uid");
+
+    if (userId !== null) {
+      const sayingsRef = await db
+        .collection("sayings")
+        .where("owner", "==", userId)
+        .orderBy("createdAt", "desc")
+        .get();
+
+      const sayings = sayingsRef.docs.map(async (saying) => {
+        let recording = "";
+
+        if (saying.data().hasRecording) {
+          recording = await fireStorage
+            .child(`sayings/${saying.data().set}/${saying.id}`)
+            .getDownloadURL();
+        }
+
+        return {
+          id: saying.id,
+          set: saying.data().set,
+          owner: saying.data().owner,
+          saying: saying.data().saying,
+          createdAt: saying.data().createdAt.toDate(),
+          recording: recording,
+          hasRecording: saying.data().hasRecording,
+        };
+      });
+
+      Promise.all(sayings).then((values) => {
+        resolve(values);
+      });
+    } else {
+      //logout
+    }
+  });
+}
 
 function saveRecording(recording: string, sayingId: string, setId: string) {
   return new Promise(async (resolve: (saying: Saying) => void) => {
