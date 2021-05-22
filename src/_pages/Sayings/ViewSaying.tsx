@@ -6,9 +6,7 @@ import {
   IonPage,
   IonIcon,
   IonGrid,
-  IonItem,
   IonList,
-  IonLabel,
   IonTitle,
   IonButton,
   IonHeader,
@@ -17,37 +15,52 @@ import {
   IonButtons,
   IonCardHeader,
   IonCardContent,
+  IonLoading,
 } from "@ionic/react";
 
-import {
-  chevronBack,
-  stopCircleSharp,
-  caretForwardCircle,
-} from "ionicons/icons";
-
+import { useParams } from "react-router";
 import { RootState } from "../../_reducers/rootReducer";
 import { NavContext } from "@ionic/react";
 import { sayingActions } from "../../_actions/sayingActions";
-import { useParams, useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import React, { ReactElement, useEffect, useContext } from "react";
+import { chevronBack, stopCircleSharp } from "ionicons/icons";
+import { ReactElement, useEffect, useContext, useState } from "react";
 
+import WaveSurfer from "wavesurfer.js";
 import EditButton from "../../_stories/EditButton";
+import PlayPauseButton from "../../_stories/PlayPauseButton";
 
 interface Props {}
 
 export default function ViewSaying({}: Props): ReactElement {
-  const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
   const { goBack } = useContext(NavContext);
 
+  const [playing, setPlaying] = useState(false);
+  const [wavesurfer, setWavesurfer] = useState<any>(null);
+
   const set = useSelector((state: RootState) => state.set.currentSet);
   const saying = useSelector((state: RootState) => state.saying.saying);
-  const history = useHistory();
+  const loading = useSelector((state: RootState) => state.saying.loading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(sayingActions.getSayingById(id));
   }, []);
+
+  useEffect(() => {
+    if (saying.hasRecording === true && wavesurfer === null) {
+      const wavesurfer = WaveSurfer.create({
+        container: "#waveform",
+      });
+      wavesurfer.load(saying.recording);
+
+      wavesurfer.on("finish", function () {
+        setPlaying(false);
+      });
+      setWavesurfer(wavesurfer);
+    }
+  }, [saying]);
 
   const deleteSaying = () => {
     const answer = window.confirm("Are you sure you want to delete?");
@@ -58,13 +71,34 @@ export default function ViewSaying({}: Props): ReactElement {
     }
   };
 
+  const listen = (id: string) => {
+    if (playing === true) {
+      setPlaying(false);
+      wavesurfer.pause();
+    } else {
+      setPlaying(true);
+      wavesurfer.play();
+    }
+  };
+
+  const cleanUp = () => {
+    if (wavesurfer !== null) {
+      wavesurfer.destroy();
+      setWavesurfer(null);
+    }
+  };
+
   return (
     <IonPage>
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton routerLink={`/set/${set.id}`} routerDirection="back">
+              <IonButton
+                routerLink={`/set/${set.id}`}
+                routerDirection="back"
+                onClick={cleanUp}
+              >
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
@@ -77,63 +111,72 @@ export default function ViewSaying({}: Props): ReactElement {
           </IonToolbar>
         </IonHeader>
 
-        <IonCard>
-          <IonCardHeader color="light" style={{ fontSize: "large" }}>
-            How do you say:
-          </IonCardHeader>
-          <IonCardContent>
-            <br />
-            <IonText color="dark">
-              <h1>{saying && saying.saying}</h1>
-            </IonText>
-          </IonCardContent>
-        </IonCard>
+        <IonLoading
+          isOpen={loading}
+          message={"Please wait..."}
+          duration={5000}
+        />
 
-        <IonCard>
-          <IonCardHeader color="light" style={{ fontSize: "large" }}>
-            Recordings:
-          </IonCardHeader>
-          <IonCardContent>
-            <br />
-            <IonList>
-              <IonRow>
-                <IonCol>
-                  <IonItem lines="full" style={{ padding: ".5em" }}>
-                    <IonLabel>Pokémon Yellow</IonLabel>
-                  </IonItem>
-                </IonCol>
-                <IonCol size="auto">
-                  <IonButton color="success" fill="outline">
-                    <IonIcon icon={caretForwardCircle} />
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-              <IonRow>
-                <IonCol>
-                  <IonItem lines="full" style={{ padding: ".5em" }}>
-                    <IonLabel>Mega Man X</IonLabel>
-                  </IonItem>
-                </IonCol>
-                <IonCol size="auto">
-                  <IonButton color="success" fill="outline">
-                    <IonIcon icon={caretForwardCircle} />
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-              <IonRow>
-                <IonCol>
+        <div style={{ height: window.screen.height / 1.4 }}>
+          <IonCard>
+            <IonCardHeader color="light" style={{ fontSize: "large" }}>
+              How do you say:
+            </IonCardHeader>
+            <IonCardContent>
+              <br />
+              <IonText color="dark">
+                <h1>{saying && saying.saying}</h1>
+              </IonText>
+            </IonCardContent>
+          </IonCard>
+
+          <IonCard>
+            <IonCardHeader color="light" style={{ fontSize: "large" }}>
+              Recording:
+            </IonCardHeader>
+            <IonCardContent>
+              <br />
+              {saying.hasRecording ? (
+                <IonList>
+                  <IonRow>
+                    <IonCol>
+                      <div id="waveform"></div>
+                    </IonCol>
+                  </IonRow>
                   <br />
-                  <IonButton color="danger" expand="block" fill="outline">
-                    <IonIcon icon={stopCircleSharp} /> &nbsp;Add Recording
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-            </IonList>
-          </IonCardContent>
-        </IonCard>
+                  <IonRow>
+                    <IonCol>
+                      <IonButton color="danger" expand="block" fill="outline">
+                        <IonIcon icon={stopCircleSharp} /> &nbsp;Re-Record
+                      </IonButton>
+                    </IonCol>
+                    <IonCol size="6">
+                      <PlayPauseButton
+                        id={saying.id}
+                        listen={listen}
+                        playing={playing}
+                        selectedSaying={saying.id}
+                      />
+                    </IonCol>
+                  </IonRow>
+                </IonList>
+              ) : (
+                <IonList>
+                  <IonRow>
+                    <IonCol>
+                      <IonButton color="danger" expand="block" fill="outline">
+                        <IonIcon icon={stopCircleSharp} /> &nbsp;Add Recording
+                      </IonButton>
+                    </IonCol>
+                  </IonRow>
+                </IonList>
+              )}
+            </IonCardContent>
+          </IonCard>
+        </div>
 
         <IonGrid>
-          <IonRow style={{ paddingTop: "4em" }}>
+          <IonRow>
             <IonCol>
               <IonButton
                 fill="outline"
@@ -142,6 +185,7 @@ export default function ViewSaying({}: Props): ReactElement {
                 className="ion-padding-horizontal"
                 routerLink={`/set/${set.id}`}
                 routerDirection="back"
+                onClick={cleanUp}
               >
                 Done
               </IonButton>
