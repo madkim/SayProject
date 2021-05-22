@@ -8,7 +8,32 @@ export const sayingActions = {
   getSayingById,
   deleteSayingById,
   getSayingsBySetId,
+  saveSayingRecording,
 };
+
+function saveSayingRecording(
+  recording: string,
+  sayingId: string,
+  setId: string
+) {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({ type: sayingConstants.SAVE_RECORDING_REQUEST, payload: true });
+    sayingService
+      .saveRecording(recording, sayingId, setId)
+      .then((saying: Saying) => {
+        dispatch({
+          type: sayingConstants.SAVE_RECORDING_SUCCESS,
+          payload: saying,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: sayingConstants.SAVE_RECORDING_FAILURE,
+          payload: false,
+        });
+      });
+  };
+}
 
 function addNewSaying(saying: string, setId: string) {
   return (dispatch: Dispatch<Action>) => {

@@ -43,7 +43,6 @@ function logUserIn(email: string, password: string) {
     authService
       .login(email, password)
       .then((user) => {
-        console.log(user);
         dispatch({ type: authConstants.USER_LOGIN_SUCCESS, payload: true });
       })
       .catch((error) => {
@@ -57,6 +56,8 @@ function logUserIn(email: string, password: string) {
 
 function logUserOut() {
   return (dispatch: Dispatch<Action>) => {
+    localStorage.removeItem("uid");
+    localStorage.removeItem("dispalyName");
     dispatch({
       type: authConstants.USER_LOGOUT,
       payload: false,

@@ -13,6 +13,7 @@ export interface Saying {
   owner: string;
   saying: string;
   createdAt: string;
+  recording: string;
   hasRecording: boolean;
 }
 

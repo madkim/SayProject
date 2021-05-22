@@ -1,7 +1,5 @@
 import { db } from "../_helpers/firebase";
-import { fireAuth } from "../_helpers/firebase";
 import { Set, Sets } from "../_helpers/types";
-import moment from "moment";
 
 export const setService = {
   add,
@@ -11,9 +9,9 @@ export const setService = {
 
 function getSet(id: string) {
   return new Promise(async (resolve: (set: Set) => void, reject) => {
-    const user = fireAuth.currentUser;
+    const userId = localStorage.getItem("uid");
 
-    if (user) {
+    if (userId) {
       const set = await db.collection("sets").doc(id).get();
 
       const sayings = await db
@@ -36,12 +34,12 @@ function getSet(id: string) {
 
 function getSets() {
   return new Promise(async (resolve: (sets: Sets) => void, reject) => {
-    const user = fireAuth.currentUser;
+    const userId = localStorage.getItem("uid");
 
-    if (user) {
+    if (userId !== null) {
       const setsRef = await db
         .collection("sets")
-        .where("owner", "==", user.uid)
+        .where("owner", "==", userId)
         .get();
 
       let sets = setsRef.docs.map(async (set) => {
@@ -71,16 +69,17 @@ function getSets() {
 
 function add(name: string, friends: string[]) {
   return new Promise((resolve: (user: any) => void, reject) => {
-    const user = fireAuth.currentUser;
+    const userId = localStorage.getItem("uid");
+    const displayName = localStorage.getItem("displayName");
 
-    if (user) {
+    if (userId !== null) {
       db.collection("sets")
-        .add({ name: name, owner: user.uid, shared: friends })
+        .add({ name: name, owner: userId, shared: friends })
         .then((setRef) => {
           resolve({
             id: setRef.id,
             name: name,
-            owner: user?.displayName,
+            owner: displayName,
             shared: friends,
           });
         });

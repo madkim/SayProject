@@ -8,11 +8,12 @@ import {
 
 import LoginForm from "./LoginForm";
 
-import { useState } from "react";
 import { DynObject } from "../../_helpers/types";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../_actions/authActions";
+import { authConstants } from "../../_constants/authConstants";
+import { useState, useEffect } from "react";
 
 interface Props {}
 
@@ -23,6 +24,12 @@ const Login: React.FC<Props> = (props: Props) => {
   const [errors, setErrors] = useState({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("uid") !== null) {
+      dispatch({ type: authConstants.USER_LOGIN_SUCCESS, payload: true });
+    }
+  }, []);
 
   const validateLogin = () => {
     let errors: DynObject = {};

@@ -12,6 +12,7 @@ export const initState: {
     owner: "",
     saying: "",
     createdAt: "",
+    recording: "",
     hasRecording: false,
   },
   sayings: [],

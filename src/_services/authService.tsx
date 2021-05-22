@@ -1,5 +1,5 @@
-import { fireAuth } from "../_helpers/firebase";
 import { db } from "../_helpers/firebase";
+import { fireAuth } from "../_helpers/firebase";
 
 export const authService = {
   login,
@@ -39,6 +39,9 @@ function login(email: string, password: string) {
       .then((userCredential: any) => {
         // Signed in
         const user = userCredential.user;
+        localStorage.setItem("uid", user.uid);
+        localStorage.setItem("dispalyName", user.displayName);
+
         resolve(user);
       })
       .catch((error: any) => {

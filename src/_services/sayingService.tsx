@@ -1,24 +1,48 @@
 import { db } from "../_helpers/firebase";
 import { Saying } from "../_helpers/types";
-import { fireAuth } from "../_helpers/firebase";
+import { fireStorage } from "../_helpers/firebase";
+
 import moment from "moment";
+import firebase from "firebase/app";
 
 export const sayingService = {
   addSaying,
   getSaying,
   getSayings,
   deleteSaying,
+  saveRecording,
 };
+
+function saveRecording(recording: string, sayingId: string, setId: string) {
+  return new Promise(async (resolve: (saying: Saying) => void) => {
+    const userId = localStorage.getItem("uid");
+
+    if (userId !== null) {
+      fireStorage
+        .child(`sayings/${setId}/${sayingId}`)
+        .putString(recording, firebase.storage.StringFormat.DATA_URL)
+        .then(() => {
+          db.collection("sayings").doc(sayingId).update({ hasRecording: true });
+          getSayings(setId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      // logout
+    }
+  });
+}
 
 function addSaying(saying: string, setId: string) {
   return new Promise(async (resolve: (saying: Saying) => void, reject) => {
-    const user = fireAuth.currentUser;
+    const userId = localStorage.getItem("uid");
 
-    if (user) {
+    if (userId !== null) {
       const sayingRef = await db.collection("sayings").add({
         createdAt: new Date(),
         hasRecording: false,
-        owner: user.uid,
+        owner: userId,
         saying: saying,
         set: setId,
       });
@@ -26,9 +50,10 @@ function addSaying(saying: string, setId: string) {
       resolve({
         id: sayingRef.id,
         set: setId,
-        owner: user.uid,
+        owner: userId,
         saying: saying,
         createdAt: moment(new Date()).format("MMM Do YYYY"),
+        recording: "",
         hasRecording: false,
       });
     } else {
@@ -41,12 +66,21 @@ function getSaying(id: string) {
   return new Promise(async (resolve: (saying: Saying) => void, reject) => {
     const sayingRef = await db.collection("sayings").doc(id).get();
 
+    let recording = "";
+
+    if (sayingRef.data()!.hasRecording) {
+      recording = await fireStorage
+        .child(`sayings/${sayingRef.data()!.set}/${id}`)
+        .getDownloadURL();
+    }
+
     resolve({
       id: sayingRef.id,
       set: sayingRef.data()!.set,
       owner: sayingRef.data()!.owner,
       saying: sayingRef.data()!.saying,
       createdAt: sayingRef.data()!.createdAt.toDate(),
+      recording: recording,
       hasRecording: sayingRef.data()!.hasRecording,
     });
   });
@@ -59,17 +93,29 @@ function getSayings(id: string) {
       .where("set", "==", id)
       .get();
 
-    const sayings = sayingsRef.docs.map((saying) => {
+    const sayings = sayingsRef.docs.map(async (saying) => {
+      let recording = "";
+
+      if (saying.data().hasRecording) {
+        recording = await fireStorage
+          .child(`sayings/${saying.data().set}/${saying.id}`)
+          .getDownloadURL();
+      }
+
       return {
         id: saying.id,
         set: saying.data().set,
         owner: saying.data().owner,
         saying: saying.data().saying,
         createdAt: saying.data().createdAt.toDate(),
+        recording: recording,
         hasRecording: saying.data().hasRecording,
       };
     });
-    resolve(sayings);
+
+    Promise.all(sayings).then((values) => {
+      resolve(values);
+    });
   });
 }
 

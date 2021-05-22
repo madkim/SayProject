@@ -1,6 +1,8 @@
 import { Saying } from "../../_helpers/types";
 import { Plugins } from "@capacitor/core";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { sayingActions } from "../../_actions/sayingActions";
 import { RecordingData, GenericResponse } from "capacitor-voice-recorder";
 import { ReactElement, useState, useEffect } from "react";
 import { IonRow, IonCol, IonText, IonCard, IonCardHeader } from "@ionic/react";
@@ -10,20 +12,36 @@ import PlayPauseButton from "../../_stories/PlayPauseButton";
 import RecordDeleteButton from "../../_stories/RecordDeleteButton";
 
 interface Props {
+  setId: string;
   sayings: Saying[];
 }
 
 export default function SayingCards(props: Props): ReactElement {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { VoiceRecorder } = Plugins;
 
-  const [sayings, setSayings] = useState(props.sayings);
   const [playing, setPlaying] = useState<boolean>(false);
   const [recording, setRecording] = useState(false);
   const [wavesurfers, setWavesurfers] = useState<any>("");
   const [selectedSaying, setSelectedSaying] = useState("");
 
-  // Listen to Recording
+  useEffect(() => {
+    props.sayings.forEach((saying) => {
+      console.log(saying);
+      if (saying.hasRecording === true) {
+        const wavesurfer = WaveSurfer.create({
+          container: `#waveform-${saying.id}`,
+        });
+        wavesurfer.load(saying.recording);
+
+        wavesurfer.on("finish", function () {
+          setPlaying(false);
+        });
+      }
+    });
+  }, []);
+
   const listen = (id: string) => {
     if (playing === true) {
       setPlaying(false);
@@ -48,23 +66,17 @@ export default function SayingCards(props: Props): ReactElement {
               container: `#waveform-${id}`,
             });
 
-            wavesurfer.load(
-              `data:audio/aac;base64,${result.value.recordDataBase64}`
-            );
+            const audio = `data:audio/aac;base64,${result.value.recordDataBase64}`;
+
+            saveRecording(audio, id, props.setId);
+
+            wavesurfer.load(audio);
 
             wavesurfer.on("finish", function () {
               setPlaying(false);
             });
 
             setWavesurfers({ ...wavesurfers, [id]: wavesurfer });
-
-            let updateSaying = sayings.find((saying) => saying.id === id);
-            const updatedSayings = sayings.filter((saying) => saying.id !== id);
-
-            if (updateSaying) {
-              updateSaying["hasRecording"] = true;
-              setSayings([...updatedSayings, { ...updateSaying }]);
-            }
           })
           .catch((error) => console.log(error));
       }
@@ -78,16 +90,23 @@ export default function SayingCards(props: Props): ReactElement {
   };
 
   const deleteRecording = () => {
-    // delete recording
     const answer = window.confirm(
       "Are you sure you want to delete this recording?"
     );
   };
 
+  const saveRecording = (
+    recording: string,
+    sayingId: string,
+    setId: string
+  ) => {
+    dispatch(sayingActions.saveSayingRecording(recording, sayingId, setId));
+  };
+
   return (
     <>
-      {Object.keys(sayings).length > 0 &&
-        sayings.map((saying) => {
+      {Object.keys(props.sayings).length > 0 &&
+        props.sayings.map((saying) => {
           return (
             <IonCard key={saying.id}>
               <IonCardHeader style={{ fontSize: "large", fontWeight: "700" }}>

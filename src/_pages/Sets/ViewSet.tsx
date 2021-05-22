@@ -70,7 +70,7 @@ const ViewSet: React.FC = () => {
         ) : (
           <FadeIn>
             <Ask addNewSaying={addNewSaying} />
-            <SayingCards sayings={sayings} />
+            <SayingCards sayings={sayings} setId={id} />
           </FadeIn>
         )}
       </IonContent>
