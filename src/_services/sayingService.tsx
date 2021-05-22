@@ -26,6 +26,7 @@ function getAll() {
         .get();
 
       const sayings = sayingsRef.docs.map(async (saying) => {
+        let setName = "";
         let recording = "";
 
         if (saying.data().hasRecording) {
@@ -34,9 +35,14 @@ function getAll() {
             .getDownloadURL();
         }
 
+        if (saying.data().set) {
+          const set = await db.collection("sets").doc(saying.data().set).get();
+          setName = set.data()!.name;
+        }
+
         return {
           id: saying.id,
-          set: saying.data().set,
+          set: setName,
           owner: saying.data().owner,
           saying: saying.data().saying,
           createdAt: saying.data().createdAt.toDate(),

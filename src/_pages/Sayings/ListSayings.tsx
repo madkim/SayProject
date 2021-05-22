@@ -35,8 +35,11 @@ const ListSayings: React.FC = () => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    dispatch(sayingActions.getAllSayings());
     dispatch({ type: setConstants.SET_INIT_STATE, payload: "" });
+  }, []);
+
+  useEffect(() => {
+    dispatch(sayingActions.getAllSayings());
   }, [sayings]);
 
   return (
@@ -110,7 +113,7 @@ const ListSayings: React.FC = () => {
                             <IonRow>
                               <IonCol className="ion-text-wrap">
                                 <small>
-                                  <b>Set:</b> Chinese words and phrases
+                                  <b>Set:</b> {saying.set}
                                 </small>
                               </IonCol>
                             </IonRow>
