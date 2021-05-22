@@ -41,7 +41,7 @@ export default function ListSets({ sets, loading }: Props): ReactElement {
       <FadeIn>
         <IonRow>
           <IonCol className="ion-margin-top ion-margin-horizontal">
-            <IonCard className="ion-no-margin" style={{ color: "black" }}>
+            <div className="ion-no-margin" style={{ color: "black" }}>
               <IonSegment
                 value={viewType}
                 onIonChange={(e) => setViewType(e.detail.value!)}
@@ -53,7 +53,7 @@ export default function ListSets({ sets, loading }: Props): ReactElement {
                   <IonIcon icon={listCircle} />
                 </IonSegmentButton>
               </IonSegment>
-            </IonCard>
+            </div>
           </IonCol>
           <IonCol className="ion-margin-horizontal ion-margin-top">
             <IonCard className="ion-no-margin" style={{ color: "black" }}>

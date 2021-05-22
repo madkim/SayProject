@@ -32,8 +32,8 @@ const ViewSet: React.FC = () => {
   const sayings = useSelector((state: RootState) => state.saying.sayings);
 
   useEffect(() => {
-    dispatch(setActions.getSetById(id));
     dispatch(sayingActions.getSayingsBySetId(id));
+    dispatch(setActions.getSetById(id));
   }, []);
 
   const addNewSaying = (saying: string) => {

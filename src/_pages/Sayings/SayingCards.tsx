@@ -23,25 +23,23 @@ export default function SayingCards(props: Props): ReactElement {
 
   const [playing, setPlaying] = useState<boolean>(false);
   const [recording, setRecording] = useState(false);
-  const [wavesurfers, setWavesurfers] = useState<any>("");
+  const [wavesurfers, setWavesurfers] = useState<any>({});
   const [selectedSaying, setSelectedSaying] = useState("");
 
   useEffect(() => {
     props.sayings.forEach((saying) => {
-      console.log(saying);
-      if (saying.hasRecording === true) {
+      if (saying.hasRecording === true && !(saying.id in wavesurfers)) {
         const wavesurfer = WaveSurfer.create({
           container: `#waveform-${saying.id}`,
         });
         wavesurfer.load(saying.recording);
-
         wavesurfer.on("finish", function () {
           setPlaying(false);
         });
         setWavesurfers({ ...wavesurfers, [saying.id]: wavesurfer });
       }
     });
-  }, []);
+  }, [props.sayings]);
 
   const listen = (id: string) => {
     if (playing === true) {
