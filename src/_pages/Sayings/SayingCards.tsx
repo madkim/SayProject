@@ -38,6 +38,7 @@ export default function SayingCards(props: Props): ReactElement {
         wavesurfer.on("finish", function () {
           setPlaying(false);
         });
+        setWavesurfers({ ...wavesurfers, [saying.id]: wavesurfer });
       }
     });
   }, []);
