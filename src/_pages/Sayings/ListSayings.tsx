@@ -33,7 +33,7 @@ const ListSayings: React.FC = () => {
   const dispatch = useDispatch();
   const sayings = useSelector((state: RootState) => state.saying.sayings);
   const allSayings = useSelector((state: RootState) => state.saying.allSayings);
-  const [searchText, setSearchText] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     dispatch({ type: setConstants.SET_INIT_STATE, payload: "" });
@@ -65,8 +65,8 @@ const ListSayings: React.FC = () => {
             <IonRow>
               <IonCol>
                 <IonSearchbar
-                  value={searchText}
-                  onIonChange={(e) => setSearchText(e.detail.value!)}
+                  value={search}
+                  onIonChange={(e) => setSearch(e.detail.value!)}
                 ></IonSearchbar>
               </IonCol>
             </IonRow>
@@ -74,54 +74,63 @@ const ListSayings: React.FC = () => {
               <IonCol>
                 <IonList>
                   {Object.keys(allSayings).length > 0 &&
-                    allSayings.map((saying: Saying) => {
-                      return (
-                        <IonItem
-                          key={saying.id}
-                          detail
-                          button
-                          routerLink={`/view/${saying.id}`}
-                        >
-                          <IonLabel className="ion-padding-vertical">
-                            <IonRow>
-                              <IonCol size="auto">
-                                <small>
-                                  {moment(saying.createdAt).format(
-                                    "MMM Do YYYY"
-                                  )}
-                                </small>
-                              </IonCol>
-
-                              {saying.hasRecording === false && (
-                                <IonCol>
+                    allSayings
+                      .filter((saying: Saying) =>
+                        search !== ""
+                          ? saying.saying
+                              .toLowerCase()
+                              .trim()
+                              .includes(search.toLowerCase().trim())
+                          : saying
+                      )
+                      .map((saying: Saying) => {
+                        return (
+                          <IonItem
+                            key={saying.id}
+                            detail
+                            button
+                            routerLink={`/view/${saying.id}`}
+                          >
+                            <IonLabel className="ion-padding-vertical">
+                              <IonRow>
+                                <IonCol size="auto">
                                   <small>
-                                    <IonNote color="danger">
-                                      &nbsp;No Recording
-                                    </IonNote>
+                                    {moment(saying.createdAt).format(
+                                      "MMM Do YYYY"
+                                    )}
                                   </small>
                                 </IonCol>
-                              )}
-                            </IonRow>
 
-                            <IonRow>
-                              <IonCol>
-                                <div className="ion-text-wrap">
-                                  <h1>{saying.saying}</h1>
-                                </div>
-                              </IonCol>
-                            </IonRow>
+                                {saying.hasRecording === false && (
+                                  <IonCol>
+                                    <small>
+                                      <IonNote color="danger">
+                                        &nbsp;No Recording
+                                      </IonNote>
+                                    </small>
+                                  </IonCol>
+                                )}
+                              </IonRow>
 
-                            <IonRow>
-                              <IonCol className="ion-text-wrap">
-                                <small>
-                                  <b>Set:</b> {saying.set}
-                                </small>
-                              </IonCol>
-                            </IonRow>
-                          </IonLabel>
-                        </IonItem>
-                      );
-                    })}
+                              <IonRow>
+                                <IonCol>
+                                  <div className="ion-text-wrap">
+                                    <h1>{saying.saying}</h1>
+                                  </div>
+                                </IonCol>
+                              </IonRow>
+
+                              <IonRow>
+                                <IonCol className="ion-text-wrap">
+                                  <small>
+                                    <b>Set:</b> {saying.set}
+                                  </small>
+                                </IonCol>
+                              </IonRow>
+                            </IonLabel>
+                          </IonItem>
+                        );
+                      })}
                 </IonList>
               </IonCol>
             </IonRow>
