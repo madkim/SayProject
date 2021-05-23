@@ -49,7 +49,11 @@ export default function ViewSaying({}: Props): ReactElement {
   }, []);
 
   useEffect(() => {
-    if (saying.hasRecording === true && wavesurfer === null) {
+    if (
+      saying.hasRecording === true &&
+      wavesurfer === null &&
+      saying.id === id
+    ) {
       const wavesurfer = WaveSurfer.create({
         container: "#waveform",
       });
@@ -114,7 +118,7 @@ export default function ViewSaying({}: Props): ReactElement {
           duration={5000}
         />
 
-        <div style={{ height: window.screen.height / 1.4 }}>
+        <div style={{ height: window.screen.height / 1.5 }}>
           <IonCard>
             <IonCardHeader color="light" style={{ fontSize: "large" }}>
               How do you say:

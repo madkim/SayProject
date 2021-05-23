@@ -37,6 +37,14 @@ export function sayingReducer(state = initState, action: Action) {
     });
   }
 
+  if (action.type === sayingConstants.SAVE_RECORDING_SUCCESS) {
+    return (state = {
+      ...state,
+      loading: false,
+      sayings: action.payload,
+    });
+  }
+
   if (action.type === sayingConstants.ADD_SAYING_SUCCESS) {
     return (state = {
       ...state,

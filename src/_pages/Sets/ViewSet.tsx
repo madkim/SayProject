@@ -21,6 +21,7 @@ import { sayingActions } from "../../_actions/sayingActions";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { chevronBack, close, searchOutline } from "ionicons/icons";
+import { sayingConstants } from "../../_constants/sayingConstants";
 
 const ViewSet: React.FC = () => {
   const { id } = useParams<{ id: string }>();

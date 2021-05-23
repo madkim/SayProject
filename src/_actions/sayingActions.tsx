@@ -5,8 +5,8 @@ import { sayingConstants } from "../_constants/sayingConstants";
 
 export const sayingActions = {
   addNewSaying,
-  getSayingById,
   getAllSayings,
+  getSayingById,
   deleteSayingById,
   getSayingsBySetId,
   saveSayingRecording,
@@ -21,10 +21,10 @@ function saveSayingRecording(
     dispatch({ type: sayingConstants.SAVE_RECORDING_REQUEST, payload: true });
     sayingService
       .saveRecording(recording, sayingId, setId)
-      .then((saying: Saying) => {
+      .then((sayings: Saying[]) => {
         dispatch({
           type: sayingConstants.SAVE_RECORDING_SUCCESS,
-          payload: saying,
+          payload: sayings,
         });
       })
       .catch((error) => {

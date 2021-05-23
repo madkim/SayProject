@@ -61,16 +61,17 @@ function getAll() {
 }
 
 function saveRecording(recording: string, sayingId: string, setId: string) {
-  return new Promise(async (resolve: (saying: Saying) => void) => {
+  return new Promise(async (resolve: (sayings: Saying[]) => void) => {
     const userId = localStorage.getItem("uid");
 
     if (userId !== null) {
       fireStorage
         .child(`sayings/${setId}/${sayingId}`)
         .putString(recording, firebase.storage.StringFormat.DATA_URL)
-        .then(() => {
+        .then(async () => {
           db.collection("sayings").doc(sayingId).update({ hasRecording: true });
-          getSayings(setId);
+          const sayings = await getSayings(setId);
+          resolve(sayings);
         })
         .catch((error) => {
           console.log(error);

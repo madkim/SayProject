@@ -21,6 +21,7 @@ import { RootState } from "../../_reducers/rootReducer";
 import { setConstants } from "../../_constants/setConstants";
 import { notifications } from "ionicons/icons";
 import { sayingActions } from "../../_actions/sayingActions";
+import { sayingConstants } from "../../_constants/sayingConstants";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 

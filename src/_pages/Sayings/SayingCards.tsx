@@ -29,7 +29,6 @@ export default function SayingCards(props: Props): ReactElement {
   useEffect(() => {
     props.sayings.forEach((saying) => {
       if (saying.hasRecording === true && !(saying.id in wavesurfers)) {
-        console.log(saying.recording);
         const wavesurfer = WaveSurfer.create({
           container: `#waveform-${saying.id}`,
         });
@@ -126,13 +125,13 @@ export default function SayingCards(props: Props): ReactElement {
                   </IonCol>
                 </IonRow>
 
-                {saying.hasRecording && (
-                  <IonRow>
-                    <IonCol>
-                      <IonRow>
-                        <IonCol>
-                          <div id={`waveform-${saying.id}`}></div>
-                        </IonCol>
+                <IonRow>
+                  <IonCol>
+                    <IonRow>
+                      <IonCol>
+                        <div id={`waveform-${saying.id}`}></div>
+                      </IonCol>
+                      {saying.hasRecording && (
                         <IonCol size="auto" className="ion-no-padding">
                           <PlayPauseButton
                             id={saying.id}
@@ -141,10 +140,10 @@ export default function SayingCards(props: Props): ReactElement {
                             selectedSaying={selectedSaying}
                           />
                         </IonCol>
-                      </IonRow>
-                    </IonCol>
-                  </IonRow>
-                )}
+                      )}
+                    </IonRow>
+                  </IonCol>
+                </IonRow>
               </IonCardHeader>
             </IonCard>
           );
