@@ -13,6 +13,7 @@ export const sayingService = {
   getSayings,
   deleteSaying,
   saveRecording,
+  deleteRecording,
 };
 
 function getAll() {
@@ -62,8 +63,31 @@ function getAll() {
   });
 }
 
+function deleteRecording(sayingId: string, setId: string) {
+  return new Promise((resolve: (saying: Saying) => void) => {
+    const userId = localStorage.getItem("uid");
+
+    if (userId !== null) {
+      fireStorage
+        .child(`sayings/${setId}/${sayingId}`)
+        .delete()
+        .then(async () => {
+          db.collection("sayings")
+            .doc(sayingId)
+            .update({ hasRecording: false });
+          getSayings(setId);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      // logout
+    }
+  });
+}
+
 function saveRecording(recording: string, sayingId: string, setId: string) {
-  return new Promise(async (resolve: (saying: Saying) => void) => {
+  return new Promise((resolve: (saying: Saying) => void) => {
     const userId = localStorage.getItem("uid");
 
     if (userId !== null) {

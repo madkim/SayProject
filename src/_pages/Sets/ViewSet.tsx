@@ -7,10 +7,10 @@ import {
   IonContent,
   IonToolbar,
   IonLoading,
+  useIonAlert,
 } from "@ionic/react";
 
 import Ask from "../Sayings/AskSaying";
-import FadeIn from "react-fade-in";
 import WaveSurfer from "wavesurfer.js";
 import SayingCards from "../Sayings/SayingCards";
 import SearchSayings from "../Sayings/SearchSayings";
@@ -28,11 +28,13 @@ import { chevronBack, close, searchOutline } from "ionicons/icons";
 
 const ViewSet: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const [present] = useIonAlert();
   const { goBack } = useContext(NavContext);
 
   const [search, setSearch] = useState(false);
   const [playing, setPlaying] = useState<boolean>(false);
   const [wavesurfers, setWavesurfers] = useState<any>({});
+  const [selectedSaying, setSelectedSaying] = useState("");
 
   const dispatch = useDispatch();
   const set = useSelector((state: RootState) => state.set.currentSet);
@@ -73,6 +75,24 @@ const ViewSet: React.FC = () => {
       setPlaying(false);
     });
     return wavesurfer;
+  };
+
+  const deleteRecording = (sayingId: string) => {
+    present({
+      header: "Delete Recording",
+      message: "Are you sure you want to delete this recording?",
+      buttons: [
+        { text: "Ok", handler: (d) => console.log("ok pressed") },
+        "Cancel",
+      ],
+    });
+
+    // const answer = window.confirm(
+    //   "Are you sure you want to delete this recording?"
+    // );
+    // if (answer) {
+    //   dispatch(sayingActions.deleteSayingRecording(sayingId, set.id));
+    // }
   };
 
   const saveRecording = (recording: string, sayingId: string) => {
@@ -118,9 +138,12 @@ const ViewSet: React.FC = () => {
             setId={id}
             sayings={sayings}
             playing={playing}
+            selected={selectedSaying}
             wavesurfers={wavesurfers}
             setPlaying={setPlaying}
+            setSelected={setSelectedSaying}
             saveRecording={saveRecording}
+            deleteRecording={deleteRecording}
           />
         </div>
       </IonContent>

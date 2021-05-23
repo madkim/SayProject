@@ -10,6 +10,7 @@ export const sayingActions = {
   deleteSayingById,
   getSayingsBySetId,
   saveSayingRecording,
+  deleteSayingRecording,
 };
 
 function saveSayingRecording(
@@ -30,6 +31,26 @@ function saveSayingRecording(
       .catch((error) => {
         dispatch({
           type: sayingConstants.SAVE_RECORDING_FAILURE,
+          payload: false,
+        });
+      });
+  };
+}
+
+function deleteSayingRecording(sayingId: string, setId: string) {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({ type: sayingConstants.DELETE_RECORDING_REQUEST, payload: true });
+    sayingService
+      .deleteRecording(sayingId, setId)
+      .then(() => {
+        dispatch({
+          type: sayingConstants.DELETE_RECORDING_SUCCESS,
+          payload: sayingId,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: sayingConstants.DELETE_RECORDING_FAILURE,
           payload: false,
         });
       });

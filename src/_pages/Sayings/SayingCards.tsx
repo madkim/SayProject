@@ -13,25 +13,27 @@ interface Props {
   setId: string;
   sayings: Saying[];
   playing: boolean;
+  selected: string;
   wavesurfers: any;
   setPlaying: (value: boolean) => void;
+  setSelected: (value: string) => void;
   saveRecording: (audio: any, sayingId: string) => void;
+  deleteRecording: (sayingId: string) => void;
 }
 
 export default function SayingCards(props: Props): ReactElement {
   const history = useHistory();
   const { VoiceRecorder } = Plugins;
   const [recording, setRecording] = useState(false);
-  const [selectedSaying, setSelectedSaying] = useState("");
 
   const listen = (id: string) => {
-    if (selectedSaying !== "" && selectedSaying !== id) {
-      props.wavesurfers[selectedSaying].stop();
-      setSelectedSaying(id);
+    if (props.selected !== "" && props.selected !== id) {
+      props.wavesurfers[props.selected].stop();
+      props.setSelected(id);
       props.setPlaying(true);
       props.wavesurfers[id].play();
     } else {
-      setSelectedSaying(id);
+      props.setSelected(id);
       if (props.playing === true) {
         props.setPlaying(false);
         props.wavesurfers[id].pause();
@@ -44,31 +46,25 @@ export default function SayingCards(props: Props): ReactElement {
 
   const record = (id: string) => {
     if (recording) {
-      if (selectedSaying !== id) {
+      if (props.selected !== id) {
         alert("Another recording already in progress!");
       } else {
         setRecording(false);
-        setSelectedSaying("");
+        props.setSelected("");
         VoiceRecorder.stopRecording()
           .then((result: RecordingData) => {
             const audio = `data:audio/aac;base64,${result.value.recordDataBase64}`;
             props.saveRecording(audio, id);
           })
-          .catch((error) => console.log(error));
+          .catch((error: Error) => console.log(error));
       }
     } else {
       setRecording(true);
-      setSelectedSaying(id);
+      props.setSelected(id);
       VoiceRecorder.startRecording()
         .then((result: GenericResponse) => console.log(result.value))
-        .catch((error) => console.log(error));
+        .catch((error: Error) => console.log(error));
     }
-  };
-
-  const deleteRecording = (id: string) => {
-    const answer = window.confirm(
-      "Are you sure you want to delete this recording?"
-    );
   };
 
   return (
@@ -88,8 +84,8 @@ export default function SayingCards(props: Props): ReactElement {
                       record={record}
                       recording={recording}
                       hasRecording={saying.hasRecording}
-                      selectedSaying={selectedSaying}
-                      deleteRecording={deleteRecording}
+                      selectedSaying={props.selected}
+                      deleteRecording={props.deleteRecording}
                     />
                   </IonCol>
                 </IonRow>
@@ -106,7 +102,7 @@ export default function SayingCards(props: Props): ReactElement {
                             id={saying.id}
                             listen={listen}
                             playing={props.playing}
-                            selectedSaying={selectedSaying}
+                            selectedSaying={props.selected}
                           />
                         </IonCol>
                       )}

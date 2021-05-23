@@ -46,6 +46,20 @@ export function sayingReducer(state = initState, action: Action) {
     });
   }
 
+  if (action.type === sayingConstants.DELETE_RECORDING_SUCCESS) {
+    return (state = {
+      ...state,
+      loading: false,
+      sayings: state.sayings.map((saying) => {
+        if (saying.id === action.payload) {
+          saying.hasRecording = false;
+          saying.recording = "";
+        }
+        return saying;
+      }),
+    });
+  }
+
   if (action.type === sayingConstants.SAVE_RECORDING_SUCCESS) {
     return (state = {
       ...state,
