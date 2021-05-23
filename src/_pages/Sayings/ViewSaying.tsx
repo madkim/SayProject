@@ -13,9 +13,10 @@ import {
   IonToolbar,
   IonContent,
   IonButtons,
+  IonLoading,
+  useIonAlert,
   IonCardHeader,
   IonCardContent,
-  IonLoading,
 } from "@ionic/react";
 
 import { useParams } from "react-router";
@@ -34,6 +35,7 @@ interface Props {}
 
 export default function ViewSaying({}: Props): ReactElement {
   const { id } = useParams<{ id: string }>();
+  const [present] = useIonAlert();
   const { goBack } = useContext(NavContext);
 
   const [playing, setPlaying] = useState(false);
@@ -68,12 +70,22 @@ export default function ViewSaying({}: Props): ReactElement {
   }, [saying]);
 
   const deleteSaying = () => {
-    const answer = window.confirm("Are you sure you want to delete?");
-
-    if (answer) {
-      dispatch(sayingActions.deleteSayingById(id, set.id, saying.hasRecording));
-      goBack(`/set/${set.id}`);
-    }
+    present({
+      header: "Delete Saying",
+      message: "Are you sure you want to delete this saying?",
+      buttons: [
+        {
+          text: "Ok",
+          handler: (d) => {
+            dispatch(
+              sayingActions.deleteSayingById(id, set.id, saying.hasRecording)
+            );
+            goBack(`/set/${set.id}`);
+          },
+        },
+        "Cancel",
+      ],
+    });
   };
 
   const listen = (id: string) => {

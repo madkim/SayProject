@@ -86,13 +86,6 @@ const ViewSet: React.FC = () => {
         "Cancel",
       ],
     });
-
-    // const answer = window.confirm(
-    //   "Are you sure you want to delete this recording?"
-    // );
-    // if (answer) {
-    //   dispatch(sayingActions.deleteSayingRecording(sayingId, set.id));
-    // }
   };
 
   const saveRecording = (recording: string, sayingId: string) => {
