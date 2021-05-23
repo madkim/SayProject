@@ -56,6 +56,7 @@ export default function ViewSaying({}: Props): ReactElement {
     ) {
       const wavesurfer = WaveSurfer.create({
         container: "#waveform",
+        barWidth: 2,
       });
       wavesurfer.load(saying.recording);
 

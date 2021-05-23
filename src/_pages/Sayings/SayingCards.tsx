@@ -20,20 +20,24 @@ interface Props {
 export default function SayingCards(props: Props): ReactElement {
   const history = useHistory();
   const { VoiceRecorder } = Plugins;
-
   const [recording, setRecording] = useState(false);
   const [selectedSaying, setSelectedSaying] = useState("");
 
   const listen = (id: string) => {
-    console.log(id);
-    console.log(props.wavesurfers);
-    setSelectedSaying(id);
-    if (props.playing === true) {
-      props.setPlaying(false);
-      props.wavesurfers[id].pause();
-    } else {
+    if (selectedSaying !== "" && selectedSaying !== id) {
+      props.wavesurfers[selectedSaying].stop();
+      setSelectedSaying(id);
       props.setPlaying(true);
       props.wavesurfers[id].play();
+    } else {
+      setSelectedSaying(id);
+      if (props.playing === true) {
+        props.setPlaying(false);
+        props.wavesurfers[id].pause();
+      } else {
+        props.setPlaying(true);
+        props.wavesurfers[id].play();
+      }
     }
   };
 
@@ -60,7 +64,7 @@ export default function SayingCards(props: Props): ReactElement {
     }
   };
 
-  const deleteRecording = () => {
+  const deleteRecording = (id: string) => {
     const answer = window.confirm(
       "Are you sure you want to delete this recording?"
     );
