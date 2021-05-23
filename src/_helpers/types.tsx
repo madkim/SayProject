@@ -12,6 +12,7 @@ export interface Saying {
   set: string;
   owner: string;
   saying: string;
+  setName: string;
   createdAt: string;
   recording: string;
   hasRecording: boolean;
@@ -21,7 +22,6 @@ export interface Set {
   id: string;
   name: string;
   owner: string;
-  count: number;
   shared: string[];
 }
 

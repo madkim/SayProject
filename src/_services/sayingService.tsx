@@ -4,6 +4,7 @@ import { fireStorage } from "../_helpers/firebase";
 
 import moment from "moment";
 import firebase from "firebase/app";
+import { setCacheNameDetails } from "workbox-core";
 
 export const sayingService = {
   getAll,
@@ -42,9 +43,10 @@ function getAll() {
 
         return {
           id: saying.id,
-          set: setName,
+          set: saying.data().set,
           owner: saying.data().owner,
           saying: saying.data().saying,
+          setName: setName,
           createdAt: saying.data().createdAt.toDate(),
           recording: recording,
           hasRecording: saying.data().hasRecording,
@@ -95,11 +97,15 @@ function addSaying(saying: string, setId: string) {
         set: setId,
       });
 
+      const set = await db.collection("sets").doc(setId).get();
+      const setName = set.data()!.name;
+
       resolve({
         id: sayingRef.id,
         set: setId,
         owner: userId,
         saying: saying,
+        setName: setName,
         createdAt: moment(new Date()).format("MMM Do YYYY"),
         recording: "",
         hasRecording: false,
@@ -122,11 +128,15 @@ function getSaying(id: string) {
         .getDownloadURL();
     }
 
+    const set = await db.collection("sets").doc(sayingRef.data()!.set).get();
+    const setName = set.data()!.name;
+
     resolve({
       id: sayingRef.id,
       set: sayingRef.data()!.set,
       owner: sayingRef.data()!.owner,
       saying: sayingRef.data()!.saying,
+      setName: setName,
       createdAt: sayingRef.data()!.createdAt.toDate(),
       recording: recording,
       hasRecording: sayingRef.data()!.hasRecording,
@@ -149,12 +159,15 @@ function getSayings(id: string) {
           .child(`sayings/${saying.data().set}/${saying.id}`)
           .getDownloadURL();
       }
+      const set = await db.collection("sets").doc(saying.data()!.set).get();
+      const setName = set.data()!.name;
 
       return {
         id: saying.id,
         set: saying.data().set,
         owner: saying.data().owner,
         saying: saying.data().saying,
+        setName: setName,
         createdAt: saying.data().createdAt.toDate(),
         recording: recording,
         hasRecording: saying.data().hasRecording,

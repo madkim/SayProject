@@ -31,9 +31,9 @@ import UserProfileButton from "../../_stories/UserProfileButton";
 
 const ListSayings: React.FC = () => {
   const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
   const sayings = useSelector((state: RootState) => state.saying.sayings);
   const allSayings = useSelector((state: RootState) => state.saying.allSayings);
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
     dispatch({ type: setConstants.SET_INIT_STATE, payload: "" });

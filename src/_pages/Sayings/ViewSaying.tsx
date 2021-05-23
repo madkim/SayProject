@@ -85,11 +85,7 @@ export default function ViewSaying({}: Props): ReactElement {
     }
   };
 
-  const cleanUp = () => {
-    if (wavesurfer !== null) {
-      wavesurfer.destroy();
-      setWavesurfer(null);
-    }
+  const back = () => {
     set.id ? goBack(`/set/${set.id}`) : goBack("/list");
   };
 
@@ -99,7 +95,7 @@ export default function ViewSaying({}: Props): ReactElement {
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton onClick={cleanUp}>
+              <IonButton onClick={back}>
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
@@ -184,7 +180,7 @@ export default function ViewSaying({}: Props): ReactElement {
                 color="primary"
                 expand="block"
                 className="ion-padding-horizontal"
-                onClick={cleanUp}
+                onClick={back}
               >
                 Done
               </IonButton>

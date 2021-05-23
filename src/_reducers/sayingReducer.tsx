@@ -12,6 +12,7 @@ export const initState: {
     set: "",
     owner: "",
     saying: "",
+    setName: "",
     createdAt: "",
     recording: "",
     hasRecording: false,

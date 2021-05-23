@@ -11,8 +11,11 @@ import {
 } from "@ionic/react";
 
 import FadeIn from "react-fade-in";
-import { Sets } from "../../../_helpers/types";
-import { ReactElement } from "react";
+import { Saying, Sets } from "../../../_helpers/types";
+import { sayingActions } from "../../../_actions/sayingActions";
+import { ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../_reducers/rootReducer";
 
 interface Props {
   sets: Sets;
@@ -25,10 +28,33 @@ export default function CardView({
   loading,
   longPress,
 }: Props): ReactElement {
+  const dispatch = useDispatch();
+  const allSayings = useSelector((state: RootState) => state.saying.allSayings);
+
+  useEffect(() => {
+    dispatch(sayingActions.getAllSayings());
+  }, []);
+
   const listShared = (shared: string[]) => {
     return shared.reduce((prev, current, index, []) => {
       return prev + ", " + current;
     });
+  };
+
+  const getCardCount = (setId: string) => {
+    if (allSayings.length > 0) {
+      return allSayings.reduce(
+        (prev: number, current: Saying, index: number, []) => {
+          if (current.set === setId) {
+            ++prev;
+          }
+          return prev;
+        },
+        0
+      );
+    } else {
+      return 0;
+    }
   };
 
   return (
@@ -57,7 +83,7 @@ export default function CardView({
               <IonCardContent className="ion-text-capitalize">
                 <IonNote color="dark">
                   <br />
-                  <h2>Cards: {set.count}</h2>
+                  <h2>Cards: {getCardCount(set.id)}</h2>
                   <br />
                   <h2>Owner: {set.owner}</h2>
                   <br />

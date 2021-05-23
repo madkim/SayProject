@@ -90,23 +90,13 @@ const ViewSet: React.FC = () => {
     dispatch(sayingActions.addNewSaying(saying, set.id));
   };
 
-  const cleanUp = () => {
-    if (Object.keys(wavesurfers).length > 0) {
-      Object.keys(wavesurfers).forEach((index) => {
-        wavesurfers[index].destroy();
-      });
-      setWavesurfers({});
-    }
-    goBack(`/set/${id}`);
-  };
-
   return (
     <IonPage>
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton onClick={cleanUp}>
+              <IonButton onClick={() => goBack(`/set/${id}`)}>
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
