@@ -59,7 +59,7 @@ const ViewSet: React.FC = () => {
         createWavesurfer(saying, wavesurfer);
       }
     });
-    setWavesurfers(wavesurfer);
+    setWavesurfers({ ...wavesurfers, ...wavesurfer });
   };
 
   const createWavesurfer = (saying: Saying, wavesurfer: any) => {
