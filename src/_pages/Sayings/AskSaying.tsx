@@ -33,7 +33,7 @@ export default function Sayings({ addNewSaying }: Props): ReactElement {
       addNewSaying(saying);
       setSaying("");
     } else {
-      setErrors({ saying: "Saying must not be empty." });
+      setErrors({ saying: "Enter a saying." });
     }
   };
 
