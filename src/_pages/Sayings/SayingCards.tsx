@@ -5,6 +5,7 @@ import { ReactElement, useState } from "react";
 import { RecordingData, GenericResponse } from "capacitor-voice-recorder";
 import { IonRow, IonCol, IonText, IonCard, IonCardHeader } from "@ionic/react";
 
+import FadeIn from "react-fade-in";
 import PlayPauseButton from "../../_stories/PlayPauseButton";
 import RecordDeleteButton from "../../_stories/RecordDeleteButton";
 
@@ -71,7 +72,7 @@ export default function SayingCards(props: Props): ReactElement {
   };
 
   return (
-    <>
+    <FadeIn>
       {Object.keys(props.sayings).length > 0 &&
         props.sayings.map((saying) => {
           return (
@@ -116,6 +117,6 @@ export default function SayingCards(props: Props): ReactElement {
             </IonCard>
           );
         })}
-    </>
+    </FadeIn>
   );
 }

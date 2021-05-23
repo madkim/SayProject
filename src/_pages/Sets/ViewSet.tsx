@@ -108,21 +108,21 @@ const ViewSet: React.FC = () => {
           duration={5000}
         />
 
-        {search ? (
+        <div className={search === true ? "" : "ion-hide"}>
           <SearchSayings sayings={sayings} />
-        ) : (
-          <FadeIn>
-            <Ask addNewSaying={addNewSaying} />
-            <SayingCards
-              setId={id}
-              sayings={sayings}
-              playing={playing}
-              wavesurfers={wavesurfers}
-              setPlaying={setPlaying}
-              saveRecording={saveRecording}
-            />
-          </FadeIn>
-        )}
+        </div>
+
+        <div className={search === true ? "ion-hide" : ""}>
+          <Ask addNewSaying={addNewSaying} />
+          <SayingCards
+            setId={id}
+            sayings={sayings}
+            playing={playing}
+            wavesurfers={wavesurfers}
+            setPlaying={setPlaying}
+            saveRecording={saveRecording}
+          />
+        </div>
       </IonContent>
     </IonPage>
   );
