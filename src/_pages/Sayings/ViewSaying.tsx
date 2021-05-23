@@ -71,7 +71,7 @@ export default function ViewSaying({}: Props): ReactElement {
     const answer = window.confirm("Are you sure you want to delete?");
 
     if (answer) {
-      dispatch(sayingActions.deleteSayingById(id));
+      dispatch(sayingActions.deleteSayingById(id, set.id, saying.hasRecording));
       goBack(`/set/${set.id}`);
     }
   };

@@ -116,15 +116,19 @@ function getSayingsBySetId(id: string) {
   };
 }
 
-function deleteSayingById(id: string) {
+function deleteSayingById(
+  sayingId: string,
+  setId: string,
+  hasRecording: boolean
+) {
   return (dispatch: Dispatch<Action>) => {
     dispatch({ type: sayingConstants.DELETE_SAYING_REQUEST, payload: true });
     sayingService
-      .deleteSaying(id)
+      .deleteSaying(sayingId, setId, hasRecording)
       .then(() => {
         dispatch({
           type: sayingConstants.DELETE_SAYING_SUCCESS,
-          payload: id,
+          payload: sayingId,
         });
       })
       .catch((error) => {

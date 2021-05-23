@@ -180,6 +180,13 @@ function getSayings(id: string) {
   });
 }
 
-function deleteSaying(id: string) {
-  return db.collection("sayings").doc(id).delete();
+async function deleteSaying(
+  sayingId: string,
+  setId: string,
+  hasRecording: boolean
+) {
+  if (hasRecording) {
+    await fireStorage.child(`sayings/${setId}/${sayingId}`).delete();
+  }
+  return db.collection("sayings").doc(sayingId).delete();
 }
