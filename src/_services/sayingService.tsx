@@ -148,6 +148,7 @@ function getSayings(id: string) {
     const sayingsRef = await db
       .collection("sayings")
       .where("set", "==", id)
+      .orderBy("createdAt", "desc")
       .get();
 
     const sayings = sayingsRef.docs.map(async (saying) => {

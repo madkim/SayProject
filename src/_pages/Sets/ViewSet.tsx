@@ -65,6 +65,7 @@ const ViewSet: React.FC = () => {
   const createWavesurfer = (saying: Saying, wavesurfer: any) => {
     wavesurfer[saying.id] = WaveSurfer.create({
       container: `#waveform-${saying.id}`,
+      height: 40,
     });
     wavesurfer[saying.id].load(saying.recording);
     wavesurfer[saying.id].on("finish", function () {
