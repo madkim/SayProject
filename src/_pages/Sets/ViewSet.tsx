@@ -11,21 +11,28 @@ import {
 
 import Ask from "../Sayings/AskSaying";
 import FadeIn from "react-fade-in";
+import WaveSurfer from "wavesurfer.js";
 import SayingCards from "../Sayings/SayingCards";
 import SearchSayings from "../Sayings/SearchSayings";
 
+import { Saying } from "../../_helpers/types";
 import { useParams } from "react-router";
 import { RootState } from "../../_reducers/rootReducer";
+import { NavContext } from "@ionic/react";
 import { setActions } from "../../_actions/setActions";
 import { sayingActions } from "../../_actions/sayingActions";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { chevronBack, close, searchOutline } from "ionicons/icons";
 import { sayingConstants } from "../../_constants/sayingConstants";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect, useContext } from "react";
+import { chevronBack, close, searchOutline } from "ionicons/icons";
 
 const ViewSet: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { goBack } = useContext(NavContext);
+
   const [search, setSearch] = useState(false);
+  const [playing, setPlaying] = useState<boolean>(false);
+  const [wavesurfers, setWavesurfers] = useState<any>({});
 
   const dispatch = useDispatch();
   const set = useSelector((state: RootState) => state.set.currentSet);
@@ -35,10 +42,62 @@ const ViewSet: React.FC = () => {
   useEffect(() => {
     dispatch(setActions.getSetById(id));
     dispatch(sayingActions.getSayingsBySetId(id));
+
+    return () => {
+      dispatch({ type: sayingConstants.SET_INIT_STATE, payload: "" });
+    };
   }, []);
+
+  useEffect(() => {
+    let wavesurfer: any = {};
+    sayings.forEach((saying: Saying) => {
+      if (saying.hasRecording === true) {
+        wavesurfer[saying.id] = WaveSurfer.create({
+          container: `#waveform-${saying.id}`,
+        });
+        wavesurfer[saying.id].load(saying.recording);
+        wavesurfer[saying.id].on("finish", function () {
+          setPlaying(false);
+        });
+      }
+    });
+    setWavesurfers(wavesurfer);
+  }, [sayings]);
+
+  const createNewWavesurfer = (result: any, sayingId: string) => {
+    const wavesurfer = WaveSurfer.create({
+      container: `#waveform-${sayingId}`,
+    });
+    const audio = `data:audio/aac;base64,${result.value.recordDataBase64}`;
+    wavesurfer.load(audio);
+
+    wavesurfer.on("finish", function () {
+      setPlaying(false);
+    });
+    saveRecording(audio, sayingId, id);
+    setWavesurfers({ ...wavesurfers, [sayingId]: wavesurfer });
+  };
+
+  const saveRecording = (
+    recording: string,
+    sayingId: string,
+    setId: string
+  ) => {
+    dispatch(sayingActions.saveSayingRecording(recording, sayingId, setId));
+  };
 
   const addNewSaying = (saying: string) => {
     dispatch(sayingActions.addNewSaying(saying, set.id));
+  };
+
+  const cleanUp = () => {
+    if (Object.keys(wavesurfers).length > 0) {
+      Object.keys(wavesurfers).forEach((index) => {
+        wavesurfers[index].destroy();
+      });
+      setWavesurfers({});
+    }
+    goBack(`/set/${id}`);
   };
 
   return (
@@ -47,7 +106,7 @@ const ViewSet: React.FC = () => {
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton routerLink="/sets" routerDirection="back">
+              <IonButton onClick={cleanUp}>
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
@@ -71,7 +130,14 @@ const ViewSet: React.FC = () => {
         ) : (
           <FadeIn>
             <Ask addNewSaying={addNewSaying} />
-            <SayingCards sayings={sayings} setId={id} />
+            <SayingCards
+              setId={id}
+              sayings={sayings}
+              playing={playing}
+              wavesurfers={wavesurfers}
+              setPlaying={setPlaying}
+              createNewWavesurfer={createNewWavesurfer}
+            />
           </FadeIn>
         )}
       </IonContent>

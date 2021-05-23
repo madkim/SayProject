@@ -33,7 +33,7 @@ export default function ListView({ sets, loading }: Props): ReactElement {
 
   return (
     <FadeIn>
-      <IonList>
+      <IonList className="ion-margin-top">
         {Object.keys(sets).length > 0 ? (
           sets.map((set) => {
             return (

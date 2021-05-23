@@ -16,8 +16,8 @@ import ManageSet from "../ManageSet";
 
 import { Sets } from "../../../_helpers/types";
 import { useLongPress } from "use-long-press";
-import { ReactElement, useState } from "react";
 import { albums, listCircle } from "ionicons/icons";
+import { ReactElement, useState, useEffect } from "react";
 
 interface Props {
   sets: Sets;
@@ -25,8 +25,18 @@ interface Props {
 }
 
 export default function ListSets({ sets, loading }: Props): ReactElement {
+  const [viewType, setViewType] = useState("");
   const [showSetOptions, setShowSetOptions] = useState(false);
-  const [viewType, setViewType] = useState("card");
+
+  useEffect(() => {
+    const type = localStorage.getItem("viewType");
+    setViewType(type !== null ? type : "card");
+  }, []);
+
+  const toggleViewType = (type: string) => {
+    localStorage.setItem("viewType", type);
+    setViewType(type);
+  };
 
   const longPress = useLongPress(() => {
     setShowSetOptions(true);
@@ -44,7 +54,7 @@ export default function ListSets({ sets, loading }: Props): ReactElement {
             <div className="ion-no-margin" style={{ color: "black" }}>
               <IonSegment
                 value={viewType}
-                onIonChange={(e) => setViewType(e.detail.value!)}
+                onIonChange={(e) => toggleViewType(e.detail.value!)}
               >
                 <IonSegmentButton value="card">
                   <IonIcon icon={albums} />
