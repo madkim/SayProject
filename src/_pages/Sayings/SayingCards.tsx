@@ -1,10 +1,8 @@
 import { Saying } from "../../_helpers/types";
 import { Plugins } from "@capacitor/core";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { sayingActions } from "../../_actions/sayingActions";
+import { ReactElement, useState } from "react";
 import { RecordingData, GenericResponse } from "capacitor-voice-recorder";
-import { ReactElement, useState, useEffect } from "react";
 import { IonRow, IonCol, IonText, IonCard, IonCardHeader } from "@ionic/react";
 
 import PlayPauseButton from "../../_stories/PlayPauseButton";
@@ -16,7 +14,7 @@ interface Props {
   playing: boolean;
   wavesurfers: any;
   setPlaying: (value: boolean) => void;
-  createNewWavesurfer: (result: any, id: string) => void;
+  saveRecording: (audio: any, sayingId: string) => void;
 }
 
 export default function SayingCards(props: Props): ReactElement {
@@ -48,7 +46,8 @@ export default function SayingCards(props: Props): ReactElement {
         setSelectedSaying("");
         VoiceRecorder.stopRecording()
           .then((result: RecordingData) => {
-            props.createNewWavesurfer(result, id);
+            const audio = `data:audio/aac;base64,${result.value.recordDataBase64}`;
+            props.saveRecording(audio, id);
           })
           .catch((error) => console.log(error));
       }

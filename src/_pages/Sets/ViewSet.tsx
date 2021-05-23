@@ -49,41 +49,32 @@ const ViewSet: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    createWavesurfers();
+  }, [sayings]);
+
+  const createWavesurfers = () => {
     let wavesurfer: any = {};
     sayings.forEach((saying: Saying) => {
       if (saying.hasRecording === true && !(saying.id in wavesurfers)) {
-        wavesurfer[saying.id] = WaveSurfer.create({
-          container: `#waveform-${saying.id}`,
-        });
-        wavesurfer[saying.id].load(saying.recording);
-        wavesurfer[saying.id].on("finish", function () {
-          setPlaying(false);
-        });
+        createWavesurfer(saying, wavesurfer);
       }
     });
     setWavesurfers(wavesurfer);
-  }, [sayings]);
-
-  const createNewWavesurfer = (result: any, sayingId: string) => {
-    const wavesurfer = WaveSurfer.create({
-      container: `#waveform-${sayingId}`,
-    });
-    const audio = `data:audio/aac;base64,${result.value.recordDataBase64}`;
-    wavesurfer.load(audio);
-
-    wavesurfer.on("finish", function () {
-      setPlaying(false);
-    });
-    saveRecording(audio, sayingId, id);
-    setWavesurfers({ ...wavesurfers, [sayingId]: wavesurfer });
   };
 
-  const saveRecording = (
-    recording: string,
-    sayingId: string,
-    setId: string
-  ) => {
-    dispatch(sayingActions.saveSayingRecording(recording, sayingId, setId));
+  const createWavesurfer = (saying: Saying, wavesurfer: any) => {
+    wavesurfer[saying.id] = WaveSurfer.create({
+      container: `#waveform-${saying.id}`,
+    });
+    wavesurfer[saying.id].load(saying.recording);
+    wavesurfer[saying.id].on("finish", function () {
+      setPlaying(false);
+    });
+    return wavesurfer;
+  };
+
+  const saveRecording = (recording: string, sayingId: string) => {
+    dispatch(sayingActions.saveSayingRecording(recording, sayingId, set.id));
   };
 
   const addNewSaying = (saying: string) => {
@@ -126,7 +117,7 @@ const ViewSet: React.FC = () => {
               playing={playing}
               wavesurfers={wavesurfers}
               setPlaying={setPlaying}
-              createNewWavesurfer={createNewWavesurfer}
+              saveRecording={saveRecording}
             />
           </FadeIn>
         )}
