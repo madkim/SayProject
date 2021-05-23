@@ -79,7 +79,9 @@ export default function ListSets({ sets, loading }: Props): ReactElement {
         {viewType === "card" && (
           <CardView sets={sets} loading={loading} longPress={longPress} />
         )}
-        {viewType === "list" && <ListView sets={sets} loading={loading} />}
+        {viewType === "list" && (
+          <ListView sets={sets} loading={loading} longPress={longPress} />
+        )}
       </FadeIn>
     </>
   );

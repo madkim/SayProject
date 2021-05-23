@@ -50,7 +50,12 @@ export function sayingReducer(state = initState, action: Action) {
     return (state = {
       ...state,
       loading: false,
-      sayings: action.payload,
+      sayings: state.sayings.map((saying) => {
+        if (saying.id === action.payload) {
+          saying.hasRecording = true;
+        }
+        return saying;
+      }),
     });
   }
 

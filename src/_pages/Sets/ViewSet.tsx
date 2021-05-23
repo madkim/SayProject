@@ -51,7 +51,7 @@ const ViewSet: React.FC = () => {
   useEffect(() => {
     let wavesurfer: any = {};
     sayings.forEach((saying: Saying) => {
-      if (saying.hasRecording === true) {
+      if (saying.hasRecording === true && !(saying.id in wavesurfers)) {
         wavesurfer[saying.id] = WaveSurfer.create({
           container: `#waveform-${saying.id}`,
         });

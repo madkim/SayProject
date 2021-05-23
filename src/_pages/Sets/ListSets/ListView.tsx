@@ -1,30 +1,29 @@
 import {
   IonRow,
   IonCol,
-  IonCard,
-  IonNote,
-  IonAvatar,
-  IonLoading,
-  IonCardTitle,
-  IonCardHeader,
-  IonCardContent,
   IonList,
   IonItem,
   IonLabel,
+  IonAvatar,
+  IonLoading,
 } from "@ionic/react";
 
 import FadeIn from "react-fade-in";
 
 import { Sets } from "../../../_helpers/types";
-import { useLongPress } from "use-long-press";
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 
 interface Props {
   sets: Sets;
   loading: boolean;
+  longPress: any;
 }
 
-export default function ListView({ sets, loading }: Props): ReactElement {
+export default function ListView({
+  sets,
+  loading,
+  longPress,
+}: Props): ReactElement {
   const listShared = (shared: string[]) => {
     return shared.reduce((prev, current, index, []) => {
       return prev + ", " + current;
@@ -42,6 +41,7 @@ export default function ListView({ sets, loading }: Props): ReactElement {
                 key={set.id}
                 detail={false}
                 routerLink={`/set/${set.id}`}
+                {...longPress}
               >
                 <IonLabel>
                   <IonRow>

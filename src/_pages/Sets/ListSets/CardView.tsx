@@ -11,11 +11,11 @@ import {
 } from "@ionic/react";
 
 import FadeIn from "react-fade-in";
+import { RootState } from "../../../_reducers/rootReducer";
 import { Saying, Sets } from "../../../_helpers/types";
 import { sayingActions } from "../../../_actions/sayingActions";
 import { ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../_reducers/rootReducer";
 
 interface Props {
   sets: Sets;

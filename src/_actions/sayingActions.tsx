@@ -21,10 +21,10 @@ function saveSayingRecording(
     dispatch({ type: sayingConstants.SAVE_RECORDING_REQUEST, payload: true });
     sayingService
       .saveRecording(recording, sayingId, setId)
-      .then((sayings: Saying[]) => {
+      .then(() => {
         dispatch({
           type: sayingConstants.SAVE_RECORDING_SUCCESS,
-          payload: sayings,
+          payload: sayingId,
         });
       })
       .catch((error) => {
