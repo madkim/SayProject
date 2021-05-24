@@ -96,7 +96,7 @@ export default function SayingCards(props: Props): ReactElement {
                       <IonCol>
                         <div id={`waveform-${saying.id}`}></div>
                       </IonCol>
-                      {saying.hasRecording && (
+                      {saying.id in props.wavesurfers && (
                         <IonCol size="auto" className="ion-no-padding">
                           <PlayPauseButton
                             id={saying.id}

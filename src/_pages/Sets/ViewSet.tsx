@@ -82,7 +82,12 @@ const ViewSet: React.FC = () => {
       header: "Delete Recording",
       message: "Are you sure you want to delete this recording?",
       buttons: [
-        { text: "Ok", handler: (d) => console.log("ok pressed") },
+        {
+          text: "Ok",
+          handler: (d) => {
+            dispatch(sayingActions.deleteSayingRecording(sayingId, set.id));
+          },
+        },
         "Cancel",
       ],
     });
@@ -90,6 +95,19 @@ const ViewSet: React.FC = () => {
 
   const saveRecording = (recording: string, sayingId: string) => {
     dispatch(sayingActions.saveSayingRecording(recording, sayingId, set.id));
+    const saying = sayings.find((saying: Saying) => saying.id === sayingId);
+    const sayingWithRecording = {
+      id: saying.id,
+      set: saying.set,
+      owner: saying.owner,
+      saying: saying.saying,
+      setName: saying.setName,
+      createdAt: saying.createdAt,
+      recording: recording,
+      hasRecording: true,
+    };
+    const wavesurfer = createWavesurfer(sayingWithRecording, {});
+    setWavesurfers({ ...wavesurfers, ...wavesurfer });
   };
 
   const addNewSaying = (saying: string) => {
