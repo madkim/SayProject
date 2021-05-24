@@ -83,7 +83,7 @@ export default function SayingCards(props: Props): ReactElement {
                       id={saying.id}
                       record={record}
                       recording={recording}
-                      hasRecording={saying.hasRecording}
+                      hasRecording={saying.id in props.wavesurfers}
                       selectedSaying={props.selected}
                       deleteRecording={props.deleteRecording}
                     />
