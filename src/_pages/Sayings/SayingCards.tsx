@@ -11,6 +11,7 @@ import RecordDeleteButton from "../../_stories/RecordDeleteButton";
 
 interface Props {
   setId: string;
+  search: string;
   sayings: Saying[];
   playing: boolean;
   selected: string;
@@ -67,12 +68,22 @@ export default function SayingCards(props: Props): ReactElement {
     }
   };
 
+  const searchSayings = (saying: Saying) => {
+    return props.search !== "" &&
+      saying.saying
+        .toLowerCase()
+        .trim()
+        .includes(props.search.toLowerCase().trim()) === false
+      ? "ion-hide"
+      : "";
+  };
+
   return (
     <FadeIn>
       {Object.keys(props.sayings).length > 0 &&
         props.sayings.map((saying) => {
           return (
-            <IonCard key={saying.id}>
+            <IonCard key={saying.id} className={searchSayings(saying)}>
               <IonCardHeader style={{ fontSize: "large", fontWeight: "700" }}>
                 <IonRow>
                   <IonCol onClick={() => history.push(`/view/${saying.id}`)}>

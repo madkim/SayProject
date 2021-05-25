@@ -8,6 +8,10 @@ import {
   IonToolbar,
   IonLoading,
   useIonAlert,
+  IonSearchbar,
+  IonRow,
+  IonCol,
+  IonGrid,
 } from "@ionic/react";
 
 import Ask from "../Sayings/AskSaying";
@@ -25,6 +29,7 @@ import { sayingConstants } from "../../_constants/sayingConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useContext } from "react";
 import { chevronBack, close, searchOutline } from "ionicons/icons";
+import FadeIn from "react-fade-in";
 
 const ViewSet: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -33,6 +38,7 @@ const ViewSet: React.FC = () => {
 
   const [search, setSearch] = useState(false);
   const [playing, setPlaying] = useState<boolean>(false);
+  const [searchText, setSearchtext] = useState("");
   const [wavesurfers, setWavesurfers] = useState<any>({});
   const [selectedSaying, setSelectedSaying] = useState("");
 
@@ -144,24 +150,31 @@ const ViewSet: React.FC = () => {
           duration={5000}
         />
 
-        <div className={search === true ? "" : "ion-hide"}>
-          <SearchSayings sayings={sayings} />
-        </div>
+        <FadeIn>
+          {search ? (
+            <IonSearchbar
+              value={searchText}
+              style={{ marginTop: "2em" }}
+              className="ion-padding-horizontal"
+              onIonChange={(e) => setSearchtext(e.detail.value!)}
+            ></IonSearchbar>
+          ) : (
+            <Ask addNewSaying={addNewSaying} />
+          )}
+        </FadeIn>
 
-        <div className={search === true ? "ion-hide" : ""}>
-          <Ask addNewSaying={addNewSaying} />
-          <SayingCards
-            setId={id}
-            sayings={sayings}
-            playing={playing}
-            selected={selectedSaying}
-            wavesurfers={wavesurfers}
-            setPlaying={setPlaying}
-            setSelected={setSelectedSaying}
-            saveRecording={saveRecording}
-            deleteRecording={deleteRecording}
-          />
-        </div>
+        <SayingCards
+          setId={id}
+          search={searchText}
+          sayings={sayings}
+          playing={playing}
+          selected={selectedSaying}
+          wavesurfers={wavesurfers}
+          setPlaying={setPlaying}
+          setSelected={setSelectedSaying}
+          saveRecording={saveRecording}
+          deleteRecording={deleteRecording}
+        />
       </IonContent>
     </IonPage>
   );

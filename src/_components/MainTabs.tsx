@@ -24,7 +24,7 @@ import StudySayings from "../_pages/Study";
 export default function MainTabs(): ReactElement {
   return (
     <IonSplitPane contentId="main">
-      <Menu />
+      {/* <Menu /> */}
       <IonTabs>
         <IonRouterOutlet id="main">
           <Route path="/sets">
