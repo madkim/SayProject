@@ -9,15 +9,12 @@ import {
   IonLoading,
   useIonAlert,
   IonSearchbar,
-  IonRow,
-  IonCol,
-  IonGrid,
 } from "@ionic/react";
 
 import Ask from "../Sayings/AskSaying";
+import FadeIn from "react-fade-in";
 import WaveSurfer from "wavesurfer.js";
 import SayingCards from "../Sayings/SayingCards";
-import SearchSayings from "../Sayings/SearchSayings";
 
 import { Saying } from "../../_helpers/types";
 import { useParams } from "react-router";
@@ -29,7 +26,6 @@ import { sayingConstants } from "../../_constants/sayingConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useContext } from "react";
 import { chevronBack, close, searchOutline } from "ionicons/icons";
-import FadeIn from "react-fade-in";
 
 const ViewSet: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -138,7 +134,13 @@ const ViewSet: React.FC = () => {
 
             <h2>{set.name}</h2>
 
-            <IonButton slot="end" onClick={() => setSearch(!search)}>
+            <IonButton
+              slot="end"
+              onClick={() => {
+                if (search) setSearchtext("");
+                setSearch(!search);
+              }}
+            >
               <IonIcon icon={search ? close : searchOutline} />
             </IonButton>
           </IonToolbar>

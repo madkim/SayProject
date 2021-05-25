@@ -14,22 +14,26 @@ import {
   IonContent,
   IonButtons,
   IonLoading,
+  IonSpinner,
   useIonAlert,
   IonCardHeader,
   IonCardContent,
 } from "@ionic/react";
 
+import { Plugins } from "@capacitor/core";
 import { useParams } from "react-router";
 import { RootState } from "../../_reducers/rootReducer";
 import { NavContext } from "@ionic/react";
 import { sayingActions } from "../../_actions/sayingActions";
 import { useSelector, useDispatch } from "react-redux";
 import { chevronBack, stopCircleSharp } from "ionicons/icons";
+import { RecordingData, GenericResponse } from "capacitor-voice-recorder";
 import { ReactElement, useEffect, useContext, useState } from "react";
 
 import WaveSurfer from "wavesurfer.js";
 import EditButton from "../../_stories/EditButton";
 import PlayPauseButton from "../../_stories/PlayPauseButton";
+import { Saying } from "../../_helpers/types";
 
 interface Props {}
 
@@ -37,8 +41,10 @@ export default function ViewSaying({}: Props): ReactElement {
   const { id } = useParams<{ id: string }>();
   const [present] = useIonAlert();
   const { goBack } = useContext(NavContext);
+  const { VoiceRecorder } = Plugins;
 
   const [playing, setPlaying] = useState(false);
+  const [recording, setRecording] = useState(false);
   const [wavesurfer, setWavesurfer] = useState<any>(null);
 
   const dispatch = useDispatch();
@@ -56,18 +62,22 @@ export default function ViewSaying({}: Props): ReactElement {
       wavesurfer === null &&
       saying.id === id
     ) {
-      const wavesurfer = WaveSurfer.create({
-        container: "#waveform",
-        barWidth: 2,
-      });
-      wavesurfer.load(saying.recording);
-
-      wavesurfer.on("finish", function () {
-        setPlaying(false);
-      });
-      setWavesurfer(wavesurfer);
+      createWavesurfer(saying);
     }
   }, [saying]);
+
+  const createWavesurfer = (saying: Saying) => {
+    const wavesurfer = WaveSurfer.create({
+      container: "#waveform",
+      barWidth: 2,
+    });
+    wavesurfer.load(saying.recording);
+
+    wavesurfer.on("finish", function () {
+      setPlaying(false);
+    });
+    setWavesurfer(wavesurfer);
+  };
 
   const deleteSaying = () => {
     present({
@@ -86,6 +96,39 @@ export default function ViewSaying({}: Props): ReactElement {
         "Cancel",
       ],
     });
+  };
+
+  const addRecording = () => {
+    if (recording) {
+      setRecording(false);
+      VoiceRecorder.stopRecording()
+        .then((result: RecordingData) => {
+          const audio = `data:audio/aac;base64,${result.value.recordDataBase64}`;
+          saveRecording(audio, id);
+        })
+        .catch((error: Error) => console.log(error));
+    } else {
+      setRecording(true);
+      VoiceRecorder.startRecording()
+        .then((result: GenericResponse) => console.log(result.value))
+        .catch((error: Error) => console.log(error));
+    }
+  };
+
+  const saveRecording = (recording: string, sayingId: string) => {
+    dispatch(sayingActions.saveSayingRecording(recording, sayingId, set.id));
+
+    const sayingWithRecording = {
+      id: saying.id,
+      set: saying.set,
+      owner: saying.owner,
+      saying: saying.saying,
+      setName: saying.setName,
+      createdAt: saying.createdAt,
+      recording: recording,
+      hasRecording: true,
+    };
+    const wavesurfer = createWavesurfer(sayingWithRecording);
   };
 
   const listen = (id: string) => {
@@ -146,14 +189,14 @@ export default function ViewSaying({}: Props): ReactElement {
             </IonCardHeader>
             <IonCardContent>
               <br />
-              {saying.hasRecording ? (
-                <IonList>
-                  <IonRow>
-                    <IonCol>
-                      <div id="waveform"></div>
-                    </IonCol>
-                  </IonRow>
-                  <br />
+              <IonList>
+                <IonRow>
+                  <IonCol>
+                    <div id="waveform"></div>
+                  </IonCol>
+                </IonRow>
+                <br />
+                {wavesurfer !== null ? (
                   <IonRow>
                     <IonCol>
                       <IonButton color="danger" expand="block" fill="outline">
@@ -169,18 +212,28 @@ export default function ViewSaying({}: Props): ReactElement {
                       />
                     </IonCol>
                   </IonRow>
-                </IonList>
-              ) : (
-                <IonList>
+                ) : (
                   <IonRow>
                     <IonCol>
-                      <IonButton color="danger" expand="block" fill="outline">
-                        <IonIcon icon={stopCircleSharp} /> &nbsp;Add Recording
+                      <IonButton
+                        color="danger"
+                        expand="block"
+                        fill="outline"
+                        onClick={addRecording}
+                      >
+                        {recording ? (
+                          <IonSpinner color="danger" name="bubbles" />
+                        ) : (
+                          <>
+                            <IonIcon icon={stopCircleSharp} />
+                            <span>&nbsp;Add Recording</span>
+                          </>
+                        )}
                       </IonButton>
                     </IonCol>
                   </IonRow>
-                </IonList>
-              )}
+                )}
+              </IonList>
             </IonCardContent>
           </IonCard>
         </div>

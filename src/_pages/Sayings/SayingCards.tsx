@@ -29,7 +29,9 @@ export default function SayingCards(props: Props): ReactElement {
 
   const listen = (id: string) => {
     if (props.selected !== "" && props.selected !== id) {
-      props.wavesurfers[props.selected].stop();
+      if (props.selected in props.wavesurfers) {
+        props.wavesurfers[props.selected].stop();
+      }
       props.setSelected(id);
       props.setPlaying(true);
       props.wavesurfers[id].play();
