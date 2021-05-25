@@ -170,6 +170,7 @@ const ViewSet: React.FC = () => {
           search={searchText}
           sayings={sayings}
           playing={playing}
+          container="waveform"
           selected={selectedSaying}
           wavesurfers={wavesurfers}
           setPlaying={setPlaying}

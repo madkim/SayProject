@@ -15,6 +15,7 @@ interface Props {
   sayings: Saying[];
   playing: boolean;
   selected: string;
+  container: string;
   wavesurfers: any;
   setPlaying: (value: boolean) => void;
   setSelected: (value: string) => void;
@@ -107,7 +108,7 @@ export default function SayingCards(props: Props): ReactElement {
                   <IonCol>
                     <IonRow>
                       <IonCol>
-                        <div id={`waveform-${saying.id}`}></div>
+                        <div id={`${props.container}-${saying.id}`}></div>
                       </IonCol>
                       {saying.id in props.wavesurfers && (
                         <IonCol size="auto" className="ion-no-padding">
