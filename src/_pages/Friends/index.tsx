@@ -2,29 +2,21 @@ import {
   IonPage,
   IonIcon,
   IonTitle,
-  IonLabel,
   IonHeader,
   IonButton,
   IonToolbar,
   IonContent,
-  IonSegment,
-  IonSegmentButton,
 } from "@ionic/react";
-
-import {
-  personAdd,
-  notifications,
-  peopleCircleOutline,
-  personCircleOutline,
-} from "ionicons/icons";
 
 import FadeIn from "react-fade-in";
 import FriendList from "./FriendList";
 import FriendSearch from "./FriendSearch";
+import FriendSegment from "./FriendSegment";
 import FriendRequests from "./FriendRequests";
 import UserProfileButton from "../../_stories/UserProfileButton";
 
 import { useState } from "react";
+import { notifications } from "ionicons/icons";
 
 const Friends: React.FC = () => {
   const [type, setType] = useState("friends");
@@ -47,27 +39,7 @@ const Friends: React.FC = () => {
         </IonHeader>
 
         <FadeIn>
-          <div style={{ margin: "1em" }}>
-            <IonSegment
-              value={type}
-              onIonChange={(e) => setType(e.detail.value!)}
-            >
-              <IonSegmentButton value="friends" style={{ padding: ".5em" }}>
-                <IonIcon icon={peopleCircleOutline} />
-                <IonLabel>Friends</IonLabel>
-              </IonSegmentButton>
-
-              <IonSegmentButton value="requests" style={{ padding: ".5em" }}>
-                <IonIcon icon={personCircleOutline} />
-                <IonLabel>Requests</IonLabel>
-              </IonSegmentButton>
-
-              <IonSegmentButton value="search" style={{ padding: ".5em" }}>
-                <IonIcon icon={personAdd} />
-                <IonLabel>Search</IonLabel>
-              </IonSegmentButton>
-            </IonSegment>
-          </div>
+          <FriendSegment type={type} setType={setType} />
 
           {type === "friends" && <FriendList />}
 
