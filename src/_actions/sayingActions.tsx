@@ -16,17 +16,23 @@ export const sayingActions = {
 function saveSayingRecording(
   recording: string,
   sayingId: string,
-  setId: string
+  setId: string,
+  getAll: boolean
 ) {
-  return (dispatch: Dispatch<Action>) => {
+  return (dispatch: Dispatch<any>) => {
     dispatch({ type: sayingConstants.SAVE_RECORDING_REQUEST, payload: true });
     sayingService
       .saveRecording(recording, sayingId, setId)
-      .then(() => {
+      .then((id: string) => {
         dispatch({
           type: sayingConstants.SAVE_RECORDING_SUCCESS,
-          payload: sayingId,
+          payload: id,
         });
+        if (getAll) {
+          dispatch(getAllSayings());
+        } else {
+          dispatch(getSayingsBySetId(setId));
+        }
       })
       .catch((error) => {
         dispatch({
@@ -37,16 +43,25 @@ function saveSayingRecording(
   };
 }
 
-function deleteSayingRecording(sayingId: string, setId: string) {
-  return (dispatch: Dispatch<Action>) => {
+function deleteSayingRecording(
+  sayingId: string,
+  setId: string,
+  getAll: boolean
+) {
+  return (dispatch: Dispatch<any>) => {
     dispatch({ type: sayingConstants.DELETE_RECORDING_REQUEST, payload: true });
     sayingService
       .deleteRecording(sayingId, setId)
-      .then(() => {
+      .then((id: string) => {
         dispatch({
           type: sayingConstants.DELETE_RECORDING_SUCCESS,
-          payload: sayingId,
+          payload: id,
         });
+        if (getAll) {
+          dispatch(getAllSayings());
+        } else {
+          dispatch(getSayingsBySetId(setId));
+        }
       })
       .catch((error) => {
         dispatch({

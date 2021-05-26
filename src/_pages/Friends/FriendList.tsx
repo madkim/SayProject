@@ -4,7 +4,10 @@ import {
   IonLabel,
   IonAvatar,
   IonListHeader,
+  IonButton,
+  IonIcon,
 } from "@ionic/react";
+import { add, addCircle, remove, removeCircle } from "ionicons/icons";
 import FadeIn from "react-fade-in";
 
 interface Props {}
@@ -16,7 +19,7 @@ const FriendList: React.FC<Props> = ({}: Props) => {
         <IonListHeader>Friends</IonListHeader>
         <br />
 
-        <IonItem button detail routerLink="/stream">
+        <IonItem button detail routerLink="/FriendProfile">
           <IonAvatar slot="start">
             <img src="https://aui.atlassian.com/aui/8.6/docs/images/avatar-person.svg" />
           </IonAvatar>

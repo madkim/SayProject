@@ -5,7 +5,6 @@ export const initState: {
   saying: Saying;
   loading: boolean;
   sayings: Saying[];
-  allSayings: Saying[];
 } = {
   saying: {
     id: "",
@@ -18,12 +17,11 @@ export const initState: {
     hasRecording: false,
   },
   sayings: [],
-  allSayings: [],
   loading: false,
 };
 
 export function sayingReducer(state = initState, action: Action) {
-  if (action.type === sayingConstants.SET_INIT_STATE) {
+  if (action.type === sayingConstants.SET_SAYINGS_INIT_STATE) {
     return (state = {
       ...state,
       loading: false,
@@ -35,7 +33,7 @@ export function sayingReducer(state = initState, action: Action) {
     return (state = {
       ...state,
       loading: false,
-      allSayings: action.payload,
+      sayings: action.payload,
     });
   }
 
@@ -50,13 +48,6 @@ export function sayingReducer(state = initState, action: Action) {
     return (state = {
       ...state,
       loading: false,
-      sayings: state.sayings.map((saying) => {
-        if (saying.id === action.payload) {
-          saying.hasRecording = false;
-          saying.recording = "";
-        }
-        return saying;
-      }),
     });
   }
 
@@ -64,12 +55,6 @@ export function sayingReducer(state = initState, action: Action) {
     return (state = {
       ...state,
       loading: false,
-      sayings: state.sayings.map((saying) => {
-        if (saying.id === action.payload) {
-          saying.hasRecording = true;
-        }
-        return saying;
-      }),
     });
   }
 

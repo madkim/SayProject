@@ -9,6 +9,7 @@ import {
   IonLoading,
   useIonAlert,
   IonSearchbar,
+  useIonViewWillLeave,
 } from "@ionic/react";
 
 import Ask from "../Sayings/AskSaying";
@@ -46,24 +47,27 @@ const ViewSet: React.FC = () => {
   useEffect(() => {
     dispatch(setActions.getSetById(id));
     dispatch(sayingActions.getSayingsBySetId(id));
-
-    return () => {
-      dispatch({ type: sayingConstants.SET_INIT_STATE, payload: "" });
-    };
   }, []);
+
+  useIonViewWillLeave(() => {
+    dispatch({ type: sayingConstants.SET_SAYINGS_INIT_STATE, payload: "" });
+  });
 
   useEffect(() => {
     createWavesurfers();
   }, [sayings]);
 
   const createWavesurfers = () => {
+    Object.keys(wavesurfers).map((id) => {
+      wavesurfers[id].destroy();
+    });
     let wavesurfer: any = {};
     sayings.forEach((saying: Saying) => {
-      if (saying.hasRecording === true && !(saying.id in wavesurfers)) {
+      if (saying.hasRecording === true) {
         createWavesurfer(saying, wavesurfer);
       }
     });
-    setWavesurfers({ ...wavesurfers, ...wavesurfer });
+    setWavesurfers(wavesurfer);
   };
 
   const createWavesurfer = (saying: Saying, wavesurfer: any) => {
@@ -87,11 +91,9 @@ const ViewSet: React.FC = () => {
         {
           text: "Ok",
           handler: (d) => {
-            dispatch(sayingActions.deleteSayingRecording(sayingId, set.id));
-            wavesurfers[sayingId].destroy();
-            const updatedWavesurfers = { ...wavesurfers };
-            delete updatedWavesurfers[sayingId];
-            setWavesurfers(updatedWavesurfers);
+            dispatch(
+              sayingActions.deleteSayingRecording(sayingId, set.id, false)
+            );
           },
         },
         "Cancel",
@@ -100,21 +102,9 @@ const ViewSet: React.FC = () => {
   };
 
   const saveRecording = (recording: string, sayingId: string) => {
-    dispatch(sayingActions.saveSayingRecording(recording, sayingId, set.id));
-
-    const saying = sayings.find((saying: Saying) => saying.id === sayingId);
-    const sayingWithRecording = {
-      id: saying.id,
-      set: saying.set,
-      owner: saying.owner,
-      saying: saying.saying,
-      setName: saying.setName,
-      createdAt: saying.createdAt,
-      recording: recording,
-      hasRecording: true,
-    };
-    const wavesurfer = createWavesurfer(sayingWithRecording, {});
-    setWavesurfers({ ...wavesurfers, ...wavesurfer });
+    dispatch(
+      sayingActions.saveSayingRecording(recording, sayingId, set.id, false)
+    );
   };
 
   const addNewSaying = (saying: string) => {

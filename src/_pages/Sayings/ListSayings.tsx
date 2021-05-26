@@ -11,6 +11,8 @@ import {
   IonContent,
   useIonAlert,
   IonSearchbar,
+  useIonViewWillEnter,
+  useIonViewWillLeave,
 } from "@ionic/react";
 
 import { Saying } from "../../_helpers/types";
@@ -26,6 +28,7 @@ import FadeIn from "react-fade-in";
 import WaveSurfer from "wavesurfer.js";
 import SayingCards from "./SayingCards";
 import UserProfileButton from "../../_stories/UserProfileButton";
+import { sayingConstants } from "../../_constants/sayingConstants";
 
 const ListSayings: React.FC = () => {
   const dispatch = useDispatch();
@@ -37,28 +40,34 @@ const ListSayings: React.FC = () => {
   const [selectedSaying, setSelectedSaying] = useState("");
 
   const sayings = useSelector((state: RootState) => state.saying.sayings);
-  const allSayings = useSelector((state: RootState) => state.saying.allSayings);
 
-  useEffect(() => {
-    dispatch({ type: setConstants.SET_INIT_STATE, payload: "" });
-  }, []);
+  useIonViewWillEnter(() => {
+    dispatch(sayingActions.getAllSayings());
+  });
+
+  useIonViewWillLeave(() => {
+    dispatch({ type: sayingConstants.SET_SAYINGS_INIT_STATE, payload: "" });
+  });
 
   useEffect(() => {
     dispatch(sayingActions.getAllSayings());
-  }, [sayings]);
+  }, []);
 
   useEffect(() => {
     createWavesurfers();
-  }, [allSayings]);
+  }, [sayings]);
 
   const createWavesurfers = () => {
+    Object.keys(wavesurfers).map((id) => {
+      wavesurfers[id].destroy();
+    });
     let wavesurfer: any = {};
-    allSayings.forEach((saying: Saying) => {
-      if (saying.hasRecording === true && !(saying.id in wavesurfers)) {
+    sayings.forEach((saying: Saying) => {
+      if (saying.hasRecording === true) {
         createWavesurfer(saying, wavesurfer);
       }
     });
-    setWavesurfers({ ...wavesurfers, ...wavesurfer });
+    setWavesurfers(wavesurfer);
   };
 
   const createWavesurfer = (saying: Saying, wavesurfer: any) => {
@@ -82,14 +91,12 @@ const ListSayings: React.FC = () => {
         {
           text: "Ok",
           handler: (d) => {
-            const saying = allSayings.find(
+            const saying = sayings.find(
               (saying: Saying) => saying.id === sayingId
             );
-            dispatch(sayingActions.deleteSayingRecording(sayingId, saying.set));
-            wavesurfers[sayingId].destroy();
-            const updatedWavesurfers = { ...wavesurfers };
-            delete updatedWavesurfers[sayingId];
-            setWavesurfers(updatedWavesurfers);
+            dispatch(
+              sayingActions.deleteSayingRecording(sayingId, saying.set, true)
+            );
           },
         },
         "Cancel",
@@ -98,24 +105,10 @@ const ListSayings: React.FC = () => {
   };
 
   const saveRecording = (recording: string, sayingId: string) => {
-    const saying = allSayings.find((saying: Saying) => saying.id === sayingId);
-
+    const saying = sayings.find((saying: Saying) => saying.id === sayingId);
     dispatch(
-      sayingActions.saveSayingRecording(recording, sayingId, saying.set)
+      sayingActions.saveSayingRecording(recording, sayingId, saying.set, true)
     );
-
-    const sayingWithRecording = {
-      id: saying.id,
-      set: saying.set,
-      owner: saying.owner,
-      saying: saying.saying,
-      setName: saying.setName,
-      createdAt: saying.createdAt,
-      recording: recording,
-      hasRecording: true,
-    };
-    const wavesurfer = createWavesurfer(sayingWithRecording, {});
-    setWavesurfers({ ...wavesurfers, ...wavesurfer });
   };
 
   return (
@@ -150,7 +143,7 @@ const ListSayings: React.FC = () => {
                 <SayingCards
                   setId={""}
                   search={searchText}
-                  sayings={allSayings}
+                  sayings={sayings}
                   playing={playing}
                   selected={selectedSaying}
                   container="list-waveform"
@@ -160,66 +153,6 @@ const ListSayings: React.FC = () => {
                   saveRecording={saveRecording}
                   deleteRecording={deleteRecording}
                 />
-                {/* <IonList>
-                  {Object.keys(allSayings).length > 0 &&
-                    allSayings
-                      .filter((saying: Saying) =>
-                        search !== ""
-                          ? saying.saying
-                              .toLowerCase()
-                              .trim()
-                              .includes(search.toLowerCase().trim())
-                          : saying
-                      )
-                      .map((saying: Saying) => {
-                        return (
-                          <IonItem
-                            key={saying.id}
-                            detail
-                            button
-                            routerLink={`/view/${saying.id}`}
-                          >
-                            <IonLabel className="ion-padding-vertical">
-                              <IonRow>
-                                <IonCol size="auto">
-                                  <small>
-                                    {moment(saying.createdAt).format(
-                                      "MMM Do YYYY"
-                                    )}
-                                  </small>
-                                </IonCol>
-
-                                {saying.hasRecording === false && (
-                                  <IonCol>
-                                    <small>
-                                      <IonNote color="danger">
-                                        &nbsp;No Recording
-                                      </IonNote>
-                                    </small>
-                                  </IonCol>
-                                )}
-                              </IonRow>
-
-                              <IonRow>
-                                <IonCol>
-                                  <div className="ion-text-wrap">
-                                    <h1>{saying.saying}</h1>
-                                  </div>
-                                </IonCol>
-                              </IonRow>
-
-                              <IonRow>
-                                <IonCol className="ion-text-wrap">
-                                  <small>
-                                    <b>Set:</b> {saying.setName}
-                                  </small>
-                                </IonCol>
-                              </IonRow>
-                            </IonLabel>
-                          </IonItem>
-                        );
-                      })}
-                </IonList> */}
               </IonCol>
             </IonRow>
           </IonGrid>

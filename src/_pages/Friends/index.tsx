@@ -6,20 +6,11 @@ import {
   IonButton,
   IonToolbar,
   IonContent,
-  IonButtons,
 } from "@ionic/react";
+import { personAdd } from "ionicons/icons";
 
-import { useState } from "react";
-import {
-  chevronBack,
-  menuSharp,
-  notifications,
-  personAdd,
-} from "ionicons/icons";
-import { menuController } from "@ionic/core";
-
-import UserProfileButton from "../../_stories/UserProfileButton";
 import FriendList from "./FriendList";
+import UserProfileButton from "../../_stories/UserProfileButton";
 
 const Friends: React.FC = () => {
   return (
@@ -27,7 +18,7 @@ const Friends: React.FC = () => {
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
-            <IonButton size="large" slot="start">
+            <IonButton size="large" slot="start" routerLink="/find-friends">
               <IonIcon icon={personAdd} />
             </IonButton>
 

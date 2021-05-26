@@ -29,7 +29,7 @@ export default function CardView({
   longPress,
 }: Props): ReactElement {
   const dispatch = useDispatch();
-  const allSayings = useSelector((state: RootState) => state.saying.allSayings);
+  const sayings = useSelector((state: RootState) => state.saying.sayings);
 
   useEffect(() => {
     dispatch(sayingActions.getAllSayings());
@@ -42,8 +42,8 @@ export default function CardView({
   };
 
   const getCardCount = (setId: string) => {
-    if (allSayings.length > 0) {
-      return allSayings.reduce(
+    if (sayings.length > 0) {
+      return sayings.reduce(
         (prev: number, current: Saying, index: number, []) => {
           if (current.set === setId) {
             ++prev;

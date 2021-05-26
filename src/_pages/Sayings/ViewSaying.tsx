@@ -116,19 +116,9 @@ export default function ViewSaying({}: Props): ReactElement {
   };
 
   const saveRecording = (recording: string, sayingId: string) => {
-    dispatch(sayingActions.saveSayingRecording(recording, sayingId, set.id));
-
-    const sayingWithRecording = {
-      id: saying.id,
-      set: saying.set,
-      owner: saying.owner,
-      saying: saying.saying,
-      setName: saying.setName,
-      createdAt: saying.createdAt,
-      recording: recording,
-      hasRecording: true,
-    };
-    const wavesurfer = createWavesurfer(sayingWithRecording);
+    dispatch(
+      sayingActions.saveSayingRecording(recording, sayingId, set.id, false)
+    );
   };
 
   const listen = (id: string) => {
