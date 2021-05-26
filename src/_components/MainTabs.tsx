@@ -16,7 +16,6 @@ import Set from "../_pages/Sets/ViewSet";
 import Sets from "../_pages/Sets";
 import AddSet from "../_pages/Sets/AddSet/AddSet";
 import Friends from "../_pages/Friends";
-import FriendFind from "../_pages/Friends/FriendFind";
 import ViewSaying from "../_pages/Sayings/ViewSaying";
 import ListSayings from "../_pages/Sayings/ListSayings";
 import StudySayings from "../_pages/Study";
@@ -42,9 +41,6 @@ export default function MainTabs(): ReactElement {
         </Route>
         <Route path="/study">
           <StudySayings />
-        </Route>
-        <Route path="/find-friends">
-          <FriendFind />
         </Route>
         <Route path="/friends">
           <Friends />

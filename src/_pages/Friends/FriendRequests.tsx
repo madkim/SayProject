@@ -1,13 +1,5 @@
-import {
-  IonList,
-  IonItem,
-  IonLabel,
-  IonButton,
-  IonAvatar,
-  IonListHeader,
-} from "@ionic/react";
-
 import React, { ReactElement } from "react";
+import { IonList, IonItem, IonLabel, IonButton, IonAvatar } from "@ionic/react";
 
 interface Props {}
 
@@ -23,7 +15,7 @@ export default function FriendRequests({}: Props): ReactElement {
           <h2>Vicky Zhen</h2>
         </IonLabel>
         <IonButton size="default" fill="clear" color="primary">
-          Accept
+          Open
         </IonButton>
       </IonItem>
       <br />
@@ -35,7 +27,7 @@ export default function FriendRequests({}: Props): ReactElement {
           <h2>Vicky Zhen</h2>
         </IonLabel>
         <IonButton size="default" fill="clear" color="primary">
-          Accept
+          Open
         </IonButton>
       </IonItem>
       <br />

@@ -47,11 +47,11 @@ const ViewSet: React.FC = () => {
   useEffect(() => {
     dispatch(setActions.getSetById(id));
     dispatch(sayingActions.getSayingsBySetId(id));
-  }, []);
 
-  useIonViewWillLeave(() => {
-    dispatch({ type: sayingConstants.SET_SAYINGS_INIT_STATE, payload: "" });
-  });
+    return () => {
+      dispatch({ type: sayingConstants.SET_SAYINGS_INIT_STATE, payload: "" });
+    };
+  }, []);
 
   useEffect(() => {
     createWavesurfers();
