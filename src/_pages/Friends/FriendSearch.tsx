@@ -11,24 +11,27 @@ import {
 } from "@ionic/react";
 
 import React, { ReactElement, useState } from "react";
+import Select from "react-select";
 
 interface Props {}
 
 export default function FriendSearch({}: Props): ReactElement {
   const [searchText, setSearchText] = useState("");
 
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+
   return (
     <IonList>
-      <IonListHeader>Search</IonListHeader>
-      <IonRow>
-        <IonCol>
-          <IonSearchbar
-            value={searchText}
-            onIonChange={(e) => setSearchText(e.detail.value!)}
-          ></IonSearchbar>
+      <IonRow style={{ height: window.screen.height / 3 }}>
+        <IonCol className="ion-padding ion-margin">
+          <Select options={options} />
         </IonCol>
       </IonRow>
-      <IonRow>
+      {/* <IonRow>
         <IonCol>
           <IonList>
             <IonItem>
@@ -45,7 +48,7 @@ export default function FriendSearch({}: Props): ReactElement {
             <br />
           </IonList>
         </IonCol>
-      </IonRow>
+      </IonRow> */}
       <br />
     </IonList>
   );

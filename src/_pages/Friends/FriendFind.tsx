@@ -42,7 +42,6 @@ export default function FriendFind({}: Props): ReactElement {
         </IonHeader>
 
         <FriendSearch />
-        <FriendRequests />
       </IonContent>
     </IonPage>
   );

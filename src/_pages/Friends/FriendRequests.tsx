@@ -14,7 +14,6 @@ interface Props {}
 export default function FriendRequests({}: Props): ReactElement {
   return (
     <IonList>
-      <IonListHeader>Requests</IonListHeader>
       <br />
       <IonItem>
         <IonAvatar slot="start">
