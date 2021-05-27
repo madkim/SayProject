@@ -26,35 +26,37 @@ const FriendList: React.FC<Props> = ({}: Props) => {
   }, []);
 
   return (
-    <FadeIn>
-      <IonList>
-        <br />
-        {loading ? (
-          <div className="ion-text-center">
-            <IonSpinner name="bubbles" />
-          </div>
-        ) : (
-          friends.length > 0 &&
-          friends.map((friend: Friend) => {
-            return (
-              <IonItem
-                key={friend.email}
-                button
-                detail
-                routerLink="/FriendProfile"
-              >
-                <IonAvatar slot="start">
-                  <img src="https://aui.atlassian.com/aui/8.6/docs/images/avatar-person.svg" />
-                </IonAvatar>
-                <IonLabel>
-                  <h2>{friend.name}</h2>
-                </IonLabel>
-              </IonItem>
-            );
-          })
-        )}
-      </IonList>
-    </FadeIn>
+    <>
+      <br />
+      {loading ? (
+        <div className="ion-text-center">
+          <IonSpinner name="bubbles" />
+        </div>
+      ) : (
+        <FadeIn>
+          <IonList>
+            {friends.length > 0 &&
+              friends.map((friend: Friend) => {
+                return (
+                  <IonItem
+                    key={friend.email}
+                    button
+                    detail
+                    routerLink="/FriendProfile"
+                  >
+                    <IonAvatar slot="start">
+                      <img src="https://aui.atlassian.com/aui/8.6/docs/images/avatar-person.svg" />
+                    </IonAvatar>
+                    <IonLabel>
+                      <h2>{friend.name}</h2>
+                    </IonLabel>
+                  </IonItem>
+                );
+              })}
+          </IonList>
+        </FadeIn>
+      )}
+    </>
   );
 };
 
