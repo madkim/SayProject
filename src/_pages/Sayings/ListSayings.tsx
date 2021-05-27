@@ -40,6 +40,7 @@ const ListSayings: React.FC = () => {
   const [selectedSaying, setSelectedSaying] = useState("");
 
   const sayings = useSelector((state: RootState) => state.saying.sayings);
+  const loading = useSelector((state: RootState) => state.saying.loading);
 
   useIonViewWillEnter(() => {
     dispatch(sayingActions.getAllSayings());
@@ -145,6 +146,7 @@ const ListSayings: React.FC = () => {
                   search={searchText}
                   sayings={sayings}
                   playing={playing}
+                  loading={loading}
                   selected={selectedSaying}
                   container="list-waveform"
                   wavesurfers={wavesurfers}

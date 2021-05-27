@@ -8,6 +8,7 @@ import {
   IonLabel,
   IonAvatar,
   IonLoading,
+  IonSpinner,
 } from "@ionic/react";
 
 import FadeIn from "react-fade-in";
@@ -28,13 +29,10 @@ const FriendList: React.FC<Props> = ({}: Props) => {
     <FadeIn>
       <IonList>
         <br />
-
         {loading ? (
-          <IonLoading
-            isOpen={loading}
-            message={"Please wait..."}
-            duration={5000}
-          />
+          <div className="ion-text-center">
+            <IonSpinner name="bubbles" />
+          </div>
         ) : (
           friends.length > 0 &&
           friends.map((friend: Friend) => {

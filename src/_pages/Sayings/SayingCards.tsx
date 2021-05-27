@@ -3,7 +3,14 @@ import { Plugins } from "@capacitor/core";
 import { useHistory } from "react-router-dom";
 import { ReactElement, useState } from "react";
 import { RecordingData, GenericResponse } from "capacitor-voice-recorder";
-import { IonRow, IonCol, IonText, IonCard, IonCardHeader } from "@ionic/react";
+import {
+  IonRow,
+  IonCol,
+  IonText,
+  IonCard,
+  IonCardHeader,
+  IonSpinner,
+} from "@ionic/react";
 
 import FadeIn from "react-fade-in";
 import PlayPauseButton from "../../_stories/PlayPauseButton";
@@ -14,6 +21,7 @@ interface Props {
   search: string;
   sayings: Saying[];
   playing: boolean;
+  loading: boolean;
   selected: string;
   container: string;
   wavesurfers: any;
@@ -82,51 +90,63 @@ export default function SayingCards(props: Props): ReactElement {
   };
 
   return (
-    <FadeIn>
-      {Object.keys(props.sayings).length > 0 &&
-        props.sayings.map((saying) => {
-          return (
-            <IonCard key={saying.id} className={searchSayings(saying)}>
-              <IonCardHeader style={{ fontSize: "large", fontWeight: "700" }}>
-                <IonRow>
-                  <IonCol onClick={() => history.push(`/view/${saying.id}`)}>
-                    <IonText color="dark">{saying.saying}</IonText>
-                  </IonCol>
-                  <IonCol size="auto">
-                    <RecordDeleteButton
-                      id={saying.id}
-                      record={record}
-                      recording={recording}
-                      hasRecording={saying.id in props.wavesurfers}
-                      selectedSaying={props.selected}
-                      deleteRecording={props.deleteRecording}
-                    />
-                  </IonCol>
-                </IonRow>
+    <>
+      {props.loading ? (
+        <div className="ion-text-center" style={{ marginTop: "2em" }}>
+          <IonSpinner name="bubbles" />
+        </div>
+      ) : (
+        <FadeIn>
+          {Object.keys(props.sayings).length > 0 &&
+            props.sayings.map((saying) => {
+              return (
+                <IonCard key={saying.id} className={searchSayings(saying)}>
+                  <IonCardHeader
+                    style={{ fontSize: "large", fontWeight: "700" }}
+                  >
+                    <IonRow>
+                      <IonCol
+                        onClick={() => history.push(`/view/${saying.id}`)}
+                      >
+                        <IonText color="dark">{saying.saying}</IonText>
+                      </IonCol>
+                      <IonCol size="auto">
+                        <RecordDeleteButton
+                          id={saying.id}
+                          record={record}
+                          recording={recording}
+                          hasRecording={saying.id in props.wavesurfers}
+                          selectedSaying={props.selected}
+                          deleteRecording={props.deleteRecording}
+                        />
+                      </IonCol>
+                    </IonRow>
 
-                <IonRow>
-                  <IonCol>
                     <IonRow>
                       <IonCol>
-                        <div id={`${props.container}-${saying.id}`}></div>
+                        <IonRow>
+                          <IonCol>
+                            <div id={`${props.container}-${saying.id}`}></div>
+                          </IonCol>
+                          {saying.id in props.wavesurfers && (
+                            <IonCol size="auto" className="ion-no-padding">
+                              <PlayPauseButton
+                                id={saying.id}
+                                listen={listen}
+                                playing={props.playing}
+                                selectedSaying={props.selected}
+                              />
+                            </IonCol>
+                          )}
+                        </IonRow>
                       </IonCol>
-                      {saying.id in props.wavesurfers && (
-                        <IonCol size="auto" className="ion-no-padding">
-                          <PlayPauseButton
-                            id={saying.id}
-                            listen={listen}
-                            playing={props.playing}
-                            selectedSaying={props.selected}
-                          />
-                        </IonCol>
-                      )}
                     </IonRow>
-                  </IonCol>
-                </IonRow>
-              </IonCardHeader>
-            </IonCard>
-          );
-        })}
-    </FadeIn>
+                  </IonCardHeader>
+                </IonCard>
+              );
+            })}
+        </FadeIn>
+      )}
+    </>
   );
 }

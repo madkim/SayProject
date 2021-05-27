@@ -154,11 +154,11 @@ export default function ViewSaying({}: Props): ReactElement {
           </IonToolbar>
         </IonHeader>
 
-        <IonLoading
+        {/* <IonLoading
           isOpen={loading}
           message={"Please wait..."}
           duration={5000}
-        />
+        /> */}
 
         <div style={{ height: window.screen.height / 1.5 }}>
           <IonCard>

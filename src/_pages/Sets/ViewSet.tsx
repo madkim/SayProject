@@ -9,6 +9,7 @@ import {
   IonLoading,
   useIonAlert,
   IonSearchbar,
+  IonSpinner,
 } from "@ionic/react";
 
 import Ask from "../Sayings/AskSaying";
@@ -135,30 +136,29 @@ const ViewSet: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonLoading
+        {/* <IonLoading
           isOpen={loading}
           message={"Please wait..."}
           duration={5000}
-        />
+        /> */}
 
-        <FadeIn>
-          {search ? (
-            <IonSearchbar
-              value={searchText}
-              style={{ marginTop: "2em" }}
-              className="ion-padding-horizontal"
-              onIonChange={(e) => setSearchtext(e.detail.value!)}
-            ></IonSearchbar>
-          ) : (
-            <Ask addNewSaying={addNewSaying} />
-          )}
-        </FadeIn>
+        {search ? (
+          <IonSearchbar
+            value={searchText}
+            style={{ marginTop: "2em" }}
+            className="ion-padding-horizontal"
+            onIonChange={(e) => setSearchtext(e.detail.value!)}
+          ></IonSearchbar>
+        ) : (
+          <Ask addNewSaying={addNewSaying} />
+        )}
 
         <SayingCards
           setId={id}
           search={searchText}
           sayings={sayings}
           playing={playing}
+          loading={loading}
           container="waveform"
           selected={selectedSaying}
           wavesurfers={wavesurfers}

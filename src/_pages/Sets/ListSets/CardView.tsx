@@ -8,6 +8,7 @@ import {
   IonCardTitle,
   IonCardHeader,
   IonCardContent,
+  IonSpinner,
 } from "@ionic/react";
 
 import FadeIn from "react-fade-in";
@@ -97,11 +98,14 @@ export default function CardView({
           );
         })
       ) : (
-        <IonLoading
-          isOpen={loading}
-          message={"Please wait..."}
-          duration={5000}
-        />
+        <div className="ion-text-center" style={{ marginTop: "2em" }}>
+          <IonSpinner name="bubbles" />
+        </div>
+        // <IonLoading
+        //   isOpen={loading}
+        //   message={"Please wait..."}
+        //   duration={5000}
+        // />
       )}
     </FadeIn>
   );

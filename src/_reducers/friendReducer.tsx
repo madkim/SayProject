@@ -25,7 +25,6 @@ export function friendReducer(state = initState, action: Action) {
   }
 
   if (action.type === friendConstants.GET_FRIENDS_SUCCESS) {
-    console.log(action.payload);
     return (state = {
       ...state,
       loading: false,
