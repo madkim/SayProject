@@ -17,10 +17,10 @@ function signup(fname: string, lname: string, email: string, password: string) {
           displayName: name,
         });
 
-        await db
-          .collection("users")
-          .doc(userCredential.user.uid)
-          .set({ name: name });
+        await db.collection("users").doc(userCredential.user.uid).set({
+          name: name,
+          email: email,
+        });
 
         resolve(userCredential.user);
       })

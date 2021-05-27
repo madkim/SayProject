@@ -9,7 +9,6 @@ import {
   IonLoading,
   useIonAlert,
   IonSearchbar,
-  useIonViewWillLeave,
 } from "@ionic/react";
 
 import Ask from "../Sayings/AskSaying";

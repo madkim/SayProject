@@ -26,3 +26,8 @@ export interface Set {
 }
 
 export type Sets = Set[];
+
+export interface Friend {
+  name: string;
+  email: string;
+}

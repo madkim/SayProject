@@ -1,10 +1,10 @@
 import {
-  IonLabel,
   IonList,
-  IonListHeader,
   IonItem,
+  IonLabel,
   IonAvatar,
   IonCheckbox,
+  IonListHeader,
 } from "@ionic/react";
 
 import FadeIn from "react-fade-in";

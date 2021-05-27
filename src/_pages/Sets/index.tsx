@@ -8,7 +8,6 @@ import {
   IonToolbar,
   IonContent,
   IonFabButton,
-  useIonViewWillEnter,
 } from "@ionic/react";
 
 import ListSets from "./ListSets";
@@ -17,8 +16,6 @@ import UserProfileButton from "../../_stories/UserProfileButton";
 import { useEffect } from "react";
 import { RootState } from "../../_reducers/rootReducer";
 import { setActions } from "../../_actions/setActions";
-import { setConstants } from "../../_constants/setConstants";
-import { sayingConstants } from "../../_constants/sayingConstants";
 import { add, notifications } from "ionicons/icons";
 import { useSelector, useDispatch } from "react-redux";
 

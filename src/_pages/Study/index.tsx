@@ -6,12 +6,11 @@ import {
   IonButton,
   IonToolbar,
   IonContent,
-  IonButtons,
 } from "@ionic/react";
-import UserProfileButton from "../../_stories/UserProfileButton";
 
-import { menuSharp, notifications } from "ionicons/icons";
-import { menuController } from "@ionic/core";
+import { notifications } from "ionicons/icons";
+
+import UserProfileButton from "../../_stories/UserProfileButton";
 
 const Study: React.FC = () => {
   return (

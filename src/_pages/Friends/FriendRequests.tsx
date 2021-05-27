@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { IonList, IonItem, IonLabel, IonButton, IonAvatar } from "@ionic/react";
 
 interface Props {}

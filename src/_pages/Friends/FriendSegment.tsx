@@ -4,7 +4,7 @@ import {
   personCircleOutline,
 } from "ionicons/icons";
 
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { IonIcon, IonLabel, IonSegment, IonSegmentButton } from "@ionic/react";
 
 interface Props {

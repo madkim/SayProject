@@ -14,13 +14,13 @@ import {
 
 import { DynObject } from "../../_helpers/types";
 import { RootState } from "../../_reducers/rootReducer";
+import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { useState, useRef } from "react";
 
 import FadeIn from "react-fade-in";
 import ShowError from "../../_stories/ShowError";
 import PasswordChecklist from "../../_stories/PasswordChecklist";
-import { useHistory } from "react-router";
 
 interface Props {
   email: string;

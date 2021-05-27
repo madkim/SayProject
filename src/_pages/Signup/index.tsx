@@ -6,13 +6,13 @@ import {
   IonContent,
 } from "@ionic/react";
 
-import SignupForm from "./SignupForm";
-
 import { useState } from "react";
 import { DynObject } from "../../_helpers/types";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../_actions/authActions";
+
+import SignupForm from "./SignupForm";
 
 interface Props {}
 

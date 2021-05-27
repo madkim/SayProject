@@ -9,7 +9,7 @@ import {
   IonSearchbar,
 } from "@ionic/react";
 
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 
 interface Props {}
 

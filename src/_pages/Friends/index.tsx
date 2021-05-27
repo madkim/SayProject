@@ -40,11 +40,8 @@ const Friends: React.FC = () => {
 
         <FadeIn>
           <FriendSegment type={type} setType={setType} />
-
           {type === "friends" && <FriendList />}
-
           {type === "requests" && <FriendRequests />}
-
           {type === "search" && <FriendSearch />}
 
           <br />
