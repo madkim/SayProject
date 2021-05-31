@@ -5,11 +5,11 @@ import {
   IonTabBar,
   IonTabButton,
   IonRouterOutlet,
-  IonSplitPane,
 } from "@ionic/react";
 
-import { ReactElement } from "react";
+import { registerPush } from "../_services/pushService";
 import { Redirect, Route } from "react-router-dom";
+import { ReactElement, useEffect } from "react";
 import { albums, book, peopleSharp, reader } from "ionicons/icons";
 
 import Set from "../_pages/Sets/ViewSet";
@@ -21,6 +21,14 @@ import ListSayings from "../_pages/Sayings/ListSayings";
 import StudySayings from "../_pages/Study";
 
 export default function MainTabs(): ReactElement {
+  useEffect(() => {
+    const permission = localStorage.getItem("pushNotificationsGranted");
+
+    if (permission === null) {
+      registerPush();
+    }
+  }, []);
+
   return (
     <IonTabs>
       <IonRouterOutlet id="main">

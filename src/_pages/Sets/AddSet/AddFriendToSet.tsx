@@ -8,11 +8,11 @@ import {
 } from "@ionic/react";
 
 import FadeIn from "react-fade-in";
+import { Friend } from "../../../_helpers/types";
 import { RootState } from "../../../_reducers/rootReducer";
 import { friendActions } from "../../../_actions/friendActions";
 import { ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Friend } from "../../../_helpers/types";
 
 interface Props {
   selectFriend: (friend: string) => void;
