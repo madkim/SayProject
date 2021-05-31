@@ -20,6 +20,8 @@
 .vscode
 .idea
 
+AuthKey_DRUGVKSK8P.p8
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
