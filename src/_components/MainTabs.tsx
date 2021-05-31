@@ -22,11 +22,11 @@ import StudySayings from "../_pages/Study";
 
 export default function MainTabs(): ReactElement {
   useEffect(() => {
-    const permission = localStorage.getItem("pushNotificationsGranted");
+    // const permission = localStorage.getItem("pushNotificationsGranted");
 
-    if (permission === null) {
-      registerPush();
-    }
+    // if (permission === null) {
+    registerPush();
+    // }
   }, []);
 
   return (
