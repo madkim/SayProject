@@ -1,15 +1,14 @@
-import { RootState } from "../../_reducers/rootReducer";
-import { useEffect } from "react";
-import { friendActions } from "../../_actions/friendActions";
-import { useDispatch, useSelector } from "react-redux";
 import {
   IonList,
   IonItem,
   IonLabel,
   IonAvatar,
-  IonLoading,
   IonSpinner,
 } from "@ionic/react";
+import { RootState } from "../../_reducers/rootReducer";
+import { useEffect } from "react";
+import { friendActions } from "../../_actions/friendActions";
+import { useDispatch, useSelector } from "react-redux";
 
 import FadeIn from "react-fade-in";
 import { Friend } from "../../_helpers/types";

@@ -31,3 +31,9 @@ export interface Friend {
   name: string;
   email: string;
 }
+
+export interface Request {
+  id: string;
+  name: string;
+  email: string;
+}
