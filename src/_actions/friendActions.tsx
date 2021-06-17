@@ -5,8 +5,32 @@ import { friendConstants } from "../_constants/friendConstants";
 
 export const friendActions = {
   getFriends,
+  getFriendSearch,
   getFriendRequests,
 };
+
+function getFriendSearch(searchText: string) {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: friendConstants.GET_FRIENDS_REQUEST,
+      payload: true,
+    });
+    friendService
+      .getSearch(searchText)
+      .then((searchResults: any) => {
+        dispatch({
+          type: friendConstants.GET_FRIEND_SEARCH_SUCCESS,
+          payload: searchResults,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: friendConstants.GET_FRIEND_REQUESTS_FAILURE,
+          payload: false,
+        });
+      });
+  };
+}
 
 function getFriendRequests() {
   return (dispatch: Dispatch<Action>) => {

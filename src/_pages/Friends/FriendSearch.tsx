@@ -4,23 +4,31 @@ import {
   IonItem,
   IonList,
   IonLabel,
-  IonButton,
   IonAvatar,
-  IonSearchbar,
+  IonButton,
   IonSpinner,
+  IonSearchbar,
 } from "@ionic/react";
-
+import { RootState } from "../../_reducers/rootReducer";
+import { friendActions } from "../../_actions/friendActions";
 import { ReactElement, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import FadeIn from "react-fade-in";
 
 interface Props {}
 
 export default function FriendSearch({}: Props): ReactElement {
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
+  const loading = useSelector((state: RootState) => state.friends.loading);
+  const searchResults = useSelector((state: RootState) => state.friends.search);
 
   const search = () => {
     // Search for friend
+    if (searchText) {
+      dispatch(friendActions.getFriendSearch(searchText));
+    }
   };
 
   return (
@@ -29,6 +37,9 @@ export default function FriendSearch({}: Props): ReactElement {
         <IonCol>
           <IonSearchbar
             value={searchText}
+            onIonClear={() => {
+              dispatch(friendActions.getFriendSearch(""));
+            }}
             onIonChange={(e) => setSearchText(e.detail.value!)}
           ></IonSearchbar>
         </IonCol>
@@ -52,17 +63,28 @@ export default function FriendSearch({}: Props): ReactElement {
           ) : (
             <FadeIn>
               <IonList>
-                <IonItem>
-                  <IonAvatar slot="start">
-                    <img src="https://aui.atlassian.com/aui/8.6/docs/images/avatar-person.svg" />
-                  </IonAvatar>
-                  <IonLabel>
-                    <h2>Vicky Zhen</h2>
-                  </IonLabel>
-                  <IonButton size="default" fill="clear" color="primary">
-                    Request
-                  </IonButton>
-                </IonItem>
+                {searchResults.length > 0 &&
+                  searchResults.map((result: any) => {
+                    return (
+                      result !== undefined && (
+                        <IonItem key={result.id}>
+                          <IonAvatar slot="start">
+                            <img src="https://aui.atlassian.com/aui/8.6/docs/images/avatar-person.svg" />
+                          </IonAvatar>
+                          <IonLabel>
+                            <h2>{result && result.name}</h2>
+                          </IonLabel>
+                          <IonButton
+                            size="default"
+                            fill="clear"
+                            color="primary"
+                          >
+                            Request
+                          </IonButton>
+                        </IonItem>
+                      )
+                    );
+                  })}
               </IonList>
             </FadeIn>
           )}

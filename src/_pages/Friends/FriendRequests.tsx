@@ -1,7 +1,3 @@
-import { RootState } from "../../_reducers/rootReducer";
-import { friendActions } from "../../_actions/friendActions";
-import { ReactElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   IonList,
   IonItem,
@@ -9,9 +5,15 @@ import {
   IonButton,
   IonAvatar,
   IonSpinner,
+  useIonAlert,
 } from "@ionic/react";
-import FadeIn from "react-fade-in";
 import { Request } from "../../_helpers/types";
+import { RootState } from "../../_reducers/rootReducer";
+import { friendActions } from "../../_actions/friendActions";
+import { ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import FadeIn from "react-fade-in";
 
 interface Props {}
 
@@ -19,8 +21,18 @@ export default function FriendRequests({}: Props): ReactElement {
   const dispatch = useDispatch();
   const loading = useSelector((state: RootState) => state.friends.loading);
   const requests = useSelector((state: RootState) => state.friends.requests);
+  const [present] = useIonAlert();
 
-  const openRequest = () => {};
+  const openRequest = (name: string) => {
+    present({
+      header: "Friend Request",
+      message: `Respond to ${name}'s friend request.`,
+      buttons: [
+        { text: "Accept", handler: (d) => console.log("Accept pressed") },
+        { text: "Decline", handler: (d) => console.log("Decline pressed") },
+      ],
+    });
+  };
 
   useEffect(() => {
     dispatch(friendActions.getFriendRequests());
@@ -51,7 +63,7 @@ export default function FriendRequests({}: Props): ReactElement {
                         size="default"
                         fill="clear"
                         color="primary"
-                        onClick={() => openRequest()}
+                        onClick={() => openRequest(request.name)}
                       >
                         Open
                       </IonButton>

@@ -5,9 +5,28 @@ import { Friend, Request } from "../_helpers/types";
 import firebase from "firebase/app";
 
 export const friendService = {
+  getSearch,
   getFriends,
   getRequests,
 };
+
+function getSearch(searchText: string) {
+  return new Promise(async (resolve: (searchResults: any) => void, reject) => {
+    db.collection("users")
+      .get()
+      .then((usersRef) => {
+        if (searchText) {
+          const searchResults = usersRef.docs.map((user) => {
+            if (user.data().name.includes(searchText.toLowerCase())) {
+              return { id: user.id, ...user.data() };
+            }
+          });
+          resolve(searchResults);
+        }
+        resolve([]);
+      });
+  });
+}
 
 function getFriends() {
   return new Promise(async (resolve: (friends: Friend[]) => void, reject) => {
