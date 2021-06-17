@@ -17,7 +17,13 @@ function getSearch(searchText: string) {
       .then((usersRef) => {
         if (searchText) {
           const searchResults = usersRef.docs.map((user) => {
-            if (user.data().name.includes(searchText.toLowerCase())) {
+            if (
+              user
+                .data()
+                .name.toLowerCase()
+                .trim()
+                .includes(searchText.toLowerCase().trim())
+            ) {
               return { id: user.id, ...user.data() };
             }
           });
