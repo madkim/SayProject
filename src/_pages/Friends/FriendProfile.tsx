@@ -39,57 +39,13 @@ export default function FriendProfile({}: Props): ReactElement {
 
   const { id } = useParams<{ id: string }>();
 
-  // const friendStatus = () => {
-  //   if (friends.find((friend: Friend) => friend.id === id)) {
-  //     return (
-  //       <IonButton
-  //         size="large"
-  //         fill="clear"
-  //         color="danger"
-  //         className="ion-margin-top"
-  //       >
-  //         Delete Friend
-  //       </IonButton>
-  //     );
-  //   } else if (requests.find((request: Request) => request.id === id)) {
-  //     <IonButton
-  //       size="large"
-  //       fill="clear"
-  //       color="medium"
-  //       className="ion-margin-top"
-  //       disabled
-  //     >
-  //       Awaiting Response
-  //     </IonButton>;
-  //   } else if (false) {
-  //     // If sent friend request
-  //     return (
-  //       <IonButton
-  //         size="large"
-  //         fill="clear"
-  //         color="medium"
-  //         disabled
-  //         className="ion-margin-top"
-  //       >
-  //         Friend Request Sent
-  //       </IonButton>
-  //     );
-  //   } else {
-  //     return (
-  //       <IonButton size="large" fill="clear" className="ion-margin-top">
-  //         Send Friend Request
-  //       </IonButton>
-  //     );
-  //   }
-  // };
-
   return (
     <IonPage>
       <IonContent>
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start" className="ion-padding">
-              <IonButton onClick={() => goBack("friends")}>
+              <IonButton onClick={() => goBack("/friends")}>
                 <IonIcon icon={chevronBack} />
               </IonButton>
             </IonButtons>
@@ -107,7 +63,6 @@ export default function FriendProfile({}: Props): ReactElement {
         ) : (
           <FadeIn>
             <div className="ion-text-center">
-              {console.log(requests)}
               <IonAvatar
                 style={{
                   width: "8em",

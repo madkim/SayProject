@@ -9,10 +9,11 @@ import {
   IonSpinner,
   IonSearchbar,
 } from "@ionic/react";
+
 import { RootState } from "../../_reducers/rootReducer";
 import { friendActions } from "../../_actions/friendActions";
-import { ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ReactElement, useState, useEffect } from "react";
 
 import FadeIn from "react-fade-in";
 
@@ -21,8 +22,14 @@ interface Props {}
 export default function FriendSearch({}: Props): ReactElement {
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
+  const [routeClicked, setRouteClicked] = useState(false);
+
   const loading = useSelector((state: RootState) => state.friends.loading);
   const searchResults = useSelector((state: RootState) => state.friends.search);
+
+  useEffect(() => {
+    dispatch(friendActions.getFriendSearch(""));
+  }, []);
 
   const search = () => {
     // Search for friend
@@ -56,7 +63,7 @@ export default function FriendSearch({}: Props): ReactElement {
       </IonRow>
       <IonRow>
         <IonCol>
-          {loading ? (
+          {loading && !routeClicked ? (
             <div className="ion-text-center" style={{ marginTop: "1em" }}>
               <IonSpinner name="bubbles" />
             </div>
@@ -71,6 +78,7 @@ export default function FriendSearch({}: Props): ReactElement {
                           key={result.id}
                           button
                           routerLink={`/friend-profile/${result.id}`}
+                          onClick={() => setRouteClicked(true)}
                         >
                           <IonAvatar slot="start">
                             <img src="https://aui.atlassian.com/aui/8.6/docs/images/avatar-person.svg" />
