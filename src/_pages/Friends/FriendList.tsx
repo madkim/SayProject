@@ -38,10 +38,10 @@ const FriendList: React.FC<Props> = ({}: Props) => {
               friends.map((friend: Friend) => {
                 return (
                   <IonItem
-                    key={friend.email}
+                    key={friend.id}
                     button
                     detail
-                    routerLink="/FriendProfile"
+                    routerLink={`/friend-profile/${friend.id}`}
                   >
                     <IonAvatar slot="start">
                       <img src="https://aui.atlassian.com/aui/8.6/docs/images/avatar-person.svg" />

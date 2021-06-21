@@ -67,7 +67,11 @@ export default function FriendSearch({}: Props): ReactElement {
                   searchResults.map((result: any) => {
                     return (
                       result !== undefined && (
-                        <IonItem key={result.id}>
+                        <IonItem
+                          key={result.id}
+                          button
+                          routerLink={`/friend-profile/${result.id}`}
+                        >
                           <IonAvatar slot="start">
                             <img src="https://aui.atlassian.com/aui/8.6/docs/images/avatar-person.svg" />
                           </IonAvatar>

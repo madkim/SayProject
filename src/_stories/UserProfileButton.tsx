@@ -44,12 +44,7 @@ export default function UserProfileButton({ slot }: Props): ReactElement {
       >
         <IonList>
           <IonListHeader>Matthew</IonListHeader>
-          {/* <IonItem button detail={false} onClick={() => logout()}>
-            Notifications
-            <IonBadge slot="end" color="danger">
-              0
-            </IonBadge>
-          </IonItem> */}
+
           <IonItem button detail={false} onClick={() => logout()}>
             Logout &nbsp;
             <IonIcon slot="end" icon={logOutOutline} />

@@ -19,9 +19,9 @@ interface Props {}
 
 export default function FriendRequests({}: Props): ReactElement {
   const dispatch = useDispatch();
+  const [present] = useIonAlert();
   const loading = useSelector((state: RootState) => state.friends.loading);
   const requests = useSelector((state: RootState) => state.friends.requests);
-  const [present] = useIonAlert();
 
   const openRequest = (name: string) => {
     present({

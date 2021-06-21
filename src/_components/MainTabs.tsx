@@ -19,6 +19,7 @@ import Friends from "../_pages/Friends";
 import ViewSaying from "../_pages/Sayings/ViewSaying";
 import ListSayings from "../_pages/Sayings/ListSayings";
 import StudySayings from "../_pages/Study";
+import FriendProfile from "../_pages/Friends/FriendProfile";
 
 export default function MainTabs(): ReactElement {
   useEffect(() => {
@@ -49,6 +50,9 @@ export default function MainTabs(): ReactElement {
         </Route>
         <Route path="/study">
           <StudySayings />
+        </Route>
+        <Route path="/friend-profile/:id">
+          <FriendProfile />
         </Route>
         <Route path="/friends">
           <Friends />

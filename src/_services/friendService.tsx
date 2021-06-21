@@ -1,8 +1,5 @@
 import { db } from "../_helpers/firebase";
-import { fireAuth } from "../_helpers/firebase";
 import { Friend, Request } from "../_helpers/types";
-
-import firebase from "firebase/app";
 
 export const friendService = {
   getSearch,
@@ -44,7 +41,7 @@ function getFriends() {
       if (user.data()?.friends) {
         const friends = user.data()!.friends.map(async (friendRef: any) => {
           const friend = await friendRef.get();
-          return friend.data();
+          return { id: friend.id, ...friend.data() };
         });
         resolve(friends);
       }
