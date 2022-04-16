@@ -4,4 +4,4 @@ A mobile app created using Capacitor where a user can ask how to 'Say' something
 
 - Uses capacitor and typescript for the front-end
 - firebase for the backend 
-- a wave capturing npm package for recording how to 'Say' something.
+- Wavesurfer-js npm package for recording how to 'Say' something. https://wavesurfer-js.org/
